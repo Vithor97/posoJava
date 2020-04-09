@@ -23,6 +23,8 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 	private Integer telNumber;
 	
 	//teste git
+	//segundo teste git
+	
 	
 	public Integer getTelNumber() {
 		return telNumber;
