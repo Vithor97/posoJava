@@ -23,7 +23,10 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 	private Integer telNumber;
 	
 	
+	//teste eclipse
 	
+	
+	//hfbhbfajhbaj
 	
 	public Integer getTelNumber() {
 		return telNumber;
