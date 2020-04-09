@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
+	version="2.2">
+
+	<application>
+		<resource-bundle>
+			<base-name>br.com.bradesco.posoTeatro.view.properties.messages</base-name>
+			<var>msgs</var>
+		</resource-bundle>
+	</application>
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/content/index.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>cadastrarPessoas</from-outcome>
+			<to-view-id>/content/pessoas/cadastrarPessoas.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>consultarPessoas</from-outcome>
+			<to-view-id>/content/pessoas/consultarPessoas.xhtml</to-view-id>
+		</navigation-case>
+		
+		
+		<navigation-case>
+			<from-outcome>listarEventos</from-outcome>
+			<to-view-id>/content/evento/listarEventos.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>detalheEvento</from-outcome>
+			<to-view-id>/content/evento/detalheEvento.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+</faces-config>

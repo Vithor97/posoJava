@@ -1,0 +1,39 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Cadastrar Pessoas</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{cadastrarPessoasBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="${cadastrarPessoasBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="nomePessoa" value="${msgs.label_pessoas_nome}" />
+				<p:inputText id="nomePessoa" value="${cadastrarPessoasBean.pessoa.nome}" size="50"/>
+				<p:outputLabel for="cpfPessoa"  value="${msgs.label_pessoas_cpf}" />
+				<p:inputMask id="cpfPessoa" value="${cadastrarPessoasBean.pessoa.cpf}" size="14" mask="999.999.999-99"/>
+				
+				<p:outputLabel for="dataNascPessoa" value="${msgs.label_pessoas_nascimento}" />
+				<p:calendar id="dataNascPessoa" value="${cadastrarPessoasBean.pessoa.dataNascimento}" pattern="dd/MM/yyyy" mask="true" showOn="button" />
+				
+				<p:outputLabel for="telefonePessoa" value="${msgs.label_pessoas_telefone}" />
+				<p:inputMask id="telefonePessoa" value="${cadastrarPessoasBean.pessoa.telefone}" size="15" mask="(99) 9999-9999"/>
+				<p:outputLabel for="emailPessoa" value="${msgs.label_pessoas_email}" />
+				<p:inputText id="emailPessoa" value="${cadastrarPessoasBean.pessoa.email}" size="50"/>
+				<p:commandButton value="Salvar" action="${cadastrarPessoasBean.cadastrar}" update="dlg1" oncomplete="PF('dlg1').show();"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

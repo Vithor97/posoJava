@@ -1,0 +1,38 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Listar Eventos</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{listarEventosBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="#{listarEventosBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			<p:dataTable value="#{listarEventosBean.eventos}" var="evento">
+				<p:column width="5%">
+					<c:facet name="header">Código</c:facet>
+                		<p:outputLabel style="float: right;" value="#{evento.codigo}"></p:outputLabel>  
+                </p:column>
+				<p:column>
+					<c:facet name="header">Nome</c:facet>
+                    <p:outputLabel value="#{evento.descEvento}"></p:outputLabel> 
+                </p:column>
+                <p:column width="10%">
+					<c:facet name="header">Ações</c:facet>
+                    <p:commandButton style="width: 100%;" value="Detalhar" action="#{listarEventosBean.detalhar(evento)}"></p:commandButton>
+                </p:column>	
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

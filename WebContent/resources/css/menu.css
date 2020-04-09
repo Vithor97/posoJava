@@ -1,0 +1,40 @@
+body {
+	padding: 0% 2%;
+	/*font-size: 14px;*/
+	/*font-family: 'Open Sans', 'Helvetica Neue', sans-serif;*/
+}
+
+body .ui-widget, 
+body .ui-widget:not(.pi){
+	font-size:80%;
+}
+
+body .ui-widget .ui-widget, 
+body .ui-widget .ui-widget:not(.pi){
+	font-size: 100%;
+}
+
+#logo {
+	text-align: center;
+	height: 137px;
+	margin-bottom: 15px;
+}
+
+.logoImagem {
+	height: 100%;
+	object-fit: fill;
+	width: 17%;
+}
+
+.menu, .breadCrumb{
+	margin-bottom: 0.5%;
+}
+
+.ui-breadcrumb ul li:last-child span{
+	font-weight: bold;
+	color: #007ad9;
+}
+
+.ui-datatable thead th, .ui-datatable tfoot td {
+	
+}

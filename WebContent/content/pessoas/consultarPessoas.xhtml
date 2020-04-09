@@ -1,0 +1,80 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<h:head>
+	
+	<script>
+	
+	document.getElementByid('meulog');
+	function meuMouseOver()
+	{
+	   alert('oiiii')
+	}
+	 
+	
+	</script>
+	
+	</h:head>
+	<ui:define name="titulo">Consultar</ui:define>
+	
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{consultarPessoasBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="${consultarPessoasBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			<h:panelGrid columns="2" >
+
+				<p:outputLabel for="cpfPessoa"  value="${msgs.label_pessoas_cpf}" />
+				<p:inputMask id="cpfPessoa" value="${consultarPessoasBean.pessoa.cpf}" size="14" mask="999.999.999-99"/>
+				
+				<p:commandButton value="Consultar" style="margin-bottom: 10px"
+				action="${consultarPessoasBean.consultaPessoa}" update="dlg1" oncomplete="PF('dlg1').show();"/>
+				
+				<div id="meulog"></div>
+			</h:panelGrid>
+			</h:form>
+			<h:panelGrid columns="1" style="width: 200%">
+				<h:panelGroup>
+					<h:outputLabel 
+               			 for="nomePessoa" value="${msgs.label_pessoas_nome}:"/>
+					<h:outputText id="nomePessoa" value = "${consultarPessoasBean.pessoa.nome}"
+					 style="margin-left: 100px"/>	
+				</h:panelGroup>
+				<br/>
+				<h:panelGroup>
+					<h:outputLabel  for="dataNasc" value="${msgs.label_pessoas_nascimento}:"></h:outputLabel>
+					<h:outputText id="dataNasc" value = "${consultarPessoasBean.dtNasc}" 
+					style="margin-left: 10px"/>	
+				</h:panelGroup>
+				<br/>
+				
+				<h:panelGroup >
+					<h:outputLabel  for="telefonePessoa" value="${msgs.label_pessoas_telefone}:"></h:outputLabel>
+					<h:outputText id="telefonePessoa" style="margin-left: 84px" 
+					value="${consultarPessoasBean.pessoa.telefone}">
+					</h:outputText>	
+				</h:panelGroup>
+				<br/>
+				<h:panelGroup >
+					<h:outputLabel  for="emailPessoa"
+					 style="padding-right: 94px"
+					 value="${msgs.label_pessoas_email}: "></h:outputLabel>
+					<h:outputText id="emailPessoa"  value = "${consultarPessoasBean.pessoa.email}" />	
+				</h:panelGroup>
+					<br/>	
+			</h:panelGrid>
+		
+	</ui:define>
+	
+</ui:composition>

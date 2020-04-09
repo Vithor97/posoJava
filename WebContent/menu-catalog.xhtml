@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+	<title><ui:insert name="titulo"></ui:insert></title>
+</h:head>
+<h:body>
+	
+	<h:outputStylesheet name="css/menu.css"></h:outputStylesheet>
+	
+	<h:form>
+	
+		<div id="logo">
+			<h:graphicImage name="img/logoPrincipal.jpg" styleClass="logoImagem"/>
+		</div>
+		
+		<p:menubar styleClass="menu">
+			<p:submenu label="Eventos">
+				<p:menuitem value="Cadastrar Evento" action="${indexBean.iniciarPagina}"></p:menuitem>
+				<p:menuitem value="Listar Eventos" action="${listarEventosBean.iniciarPagina}"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Sessões">
+				<p:menuitem value="Cadastrar Sessões"></p:menuitem>
+				<p:menuitem value="Consultar Sessões"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Pessoas">
+				<p:menuitem value="Cadastrar Pessoas" action="${cadastrarPessoasBean.iniciarPagina}"></p:menuitem>
+				<p:menuitem value="Consultar Pessoas" action="${consultarPessoasBean.iniciarPagina}"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Ingressos">
+				<p:menuitem value="Cadastrar Ingressos"></p:menuitem>
+				<p:menuitem value="Consultar Ingressos"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Empresas">
+				<p:menuitem value="Cadastrar Empresas"></p:menuitem>
+				<p:menuitem value="Consultar Empresas"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Funcionários">
+				<p:menuitem value="Cadastrar Funcionários"></p:menuitem>
+				<p:menuitem value="Consultar Funcionários"></p:menuitem>
+			</p:submenu>
+		</p:menubar>
+		
+		<ui:insert name="breadCrumb"></ui:insert>
+				
+	</h:form> 
+
+	<ui:insert name="conteudo"></ui:insert>
+		
+</h:body>
+</html>

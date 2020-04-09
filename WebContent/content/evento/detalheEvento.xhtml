@@ -1,0 +1,109 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Listar Eventos</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb"
+			model="#{detalheEventoBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"
+				minHeight="40" width="300">
+				<h:outputText value="#{detalheEventoBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK"
+					onclick="dlg1.hide()" />
+			</p:dialog>
+			<h:panelGrid columns="2" cellspacing="20">
+				<h:panelGrid columns="2">
+					<p:outputLabel for="codigoEvento" value="#{msgs.label_detalheEvento_codigo}" />
+					<p:inputText id="codigoEvento"	value="#{detalheEventoBean.evento.codigo}" disabled="true" />
+					<p:outputLabel for="tipoEvento"	value="#{msgs.label_detalheEvento_tipo}" />
+					<p:inputText id="tipoEvento" value="#{detalheEventoBean.evento.tipoEvento}" disabled="true"	size="20" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:outputLabel for="descricaoEvento" value="#{msgs.label_detalheEvento_descricao}" />
+					<p:inputText id="descricaoEvento" value="#{detalheEventoBean.evento.descEvento}" disabled="true" size="50" />				
+					<p:outputLabel for="generoEvento" value="#{msgs.label_detalheEvento_genero}" />
+					<p:inputText id="generoEvento" value="#{detalheEventoBean.evento.generoEvento}" disabled="true"	size="20" />
+				</h:panelGrid>
+			</h:panelGrid>
+
+			<p:panel id="pnFuncionario" header="Funcionário Responsável" style="margin-top:10px">
+				<h:panelGrid columns="3" cellpadding="20">
+					<h:panelGrid columns="2">
+						<p:outputLabel for="codigoFuncionario" value="#{msgs.label_detalheEvento_funcionarios_codigo}" />
+						<p:inputText id="codigoFuncionario" value="" size="4" disabled="true"/>
+						<p:outputLabel for="cargoFuncionario" value="#{msgs.label_detalheEvento_funcionarios_cargo}" />
+						<p:inputText id="cargoFuncionario" value="" size="15" disabled="true" />
+						<p:outputLabel for="emailFuncionario" value="#{msgs.label_detalheEvento_funcionarios_email}" />
+						<p:inputText id="emailFuncionario" value="" size="50" disabled="true" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="nomeFuncionario" value="#{msgs.label_detalheEvento_funcionarios_nome}" />
+						<p:inputText id="nomeFuncionario" value="" size="50" disabled="true" />
+						<p:outputLabel for="dataNascFuncionario" value="#{msgs.label_detalheEvento_funcionarios_nascimento}" />
+						<p:inputText id="dataNascFuncionario" value="" disabled="true" />
+						<br />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="cpfFuncionario" value="#{msgs.label_detalheEvento_funcionarios_cpf}" />
+						<p:inputText id="cpfFuncionario" value="" size="14" disabled="true" />
+						<p:outputLabel for="telefoneFuncionario" value="#{msgs.label_detalheEvento_funcionarios_telefone}" />
+						<p:inputText id="telefoneFuncionario" value="" size="15" disabled="true" />
+						<br />
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+
+			<p:panel id="pnEmpresa" header="Empresa Responsável" style="margin-top:10px">
+				<h:panelGrid columns="3" cellpadding="20">
+					<h:panelGrid columns="2">
+						<p:outputLabel for="codigoEmpresa" value="#{msgs.label_detalheEvento_empresa_codigo}" />
+						<p:inputText id="codigoEmpresa" value="" size="4" disabled="true" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="cnpjEmpresa" value="#{msgs.label_detalheEvento_empresa_cnpj}" />
+						<p:inputText id="cnpjEmpresa" value="" size="18" disabled="true" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="nomefEmpresa" value="#{msgs.label_detalheEvento_empresa_nomef}" />
+						<p:inputText id="nomefEmpresa" value="" size="50" disabled="true" />
+					</h:panelGrid>
+				</h:panelGrid>
+
+				<p:dataTable value="#{detalheEventoBean.pessoas}" var="pessoa">
+					<p:column width="5%">
+						<c:facet name="header">Código</c:facet>
+						<p:outputLabel style="float: right;" value="#{pessoa.codigo}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalheEvento_pessoa_nome}</c:facet>
+						<p:outputLabel value="#{pessoa.nome}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalheEvento_pessoa_cpf}</c:facet>
+						<p:outputLabel value="#{pessoa.cpf}"></p:outputLabel>
+					</p:column>
+					<p:column width="10%">
+						<c:facet name="header">#{msgs.label_detalheEvento_acoes}</c:facet>
+						<p:commandButton style="width: 100%;" value="Detalhar"></p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+
+			<p:commandButton value="Voltar"
+				action="#{detalheEventoBean.voltar()}" style="margin-top:10px" />
+
+		</h:form>
+	</ui:define>
+
+</ui:composition>
