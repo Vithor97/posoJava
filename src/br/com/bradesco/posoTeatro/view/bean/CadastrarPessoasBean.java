@@ -10,6 +10,8 @@ import org.primefaces.PrimeFaces;
 import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 
+//Este comentario é para um teste ni git
+
 @ManagedBean(name = "cadastrarPessoasBean")
 @SessionScoped
 
