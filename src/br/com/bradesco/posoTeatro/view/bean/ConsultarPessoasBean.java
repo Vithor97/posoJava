@@ -27,7 +27,7 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 	
 	
 	//hfbhbfajhbaj
-	//vjfndnvakjn
+	
 	
 	public Integer getTelNumber() {
 		return telNumber;
