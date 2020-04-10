@@ -8,14 +8,14 @@
 	<ui:define name="titulo">Consultar ingressos</ui:define>
 	
 	<ui:define name="breadCrumb">
-		<p:breadCrumb styleClass="breadCrumb" model="#{consultarIngressosDetalheBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+		<p:breadCrumb styleClass="breadCrumb" model="#{consultarPessoaDetalheBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
 	</ui:define>
 	
 	<ui:define name="conteudo">
 		<h:form id = "form">
 			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
                 <br/>
-			    <h:outputText value="${consultarIngressosDetalheBean.mensagem}" />
+			    <h:outputText value="${consultarPessoaDetalheBean.mensagem}" />
 			    <br/>
 				<p:commandButton style="float: right;" value="OK" 
 								 onclick="PF('dlg1').hide()"/>
@@ -23,43 +23,35 @@
 			
 			<h:panelGrid cellspacing="10">
 				<h:panelGroup>
-					<p:outputLabel for="codIngresso" value="${msgs.label_ingressos_codigoIngresso}" /><br/>
-					<p:inputText id="codIngresso" value="${consultarIngressosDetalheBean.ingresso.codigoIngresso}" disabled="true"/>
+					<p:outputLabel for="cpfPessoa" value="${msgs.label_pessoas_cpf}" /><br/>
+					<p:inputText id="cpfPessoa" value="${consultarPessoaDetalheBean.pessoa.cpf}" disabled="true"/> 
 				</h:panelGroup>
 			</h:panelGrid>
 				
-			<h:panelGrid columns="3" cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="codSessao" value="${msgs.label_ingressos_codigoSessao}" /><br/>
-					<p:inputText id="codSessao" value="${consultarIngressosDetalheBean.ingresso.codigoSessao}" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="dataSessao" value="Data da sessão" /><br/><!-- ##########   IREI PEGAR AS LABELS DA SESSÃO DEPOIS ############-->
-					<p:inputText id="dataSessao" value="Vou pegar a model da sessão" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="horaSessao" value="Hora da sessão" /><br/>
-					<p:inputText id="horaSessao" value="Vou pegar a model da sessão" disabled="true"/>
-				</h:panelGroup>
-			</h:panelGrid>
 				
 			<h:panelGrid columns="2" cellspacing="10">	
 				<h:panelGroup>
 					<p:outputLabel for="nomePessoa" value="Nome da pessoa" /><br/>
-					<p:inputText id="nomePessoa" value="Vou pegar a model da pessoa" disabled="true"/>
+					<p:inputText id="nomePessoa" value="${consultarPessoaDetalheBean.pessoa.nome}" disabled="true"/>
 				</h:panelGroup>
 				<h:panelGroup>
-					<p:outputLabel for="cpfPessoa" value="CPF da pessoa" /><br/>
-					<p:inputText id="cpfPessoa" value="Vou pegar a model da pessoa" disabled="true"/>
+					<p:outputLabel for="emailPessoa" value="${msgs.label_pessoas_email}"/> <br/>
+					<p:inputText id="emailPessoa" value="${consultarPessoaDetalheBean.pessoa.email}" size="25" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" cellspacing="10">	
+				<h:panelGroup>
+					<p:outputLabel for="dtNascimento" value="${msgs.label_pessoas_nascimento}"/><br/>
+					<p:inputText  id="dtNascimento" value="${consultarPessoaDetalheBean.pessoa.dataNascimentoString}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="telPessoa" value="${msgs.label_pessoas_telefone}" /><br/>
+					<p:inputText id="telPessoa" value="${consultarPessoaDetalheBean.pessoa.telefone}" disabled="true"/>
 				</h:panelGroup>
 			</h:panelGrid>
 				
-			<h:panelGrid cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="codPoltrona" value="${msgs.label_ingressos_codigoPoltrona}" /><br/>
-					<p:inputText id="codPoltrona" value="${consultarIngressosDetalheBean.ingresso.codigoPoltrona}" disabled="true"/>
-				</h:panelGroup>
-			</h:panelGrid>	
+		
 		</h:form>
 	</ui:define>
 	

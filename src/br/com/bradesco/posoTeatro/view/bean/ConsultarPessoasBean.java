@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.swing.text.MaskFormatter;
 
@@ -16,18 +17,12 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 
 	private Pessoa pessoa;
 	private String DtNasc;
-	
 	private String mensagem;
-	
 	public 	PessoaDao dao;
 	private Integer telNumber;
 	
-	
-	//teste eclipse
-	
-	
-	//hfbhbfajhbaj
-	
+	@ManagedProperty(value = "#{consultarPessoaDetalheBean}")
+	private DetalharPessoaBean detalhePessoa;
 	
 	public Integer getTelNumber() {
 		return telNumber;
@@ -55,24 +50,28 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 		this.mensagem = mensagem;
 	}
 	
-	public void consultaPessoa() {
+	public String consultaPessoa() {
 		System.out.println("cpf do individuo na tela  " + pessoa.getCpfFormatado());
 		if(validarDados()) {
-			pessoa =  new PessoaDao().consultar(pessoa.getCpfFormatado());
-			
-			setDtNasc(pessoa.getDataNascimentoString());
-			pessoa.setTelefone(formatString(pessoa.getTelefone(), "(##) ####-####"));
-//			setTelNumber(Integer.parseInt(pessoa.getTelefone()));
-			
-//			System.out.println(pessoa);
-//			pessoa.setDataNascimento(new DataUtil().converteData(pessoa.getDataNascimento(), "dd/MM/yyyy"));
+			pessoa =  new PessoaDao().consultar(pessoa.getCpfFormatado());	
 			
 			if(pessoa.getNome() != null) {
-				setMensagem("Consulta realizada com sucesso");				
-			}else {
-				setMensagem("Não existe essa pessoa");
+				setDtNasc(pessoa.getDataNascimentoString());
+				pessoa.setTelefone(formatString(pessoa.getTelefone(), "(##) ####-####"));
+				detalhePessoa.setMensagem("Consulta realixada com sucesso");
+				detalhePessoa.setPessoa(pessoa);
+				return detalhePessoa.iniciarPagina();
+				
 			}
+			else {
+				setMensagem("Não existe essa pessoa");
+				return "";
+			}
+			
 		}
+		
+		return iniciarPagina();
+			
 	}
 	
 
@@ -125,6 +124,14 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 	            return value;
 	        }
 	    }
+
+	public DetalharPessoaBean getDetalhePessoa() {
+		return detalhePessoa;
+	}
+
+	public void setDetalhePessoa(DetalharPessoaBean detalhePessoa) {
+		this.detalhePessoa = detalhePessoa;
+	}
 	
 	
 }
