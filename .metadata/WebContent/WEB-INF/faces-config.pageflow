@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15850288949900" configfile="/posoTeatro 1.0.1/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15851357609810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15851357609821 pf158513819225911 pf15856735254440 pf15857079403632 pf15857445589600 pf15865299142090" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15851357609810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15851357609821 pf158513819225911 pf15856735254440 pf15857079403632 pf15857445589600 pf15865299142090 pf15867843344651" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="content/index.xhtml" id="pf15851357609823" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15851357609821" path="/content/index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/pessoas/cadastrarPessoas.xhtml" id="pf158513819225912" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf158513819225911" path="/content/pessoas/cadastrarPessoas.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/evento/listarEventos.xhtml" id="pf15856735254441" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15856735254440" path="/content/evento/listarEventos.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/evento/detalheEvento.xhtml" id="pf15857079403633" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15857079403632" path="/content/evento/detalheEvento.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/consultarPessoas.xhtml" id="pf15857445589601" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15857445589600" path="/content/pessoas/consultarPessoas.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/detalheConsultaPessoa.xhtml" id="pf15865299142101" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15865299142090" path="/content/pessoas/detalheConsultaPessoa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/evento/listarEventos.xhtml" id="pf15856735254441" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15856735254440" path="/content/evento/listarEventos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/evento/detalheEvento.xhtml" id="pf15857079403633" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf15857079403632" path="/content/evento/detalheEvento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/consultarPessoas.xhtml" id="pf15857445589601" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf15857445589600" path="/content/pessoas/consultarPessoas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/detalheConsultaPessoa.xhtml" id="pf15865299142101" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15865299142090" path="/content/pessoas/detalheConsultaPessoa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/alteraPessoa.xhtml" id="pf15867843344652" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15867843344651" path="/content/pessoas/alteraPessoa.xhtml"/>
   <links id="pf15851357609821" target="pf15851357609823" source="pf15851357609810" outcome="index"/>
   <links id="pf158513819225911" target="pf158513819225912" source="pf15851357609810" outcome="cadastrarPessoas"/>
   <links id="pf15856735254440" target="pf15856735254441" source="pf15851357609810" outcome="listarEventos"/>
   <links id="pf15857079403632" target="pf15857079403633" source="pf15851357609810" outcome="detalheEvento"/>
   <links id="pf15857445589600" target="pf15857445589601" source="pf15851357609810" outcome="consultarPessoas"/>
   <links id="pf15865299142090" target="pf15865299142101" source="pf15851357609810" outcome="detalhePessoas"/>
+  <links id="pf15867843344651" target="pf15867843344652" source="pf15851357609810" outcome="alteraPessoas"/>
 </pageflow:Pageflow>
