@@ -10,6 +10,7 @@ import javax.swing.text.MaskFormatter;
 import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 
+// carol esteve aqui
 @ManagedBean(name = "consultarPessoasBean")
 @SessionScoped
 public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
