@@ -16,10 +16,10 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 	private Pessoa pessoa;
 	private String mensagem;
 	
-//	@ManagedProperty(value = "#{alteraPessoaBean}")
-//	private AlteraPessoaBean alteraPessoaBean;
-//	
-//	
+	@ManagedProperty(value = "#{alteraPessoaBean}")
+	private AlteraPessoaBean alteraPessoaBean;
+	
+	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -33,12 +33,12 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 		this.mensagem = mensagem;
 	}
 	
-//	public AlteraPessoaBean getAlteraPessoaBean() {
-//		return alteraPessoaBean;
-//	}
-//	public void setAlteraPessoaBean(AlteraPessoaBean alteraPessoaBean) {
-//		this.alteraPessoaBean = alteraPessoaBean;
-//	}
+	public AlteraPessoaBean getAlteraPessoaBean() {
+		return alteraPessoaBean;
+	}
+	public void setAlteraPessoaBean(AlteraPessoaBean alteraPessoaBean) {
+		this.alteraPessoaBean = alteraPessoaBean;
+	}
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Pessoas Detalhe", "detalhePessoas", titulosBread, urlsBread);
@@ -50,10 +50,10 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 		return "detalhePessoas";
 	}
 	
-//	public String alteracao() {
-//		alteraPessoaBean.setPessoa(pessoa);
-//		return alteraPessoaBean.iniciarPagina();
-//	}
+	public String alteracao() {
+		alteraPessoaBean.setPessoa(pessoa);
+		return alteraPessoaBean.iniciarPagina();
+	}
 	
 	
 
