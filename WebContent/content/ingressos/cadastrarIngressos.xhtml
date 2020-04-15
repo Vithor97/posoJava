@@ -1,0 +1,38 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Cadastrar Ingressos</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{cadastrarIngressosBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="${cadastrarIngressosBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			<h:panelGrid columns="2">
+				
+				<p:outputLabel for="codSessao"  value="${msgs.label_cod_sessao}" />
+				<p:inputText id="codSessao" value="${cadastrarIngressosBean.ingresso.codigoSessao}" size="14" required="true" />
+				
+				
+				<p:outputLabel for="codPessoa" value="${msgs.label_cod_pessoa}" />
+				<p:inputText id="codPessoa" value="${cadastrarIngressosBean.ingresso.codigoPessoa}" size="14" required="true"/>
+				
+				<p:outputLabel for="codPoltrona" value="${msgs.label_cod_poltrona}" />
+				<p:inputText id="codPoltrona" value="${cadastrarIngressosBean.ingresso.codigoPoltrona}" size="14" required="true" />
+				
+				<p:commandButton value="Salvar" action="${cadastrarIngressosBean.cadastrar}" update="dlg1" oncomplete="PF('dlg1').show();"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

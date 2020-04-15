@@ -39,5 +39,19 @@
 			<from-outcome>detalheEvento</from-outcome>
 			<to-view-id>/content/evento/detalheEvento.xhtml</to-view-id>
 		</navigation-case>
+		
+		<navigation-case>
+            <from-outcome>consultarIngressos</from-outcome>
+            <to-view-id>/content/ingressos/consultarIngressos.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>consultarIngressosDetalhe</from-outcome>
+            <to-view-id>/content/ingressos/ingressosDetalhe.xhtml</to-view-id>
+        </navigation-case>
+        
+        <navigation-case>
+			<from-outcome>cadastrarIngressos</from-outcome>
+			<to-view-id>/content/ingressos/cadastrarIngressos.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 </faces-config>
