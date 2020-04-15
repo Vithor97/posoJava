@@ -7,13 +7,15 @@
 	
 	<ui:define name="titulo">Altera Pessoas</ui:define>
 	
+	<meta http-equiv="refresh" content="3;url=/content/pessoas/consultarPessoas.xhtml" />
+	
 	<ui:define name="breadCrumb">
 		<p:breadCrumb styleClass="breadCrumb" model="#{alteraPessoaBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
 	</ui:define>
 	
 	<ui:define name="conteudo">
 		<h:form id = "form">
-			<p:dialog header="Alterar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			<p:dialog header="Alteração de Pessoa" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
                 <br/>
 			    <h:outputText value="${alteraPessoaBean.mensagem}" />
 			    <br/>

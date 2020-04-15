@@ -29,7 +29,7 @@
 	<ui:define name="conteudo">
 		<h:form>
 			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
-			    <h:outputText value="${consultarPessoasBean.mensagem}" />
+			    <h:messages  globalOnly="true"/>
 			    <br/>
 				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
 			</p:dialog>

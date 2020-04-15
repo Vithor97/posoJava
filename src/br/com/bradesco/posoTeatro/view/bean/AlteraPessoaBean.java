@@ -3,9 +3,12 @@ package br.com.bradesco.posoTeatro.view.bean;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 
 @ManagedBean(name="alteraPessoaBean")
@@ -13,15 +16,15 @@ import br.com.bradesco.posoTeatro.model.Pessoa;
 public class AlteraPessoaBean extends PosoBean implements Serializable,  BeanInterface {
 	
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
+
+	
 	private Pessoa pessoa;
 	private String mensagem;
 	
 	
-
+	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -42,14 +45,31 @@ public class AlteraPessoaBean extends PosoBean implements Serializable,  BeanInt
 	}
 	
 	
-	public void altera() {
-		
+	public String altera() {
+		int linhasAfetadas;
 		System.out.println(getMensagem());
 		if(validarDados()) {
-			setMensagem("Dados validados");
-			System.out.println(getMensagem());
-		}else {
-			setMensagem("Não valida nada");
+			linhasAfetadas	= new PessoaDao().alterar(getPessoa());
+			if(linhasAfetadas != 0) {
+				setMensagem("Alteração realizada com sucesso");					
+				
+				FacesContext.getCurrentInstance().addMessage(
+				        null, new FacesMessage(getMensagem()));
+				 
+				  FacesContext.getCurrentInstance().getExternalContext()
+				      .getFlash().setKeepMessages(true);
+							
+	
+				return "consultarPessoas?faces-redirect=true";			
+			}
+			else {
+				setMensagem("Alteração não realizada");
+				return iniciarPagina();
+			}
+		}
+		else {
+			
+			return iniciarPagina();
 		}
 			
 		
@@ -80,7 +100,7 @@ public class AlteraPessoaBean extends PosoBean implements Serializable,  BeanInt
 			return false;
 		}
 
-		if (getPessoa().getEmail().equals(null)) {
+		if (getPessoa().getEmail() == "") {
 			setMensagem("O preenchimento do campo email é obrigatório");
 			return false;
 		} else if (!getPessoa().emailValido()) {

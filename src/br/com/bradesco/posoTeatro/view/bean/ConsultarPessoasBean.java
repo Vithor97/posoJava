@@ -1,3 +1,4 @@
+
 package br.com.bradesco.posoTeatro.view.bean;
 
 import java.text.ParseException;
@@ -53,7 +54,7 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 	public String consultaPessoa() {
 		System.out.println("cpf do individuo na tela  " + pessoa.getCpfFormatado());
 		if(validarDados()) {
-			pessoa =  new PessoaDao().consultar(pessoa.getCpfFormatado());	
+			pessoa =  new PessoaDao().consultar(pessoa);	
 			
 			if(pessoa.getNome() != null) {
 				setDtNasc(pessoa.getDataNascimentoString());
