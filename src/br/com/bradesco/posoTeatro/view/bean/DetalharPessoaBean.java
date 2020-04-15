@@ -19,7 +19,7 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 //	@ManagedProperty(value = "#{alteraPessoaBean}")
 //	private AlteraPessoaBean alteraPessoaBean;
 //	
-	
+//	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -54,7 +54,7 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 //		alteraPessoaBean.setPessoa(pessoa);
 //		return alteraPessoaBean.iniciarPagina();
 //	}
-//	
+	
 	
 
 }
