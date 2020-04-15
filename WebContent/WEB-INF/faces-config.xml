@@ -51,6 +51,16 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>alterarEvento</from-outcome>
+			<to-view-id>/content/evento/alterarEvento.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>excluirEvento</from-outcome>
+			<to-view-id>/content/evento/excluirEvento.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
             <from-outcome>consultarIngressos</from-outcome>
             <to-view-id>/content/ingressos/consultarIngressos.xhtml</to-view-id>
         </navigation-case>
