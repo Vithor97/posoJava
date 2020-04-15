@@ -44,36 +44,7 @@
 				<div id="meulog"></div>
 			</h:panelGrid>
 			</h:form>
-			<h:panelGrid columns="1" style="width: 200%">
-				<h:panelGroup>
-					<h:outputLabel 
-               			 for="nomePessoa" value="${msgs.label_pessoas_nome}:"/>
-					<h:outputText id="nomePessoa" value = "${consultarPessoasBean.pessoa.nome}"
-					 style="margin-left: 100px"/>	
-				</h:panelGroup>
-				<br/>
-				<h:panelGroup>
-					<h:outputLabel  for="dataNasc" value="${msgs.label_pessoas_nascimento}:"></h:outputLabel>
-					<h:outputText id="dataNasc" value = "${consultarPessoasBean.dtNasc}" 
-					style="margin-left: 10px"/>	
-				</h:panelGroup>
-				<br/>
-				
-				<h:panelGroup >
-					<h:outputLabel  for="telefonePessoa" value="${msgs.label_pessoas_telefone}:"></h:outputLabel>
-					<h:outputText id="telefonePessoa" style="margin-left: 84px" 
-					value="${consultarPessoasBean.pessoa.telefone}">
-					</h:outputText>	
-				</h:panelGroup>
-				<br/>
-				<h:panelGroup >
-					<h:outputLabel  for="emailPessoa"
-					 style="padding-right: 94px"
-					 value="${msgs.label_pessoas_email}: "></h:outputLabel>
-					<h:outputText id="emailPessoa"  value = "${consultarPessoasBean.pessoa.email}" />	
-				</h:panelGroup>
-					<br/>	
-			</h:panelGrid>
+
 		
 	</ui:define>
 	

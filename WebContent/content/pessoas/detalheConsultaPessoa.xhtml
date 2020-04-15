@@ -1,0 +1,60 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Consultar ingressos</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{consultarPessoaDetalheBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id = "form">
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${consultarPessoaDetalheBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			
+			<h:panelGrid cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="cpfPessoa" value="${msgs.label_pessoas_cpf}" /><br/>
+					<p:inputText id="cpfPessoa" value="${consultarPessoaDetalheBean.pessoa.cpf}" disabled="true"/> 
+				</h:panelGroup>
+			</h:panelGrid>
+				
+				
+			<h:panelGrid columns="2" cellspacing="10">	
+				<h:panelGroup>
+					<p:outputLabel for="nomePessoa" value="Nome da pessoa" /><br/>
+					<p:inputText id="nomePessoa" value="${consultarPessoaDetalheBean.pessoa.nome}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="emailPessoa" value="${msgs.label_pessoas_email}"/> <br/>
+					<p:inputText id="emailPessoa" value="${consultarPessoaDetalheBean.pessoa.email}" size="25" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<h:panelGrid columns="2" cellspacing="10">	
+				<h:panelGroup>
+					<p:outputLabel for="dtNascimento" value="${msgs.label_pessoas_nascimento}"/><br/>
+					<p:inputText  id="dtNascimento" value="${consultarPessoaDetalheBean.pessoa.dataNascimentoString}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="telPessoa" value="${msgs.label_pessoas_telefone}" /><br/>
+					<p:inputText id="telPessoa" value="${consultarPessoaDetalheBean.pessoa.telefone}" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+		<p:commandButton value="Alterar" action="#{consultarPessoaDetalheBean.alteracao}"/>
+				
+		
+		</h:form>
+	</ui:define>
+	
+</ui:composition>
