@@ -29,6 +29,16 @@
 			<to-view-id>/content/pessoas/consultarPessoas.xhtml</to-view-id>
 		</navigation-case>
 		
+		<navigation-case>
+			<from-outcome>detalhePessoas</from-outcome>
+			<to-view-id>/content/pessoas/detalheConsultaPessoa.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>alteraPessoas</from-outcome>
+			<to-view-id>/content/pessoas/alteraPessoa.xhtml</to-view-id>
+		</navigation-case>
+		
 		
 		<navigation-case>
 			<from-outcome>listarEventos</from-outcome>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15850288949900" configfile="/posoJava/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15851357609810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15851357609821 pf158513819225911 pf15856735254440 pf15857079403632 pf15857445589600 pf15869675478850 pf15869675478851 pf15869675478852" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" id="pf15851357609810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15851357609821 pf158513819225911 pf15856735254440 pf15857079403632 pf15857445589600 pf15869675478850 pf15869675478851 pf15869675478852 pf15869690316856 pf15869690316857" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="content/index.xhtml" id="pf15851357609823" referenceLink="//@navigationRule.0/@navigationCase.0/@toViewId|" inlinks="pf15851357609821" path="/content/index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/pessoas/cadastrarPessoas.xhtml" id="pf158513819225912" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf158513819225911" path="/content/pessoas/cadastrarPessoas.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/evento/listarEventos.xhtml" id="pf15856735254441" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15856735254440" path="/content/evento/listarEventos.xhtml"/>
@@ -9,6 +9,8 @@
   <nodes xsi:type="pageflow:PFPage" name="content/ingressos/ingressosDetalhe.xhtml" id="pf15869675478863" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf15869675478850" path="/content/ingressos/ingressosDetalhe.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/ingressos/cadastrarIngressos.xhtml" id="pf15869675478864" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf15869675478851" path="/content/ingressos/cadastrarIngressos.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/ingressos/consultarIngressos.xhtml" id="pf15869675478865" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf15869675478852" path="/content/ingressos/consultarIngressos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/detalheConsultaPessoa.xhtml" id="pf15869690316858" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15869690316856" path="/content/pessoas/detalheConsultaPessoa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/alteraPessoa.xhtml" id="pf15869690316859" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15869690316857" path="/content/pessoas/alteraPessoa.xhtml"/>
   <links id="pf15851357609821" target="pf15851357609823" source="pf15851357609810" outcome="index"/>
   <links id="pf158513819225911" target="pf158513819225912" source="pf15851357609810" outcome="cadastrarPessoas"/>
   <links id="pf15856735254440" target="pf15856735254441" source="pf15851357609810" outcome="listarEventos"/>
@@ -17,4 +19,6 @@
   <links id="pf15869675478850" target="pf15869675478863" source="pf15851357609810" outcome="consultarIngressosDetalhe"/>
   <links id="pf15869675478851" target="pf15869675478864" source="pf15851357609810" outcome="cadastrarIngressos"/>
   <links id="pf15869675478852" target="pf15869675478865" source="pf15851357609810" outcome="consultarIngressos"/>
+  <links id="pf15869690316856" target="pf15869690316858" source="pf15851357609810" outcome="detalhePessoas"/>
+  <links id="pf15869690316857" target="pf15869690316859" source="pf15851357609810" outcome="alteraPessoas"/>
 </pageflow:Pageflow>
