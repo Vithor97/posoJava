@@ -61,10 +61,28 @@ public class PessoaDao extends Pessoa {
 			rs.close();
 			smt.close();
 			conn.close();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return produto;
 	}
+	
+	
+	public Pessoa alterar(Pessoa pessoaAltera) {
+		
+		
+		try {
+			
+			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement stm = conn.prepareStatement("Update pessoa set ");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return pessoaAltera;				
+	}
+	
 }
