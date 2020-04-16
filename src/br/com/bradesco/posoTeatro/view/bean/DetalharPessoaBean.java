@@ -55,6 +55,12 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 		return alteraPessoaBean.iniciarPagina();
 	}
 	
+	public String excluir() {
+		System.out.println("Dentro do metodo de exclusão");
+		
+		return "";
+	}
+	
 	
 
 }

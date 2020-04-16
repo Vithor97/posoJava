@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<ui:define name="titulo">Consultar ingressos</ui:define>
+	<ui:define name="titulo">Detalhe pessoas</ui:define>
 	
 	<ui:define name="breadCrumb">
 		<p:breadCrumb styleClass="breadCrumb" model="#{consultarPessoaDetalheBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
@@ -51,9 +51,19 @@
 				</h:panelGroup>
 			</h:panelGrid>
 			
-		<p:commandButton value="Alterar" action="#{consultarPessoaDetalheBean.alteracao}"/>
+			<p:commandButton value="Alterar" action="#{consultarPessoaDetalheBean.alteracao}"/>
+			
+			<p:commandButton value="Excluir" action="#{consultarPessoaDetalheBean.excluir}">
+				<p:confirm header="Exlusão de Pessoa" message="Deseja apagar?" icon="ui-icon-alert" />
+			</p:commandButton>
 				
+		</h:form>
 		
+		<h:form>
+			<p:confirmDialog global="true" width="300">
+			        <p:commandButton value="Sim"   type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 	
