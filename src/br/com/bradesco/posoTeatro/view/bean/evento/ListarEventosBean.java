@@ -15,6 +15,8 @@ import br.com.bradesco.posoTeatro.model.Pessoa;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
+//Vitor esteve aqui
+
 @ManagedBean(name = "listarEventosBean")
 @SessionScoped
 
