@@ -102,4 +102,20 @@ public class EventoDao extends Evento {
 
 		return evento;
 	}
+	
+	
+	public Evento alterar(Evento eventoAltera) {
+		
+		
+		try {
+			
+			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement stm = conn.prepareStatement("Update evento set ");
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+		return eventoAltera;				
+	}
 }
