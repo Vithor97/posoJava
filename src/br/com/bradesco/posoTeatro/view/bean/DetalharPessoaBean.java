@@ -2,10 +2,16 @@ package br.com.bradesco.posoTeatro.view.bean;
 
 import java.util.List;
 
+import javax.faces.application.Application;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.el.ValueBinding;
+import javax.inject.Inject;
+import javax.inject.Named;
 
+import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 
 
@@ -15,9 +21,28 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 	
 	private Pessoa pessoa;
 	private String mensagem;
+	private PessoaDao dao;
 	
+//	@Inject
+//	@Named("consultarPessoasBean")
+//	private ConsultarPessoasBean consultaPessoaBean;
+//	
+//	public ConsultarPessoasBean getConsultaPessoaBean() {
+//		return consultaPessoaBean;
+//	}
+//
+//
+//	public void setConsultaPessoaBean(ConsultarPessoasBean consultaPessoaBean) {
+//		this.consultaPessoaBean = consultaPessoaBean;
+//	}
+
 	@ManagedProperty(value = "#{alteraPessoaBean}")
 	private AlteraPessoaBean alteraPessoaBean;
+	
+	
+	public DetalharPessoaBean() {
+		dao = new PessoaDao();
+	}
 	
 	
 	public Pessoa getPessoa() {
@@ -39,6 +64,16 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 	public void setAlteraPessoaBean(AlteraPessoaBean alteraPessoaBean) {
 		this.alteraPessoaBean = alteraPessoaBean;
 	}
+	public PessoaDao getDao() {
+		return dao;
+	}
+
+
+	public void setDao(PessoaDao dao) {
+		this.dao = dao;
+	}
+
+
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Pessoas Detalhe", "detalhePessoas", titulosBread, urlsBread);
@@ -55,10 +90,36 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 		return alteraPessoaBean.iniciarPagina();
 	}
 	
+//	  public void readBookStudent() {
+//	        FacesContext context = FacesContext.getCurrentInstance();
+//	        Application application = context.getApplication();
+//	        ValueBinding binding = application.createValueBinding("#{otherBean}");
+//	        om.jwt.jsf.BookBean book = (com.jwt.jsf.BookBean)binding.getValue(context);
+//	        book.readBook();
+//	    }
+	
 	public String excluir() {
 		System.out.println("Dentro do metodo de exclusão");
+		int RowAffected = 0;
 		
-		return "";
+		RowAffected = dao.deletaPessoa(pessoa);
+		
+		if(RowAffected !=0) {
+			setMensagem("Exclusão realizada");
+//			FacesContext context = FacesContext.getCurrentInstance();
+//	        Application application = context.getApplication();
+//	        ValueBinding binding = application.createValueBinding("#{consultarPessoaDetalheBean}");
+//	        ConsultarPessoasBean consulta = (ConsultarPessoasBean)binding.getValue(context);
+//			
+//	        return consulta.iniciarPagina()+"?faces-redirect=true";
+			//setPessoa(dao.consultar(pessoa));
+			return "consultarPessoas?faces-redirect=true";
+		}
+		else {
+			setMensagem("Exclusão não realizada");
+			return iniciarPagina();
+		}
+		
 	}
 	
 	

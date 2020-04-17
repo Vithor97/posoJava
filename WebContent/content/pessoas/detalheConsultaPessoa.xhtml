@@ -53,7 +53,7 @@
 			
 			<p:commandButton value="Alterar" action="#{consultarPessoaDetalheBean.alteracao}"/>
 			
-			<p:commandButton value="Excluir" action="#{consultarPessoaDetalheBean.excluir}">
+			<p:commandButton value="Excluir" action="#{consultarPessoaDetalheBean.excluir}" update="dlg1" oncomplete="PF('dlg1').show();">
 				<p:confirm header="Exlusão de Pessoa" message="Deseja apagar?" icon="ui-icon-alert" />
 			</p:commandButton>
 				

@@ -30,6 +30,7 @@
 		<h:form>
 			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
 			    <h:messages  globalOnly="true"/>
+			    <h:outputText value="${consultarPessoasBean.mensagem}"/>
 			    <br/>
 				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
 			</p:dialog>
