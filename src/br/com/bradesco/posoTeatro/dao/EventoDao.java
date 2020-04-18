@@ -110,11 +110,13 @@ public class EventoDao extends Evento {
 		try {
 			
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement smt = conn.prepareStatement("Update evento set desc_evento = ?,  tipo_evento = ?, genr_evento = ?");
+			PreparedStatement smt = conn.prepareStatement("Update evento set desc_evento = ?,  tipo_evento = ?, genr_evento = ?, cnpj_empresa = ?, cod_func_resp = ?");
 			
 			smt.setString(1, eventoAltera.getDescEvento());
 			smt.setString(2, eventoAltera.getTipoEvento());
 			smt.setString(3, eventoAltera.getGeneroEvento());
+			smt.setString(4, eventoAltera.getCnpjEmpresa());
+			smt.setInt(5, eventoAltera.getCodFuncResp());
 
 			rs = smt.executeUpdate();
 			

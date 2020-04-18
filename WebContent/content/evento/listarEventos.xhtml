@@ -29,7 +29,9 @@
                 </p:column>
                 <p:column width="10%">
 					<c:facet name="header">Ações</c:facet>
-                    <p:commandButton style="width: 100%;" value="Detalhar" action="#{listarEventosBean.detalhar(evento)}"></p:commandButton>
+                    <p:commandButton value="Detalhar" action="#{listarEventosBean.detalhar(evento)}" style = "width: 100%"></p:commandButton>
+                    <p:commandButton value="Alterar" action="#{detalheEventoBean.alteracao}" style= "margin-top:10px; margin-right:10px" ></p:commandButton>
+                	<p:commandButton value="Excluir" action="#{excluirEventoBean.iniciarPagina}"  />
                 </p:column>	
 			</p:dataTable>
 		</h:form>
