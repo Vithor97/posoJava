@@ -15,7 +15,6 @@ import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
 @ManagedBean(name = "detalheEventoBean")
 @SessionScoped
-
 public class DetalheEventoBean extends PosoBean implements BeanInterface{
 
 	private Evento evento;
