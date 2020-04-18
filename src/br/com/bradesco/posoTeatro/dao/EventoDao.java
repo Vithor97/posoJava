@@ -104,18 +104,27 @@ public class EventoDao extends Evento {
 	}
 	
 	
-	public Evento alterar(Evento eventoAltera) {
-		
+	public int alterar(Evento eventoAltera) {
+		int rs = 0;
 		
 		try {
 			
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement stm = conn.prepareStatement("Update evento set ");
+			PreparedStatement smt = conn.prepareStatement("Update evento set desc_evento = ?,  tipo_evento = ?, genr_evento = ?");
+			
+			smt.setString(1, eventoAltera.getDescEvento());
+			smt.setString(2, eventoAltera.getTipoEvento());
+			smt.setString(3, eventoAltera.getGeneroEvento());
+
+			rs = smt.executeUpdate();
+			
+			
+			System.out.println("rows affected " + rs);
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			System.out.println("dentro do catch: " + e.getMessage());
 		}
 		
-		return eventoAltera;				
+		return rs;				
 	}
 }

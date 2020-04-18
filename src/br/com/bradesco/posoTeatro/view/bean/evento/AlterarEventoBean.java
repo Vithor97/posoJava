@@ -3,9 +3,13 @@ package br.com.bradesco.posoTeatro.view.bean.evento;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
+import br.com.bradesco.posoTeatro.dao.EventoDao;
+import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.model.Evento;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
@@ -33,16 +37,35 @@ public class AlterarEventoBean extends PosoBean implements Serializable,  BeanIn
 	}
 	
 	
-	public void altera() {
-		
+	
+	public String altera() {
+		int linhasAfetadas;
 		System.out.println(getMensagem());
 		if(validarDados()) {
-			setMensagem("Dados validados");
-			System.out.println(getMensagem());
-		}else {
-			setMensagem("Não valida nada");
+			linhasAfetadas	= new EventoDao().alterar(getEvento());
+			if(linhasAfetadas != 0) {
+				setMensagem("Alteração realizada com sucesso");					
+				
+				FacesContext.getCurrentInstance().addMessage(
+				        null, new FacesMessage(getMensagem()));
+				 
+				  FacesContext.getCurrentInstance().getExternalContext()
+				      .getFlash().setKeepMessages(true);
+							
+	
+				return "listarEventos?faces-redirect=true";			
+			}
+			else {
+				setMensagem("Alteração não realizada");
+				return iniciarPagina();
+			}
+		}
+		else {
+			
+			return iniciarPagina();
 		}
 			
+		
 	}
 	
 		public boolean validarDados() {
