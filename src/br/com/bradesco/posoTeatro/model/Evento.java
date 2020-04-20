@@ -3,7 +3,8 @@ package br.com.bradesco.posoTeatro.model;
 import br.com.bradesco.posoTeatro.posoUtil.Validacoes;
 
 public class Evento {
-
+	
+	//eduardo funkeiro
 	private int codigo;
 	private String cnpjEmpresa;
 	private int codFuncResp;
