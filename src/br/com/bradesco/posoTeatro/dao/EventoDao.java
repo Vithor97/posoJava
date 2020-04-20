@@ -3,10 +3,12 @@ package br.com.bradesco.posoTeatro.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.com.bradesco.posoTeatro.model.Evento;
 import br.com.bradesco.posoTeatro.model.Pessoa;
+
 
 public class EventoDao extends Evento {
 
@@ -129,4 +131,35 @@ public class EventoDao extends Evento {
 		
 		return rs;				
 	}
+	
+	Connection conn = new ConnectionFactory().getConnection();
+	
+	public boolean excluir(Evento evento) {
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+
+			PreparedStatement smt = conn.prepareStatement("delete from evento where cod_evento = ?");
+
+			smt.setInt(1, evento.getCodigo());
+
+			smt.executeUpdate();
+
+			smt.close();
+			conn.close();
+
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	
 }
