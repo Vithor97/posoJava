@@ -28,7 +28,7 @@
 			<div id="divLogin">
 				<h:panelGrid columns="2">
 				   <p:outputLabel for="codigoFuncionario" value="${msgs.label_login_codigoFuncionario}" />
-				   <p:inputText id="codigoFuncionario" value="#{loginBean.funcionario.codigo}" size="17"/>
+				   <p:inputText id="codigoFuncionario" value="#{loginBean.funcionario.cargo.codigo}" size="17"/>
 					
 				   <p:outputLabel for="senhaFuncionario"  value="${msgs.label_login_senhaFuncionario}" />
 				   <p:password id="senhaFuncionario" value="#{loginBean.funcionario.senha}" size="17"/>
