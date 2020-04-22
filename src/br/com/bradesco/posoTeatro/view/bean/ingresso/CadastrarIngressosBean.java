@@ -32,6 +32,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 	@ManagedProperty("#{cadastrarPessoasBean}")
 	private CadastrarPessoasBean cadastrarPessoasBean;
 	
+	//Cadastrar
 	private Estacionamento estacionamento;
 	private int limiteEstacionamento;
 	private int vagasEstacionamento;
