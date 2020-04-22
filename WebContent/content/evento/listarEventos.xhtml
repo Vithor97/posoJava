@@ -42,7 +42,7 @@
                 <p:column width="12%">
 					<c:facet name="header">#{msgs.label_listarEvento_acoes}</c:facet>
                     <p:commandButton style="width: 100%;" value="#{msgs.label_listarEvento_detalhar}" action="#{listarEventosBean.detalhar(evento)}"></p:commandButton>
- 					<p:commandButton value="Alterar" action="#{detalheEventoBean.alteracao}" style= "margin-top:10px; margin-right:10px;width: 46.25%;"/>
+ 					<p:commandButton value="Alterar" action="#{listarEventosBean.alteracao}" style= "margin-top:10px; margin-right:10px;width: 46.25%;"/>
                 	<p:commandButton value="Excluir" action="#{excluirEventoBean.iniciarPagina}" style="width: 46.25%;" />               
                 </p:column>	
 			</p:dataTable>
