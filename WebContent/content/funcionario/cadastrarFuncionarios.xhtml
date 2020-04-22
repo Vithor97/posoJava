@@ -1,0 +1,56 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">#{msgs.label_cadastrarFuncionários}</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{cadastrarFuncionariosBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="#{cadastrarFuncionariosBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			
+			<h:panelGrid columns="2">
+				
+			   <p:outputLabel for="nomeFuncionario" value="#{msgs.label_cadastrarFuncionarios_nome}" />
+			   <p:inputText id="nomeFuncionario" value="#{cadastrarFuncionariosBean.funcionario.nome}" size="50"/>
+				
+			   <p:outputLabel for="cpfFuncionario"  value="#{msgs.label_cadastrarFuncionarios_cpf}" />
+			   <p:inputMask id="cpfFuncionario" value="#{cadastrarFuncionariosBean.funcionario.cpf}" size="14" mask="999.999.999-99"/>
+
+			   <p:outputLabel for="cargoFuncionario" value="${msgs.label_cadastrarFuncionarios_cargo}"/>
+			   <p:selectOneMenu id="cargoFuncionario" value="${cadastrarFuncionariosBean.funcionario.cargo.nome}" > 
+            	   <c:selectItem itemValue = "${msgs.label_cadastrarFuncionarios_cargo1}" itemLabel ="${msgs.label_cadastrarFuncionarios_cargo1}" />
+            	   <c:selectItem itemValue = "${msgs.label_cadastrarFuncionarios_cargo2}" itemLabel ="${msgs.label_cadastrarFuncionarios_cargo2}" /> 
+               </p:selectOneMenu>  
+			    
+			
+			   <p:outputLabel for="dataNascFuncionario" value="#{msgs.label_cadastrarFuncionarios_dataNascimento}" />
+			   <p:calendar id="dataNascFuncionario" value="#{cadastrarFuncionariosBean.funcionario.dataNascimento}" pattern="dd/MM/yyyy" mask="true" showOn="button" />
+			
+	
+			   <p:outputLabel for="telefoneFuncionario" value="#{msgs.label_cadastrarFuncionarios_telefone}" />
+			   <p:inputMask id="telefoneFuncionario" value="#{cadastrarFuncionariosBean.funcionario.telefone}" size="15" mask="(99) 9999-9999"/>
+			
+
+			   <p:outputLabel for="emailFuncionario" value="#{msgs.label_cadastrarFuncionarios_email}" />
+			   <p:inputText id="emailFuncionario" value="#{cadastrarFuncionariosBean.funcionario.email}" size="50"/>
+		
+		
+			   <p:commandButton value="#{msgs.label_cadastrarFuncionarios_salvar}"  action="#{cadastrarFuncionariosBean.cadastrar}" update="dlg1" oncomplete="PF('dlg1').show();"/>
+			
+		    </h:panelGrid>
+			
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

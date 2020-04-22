@@ -3,7 +3,10 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd"
 	version="2.2">
-
+	
+	<lifecycle>
+		<phase-listener>br.com.bradesco.posoTeatro.posoUtil.Autorizador</phase-listener>
+	</lifecycle>
 	<application>
 		<resource-bundle>
 			<base-name>br.com.bradesco.posoTeatro.view.properties.messages</base-name>
@@ -13,31 +16,125 @@
 
 	<navigation-rule>
 		<from-view-id>*</from-view-id>
-
+		
 		<navigation-case>
 			<from-outcome>index</from-outcome>
 			<to-view-id>/content/index.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>login</from-outcome>
+			<to-view-id>/content/login.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>perfil</from-outcome>
+			<to-view-id>/content/perfil/perfilFuncionario.xhtml</to-view-id>
+			<redirect/>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>index</from-outcome>
+			<to-view-id>/content/index.xhtml</to-view-id>
+			
 		</navigation-case>
 
 		<navigation-case>
 			<from-outcome>cadastrarPessoas</from-outcome>
 			<to-view-id>/content/pessoas/cadastrarPessoas.xhtml</to-view-id>
 		</navigation-case>
-		
+
 		<navigation-case>
 			<from-outcome>consultarPessoas</from-outcome>
 			<to-view-id>/content/pessoas/consultarPessoas.xhtml</to-view-id>
 		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>detalhePessoas</from-outcome>
+			<to-view-id>/content/pessoas/detalheConsultaPessoa.xhtml</to-view-id>
+		</navigation-case>
 		
+		<navigation-case>
+			<from-outcome>alteraPessoas</from-outcome>
+			<to-view-id>/content/pessoas/alteraPessoa.xhtml</to-view-id>
+		</navigation-case>
 		
+		<navigation-case>
+			<from-outcome>cadastrarEvento</from-outcome>
+			<to-view-id>/content/evento/cadastrarEvento.xhtml</to-view-id>
+		</navigation-case>
+
 		<navigation-case>
 			<from-outcome>listarEventos</from-outcome>
 			<to-view-id>/content/evento/listarEventos.xhtml</to-view-id>
 		</navigation-case>
-		
+
 		<navigation-case>
 			<from-outcome>detalheEvento</from-outcome>
 			<to-view-id>/content/evento/detalheEvento.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>alterarEvento</from-outcome>
+			<to-view-id>/content/evento/alterarEvento.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>cadastrarFuncionario</from-outcome>
+			<to-view-id>/content/funcionario/cadastrarFuncionarios.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>consultarFuncionario</from-outcome>
+			<to-view-id>/content/funcionario/consultarFuncionario.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+            <from-outcome>consultarFuncionarioDetalhe</from-outcome>
+            <to-view-id>/content/funcionario/funcionarioDetalhe.xhtml</to-view-id>
+        </navigation-case>
+        
+		<navigation-case>
+			<from-outcome>consultarIngressos</from-outcome>
+			<to-view-id>/content/ingressos/consultarIngressos.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>consultarIngressosDetalhe</from-outcome>
+			<to-view-id>/content/ingressos/ingressosDetalhe.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>cadastrarIngressos</from-outcome>
+			<to-view-id>/content/ingressos/cadastrarIngressos.xhtml</to-view-id>
+			<redirect></redirect>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>consultaSessao</from-outcome>
+			<to-view-id>/content/sessao/consultaSessao.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>consultaSessaoDetalhe</from-outcome>
+			<to-view-id>/content/sessao/sessaoDetalhe.xhtml</to-view-id>
+		</navigation-case>
+
+		<navigation-case>
+			<from-outcome>cadastrarSessao</from-outcome>
+			<to-view-id>/content/sessao/cadastrarSessao.xhtml</to-view-id>
+		</navigation-case>
+				
+		<navigation-case>
+			<from-outcome>cadastrarEmpresas</from-outcome>
+			<to-view-id>/content/empresaResponsavel/cadastrarEmpresaResp.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>alterarEmpresas</from-outcome>
+			<to-view-id>/content/empresaResponsavel/alterarEmpresaResp.xhtml</to-view-id>
 		</navigation-case>
 	</navigation-rule>
 </faces-config>

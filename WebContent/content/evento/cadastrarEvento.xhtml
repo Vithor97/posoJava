@@ -1,0 +1,70 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">#{msgs.label_cadastrarEventos}</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{cadastrarEventoBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="${cadastrarEventoBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			<h:panelGrid columns="3">
+				<p:outputLabel for="cnpjEmpresa" value="${msgs.label_evento_cnpjEmpresa}" />
+				<p:inputMask id="cnpjEmpresa" value="${cadastrarEventoBean.evento.empresaResponsavel.cnpj}" size="18" mask="99.999.999/9999-99">
+					<p:ajax event="blur" listener="#{cadastrarEventoBean.retornaCnpj}" update="cnpj"/>
+				</p:inputMask>
+				<p:outputLabel id="cnpj"  value="${cadastrarEventoBean.evento.empresaResponsavel.nome}" />
+				<p:outputLabel for="cpfFunc"  value="${msgs.label_evento_cpfFunc}" />
+				<p:inputMask id="cpfFunc" value="${cadastrarEventoBean.evento.funcionario.cpf}" size="14" mask="999.999.999-99">
+					<p:ajax event="blur" listener="#{cadastrarEventoBean.retornaCpf}" update="cpf"/>
+				</p:inputMask>
+				<p:outputLabel id="cpf" value="${cadastrarEventoBean.evento.funcionario.nome}" />
+			</h:panelGrid>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="descEvento" value="${msgs.label_evento_descEvento}" />
+				<p:inputText id="descEvento" value="${cadastrarEventoBean.evento.descricao}" size="50"/>
+				
+				<p:outputLabel for="tipoEvento" value="${msgs.label_evento_tipoEvento}"/>
+				<p:selectOneMenu id="tipoEvento" value="${cadastrarEventoBean.evento.tipoEvento.nome}"> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_tipo1}" itemLabel ="${msgs.label_evento_tipo1}" />
+            	    <c:selectItem itemValue = "${msgs.label_evento_tipo2}" itemLabel ="${msgs.label_evento_tipo2}" /> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_tipo3}" itemLabel ="${msgs.label_evento_tipo3}" /> 
+            	</p:selectOneMenu> 		
+				
+				<p:outputLabel for="generoEvento" value="${msgs.label_evento_generoEvento}"/>
+				<p:selectOneMenu id="generoEvento" value="${cadastrarEventoBean.evento.genero.nome}"> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_genero1}" itemLabel ="${msgs.label_evento_genero1}" />
+            	    <c:selectItem itemValue = "${msgs.label_evento_genero2}" itemLabel ="${msgs.label_evento_genero2}" /> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_genero3}" itemLabel ="${msgs.label_evento_genero3}" /> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_genero4}" itemLabel ="${msgs.label_evento_genero4}" /> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_genero5}" itemLabel ="${msgs.label_evento_genero5}" /> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_genero6}" itemLabel ="${msgs.label_evento_genero6}" /> 
+            	    <c:selectItem itemValue = "${msgs.label_evento_genero7}" itemLabel ="${msgs.label_evento_genero7}" />  
+            	</p:selectOneMenu>  
+			</h:panelGrid>
+			<h:panelGrid columns="4">
+				<p:outputLabel for="pessoaEvento" value="${msgs.label_evento_pessoas}"/>
+				<p:inputMask id="pessoaEvento" value="${cadastrarEventoBean.evento.pessoa.cpf}" size="14" mask="999.999.999-99"/>
+				<p:commandButton value="+" action="#{cadastrarEventoBean.cpfPessoaEvento}" update="@form" />
+				<p:outputLabel id="listaPessoasEvento" value="${cadastrarEventoBean.evento.pessoa.nome}"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<p:outputLabel for="listaPessoasEvento" value="${cadastrarEventoBean.mensagem}" styleClass="erro"/>
+			</h:panelGrid>
+			<h:panelGrid columns="1">
+				<p:commandButton value="Salvar" action="${cadastrarEventoBean.cadastrar}" update="dlg1" oncomplete="PF('dlg1').show();"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

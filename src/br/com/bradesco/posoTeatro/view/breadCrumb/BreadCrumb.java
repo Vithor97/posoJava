@@ -20,8 +20,10 @@ public class BreadCrumb {
 		
 		for (String string : titulos) {
 			item = new DefaultMenuItem(string);
-			if(!urls.get(i).equals("") && i != titulos.size() - 1)
-				item.setUrl(getFacesUrl(urls.get(i)));
+			item.setDisabled(true);
+			item.setStyle("opacity: 1");
+//			if(!urls.get(i).equals("") && i != titulos.size() - 1)
+//				item.setUrl(getFacesUrl(urls.get(i)));
 			menuModel.addElement(item);
 			i++;
 		}

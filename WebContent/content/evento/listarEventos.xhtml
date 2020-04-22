@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<ui:define name="titulo">Listar Eventos</ui:define>
+	<ui:define name="titulo">#{msgs.label_consultarEventos}</ui:define>
 	
 	<ui:define name="breadCrumb">
 		<p:breadCrumb styleClass="breadCrumb" model="#{listarEventosBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
@@ -18,20 +18,39 @@
 			    <br/>
 				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
 			</p:dialog>
-			<p:dataTable value="#{listarEventosBean.eventos}" var="evento">
+			
+			<h:panelGrid columns="3" style="margin-bottom: 1%">
+				<p:outputLabel value="Pesquisar: " style="font-weight: 700;color: #333;"/>
+				<p:inputText size="50" placeholder="Digite o nome do evento" value="#{listarEventosBean.pesquisaEvento}" />
+				<p:commandButton icon="pi pi-search" action="#{listarEventosBean.pesquisarEventos}" update="eventos"/>			
+			</h:panelGrid>
+
+			
+			<p:dataTable value="#{listarEventosBean.eventos}" id="eventos" var="evento" rows="10" emptyMessage="#{msgs.msg_listarEvento_eventos_empty}"
+					paginator="true"
+					paginatorPosition="top"
+	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} eventos">
 				<p:column width="5%">
-					<c:facet name="header">Código</c:facet>
+					<c:facet name="header">#{msgs.label_listarEvento_codigo}</c:facet>
                 		<p:outputLabel style="float: right;" value="#{evento.codigo}"></p:outputLabel>  
                 </p:column>
 				<p:column>
-					<c:facet name="header">Nome</c:facet>
-                    <p:outputLabel value="#{evento.descEvento}"></p:outputLabel> 
+					<c:facet name="header">#{msgs.label_listarEvento_descricao}</c:facet>
+                    <p:outputLabel value="#{evento.descricao}"></p:outputLabel> 
                 </p:column>
-                <p:column width="10%">
-					<c:facet name="header">Ações</c:facet>
-                    <p:commandButton style="width: 100%;" value="Detalhar" action="#{listarEventosBean.detalhar(evento)}"></p:commandButton>
+                <p:column width="12%">
+					<c:facet name="header">#{msgs.label_listarEvento_acoes}</c:facet>
+                    <p:commandButton style="width: 100%;" value="#{msgs.label_listarEvento_detalhar}" action="#{listarEventosBean.detalhar(evento)}"></p:commandButton>
+ 					<p:commandButton value="Alterar" action="#{detalheEventoBean.alteracao}" style= "margin-top:10px; margin-right:10px;width: 46.25%;"/>
+                	<p:commandButton value="Excluir" action="#{excluirEventoBean.iniciarPagina}" style="width: 46.25%;" />               
                 </p:column>	
 			</p:dataTable>
+			
+			<p:commandButton value="#{msgs.label_listarEvento_voltar}"
+				action="#{listarEventosBean.voltar}" style="margin-top:10px" />
+				
+				
 		</h:form>
 	</ui:define>
 	

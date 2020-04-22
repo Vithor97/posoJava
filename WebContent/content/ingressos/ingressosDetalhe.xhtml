@@ -1,0 +1,70 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Consultar ingressos</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{ingressosDetalheBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id = "form">
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${ingressosDetalheBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			
+			<h:panelGrid cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="codIngresso" value="${msgs.label_ingressos_codigoIngresso}" /><br/>
+					<p:inputText id="codIngresso" value="${ingressosDetalheBean.ingresso.codigoIngresso}" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+					
+			<h:panelGrid columns="3" cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="codSessao" value="${msgs.label_ingressos_codigoSessao}" /><br/>
+					<p:inputText id="codSessao" value="${ingressosDetalheBean.ingresso.sessao.codigo}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="dataSessao" value="${msgs.label_sessao_dataSessao}" /><br/><!-- ##########   IREI PEGAR AS LABELS DA SESSÃO DEPOIS ############-->
+					<p:inputText id="dataSessao" value="${ingressosDetalheBean.ingresso.sessao.dataSessao}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="horaSessao" value="${msgs.label_sessao_horaSessao}" /><br/>
+					<p:inputText id="horaSessao" value="${ingressosDetalheBean.hora}" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+				
+			<h:panelGrid columns="2" cellspacing="10">	
+				<h:panelGroup>
+					<p:outputLabel for="nomePessoa" value="${msgs.label_ingressos_nomePessoa}" /><br/>
+					<p:inputText id="nomePessoa" value="${ingressosDetalheBean.ingresso.pessoa.nome}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="cpfPessoa" value="${msgs.label_ingressos_cpfPessoa}" /><br/>
+					<p:inputMask id="cpfPessoa" value="${ingressosDetalheBean.ingresso.pessoa.cpf}" disabled="true" mask="999.999.999-99"/>
+				</h:panelGroup>
+			</h:panelGrid>
+				
+			<h:panelGrid columns="2" cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="codPoltrona" value="${msgs.label_ingressos_codigoPoltrona}" /><br/>
+					<p:inputText id="codPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.codigo}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="tipoPoltrona" value="${msgs.label_ingressos_tipoPoltrona}" /><br/>
+					<p:inputText id="tipoPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.tipoPoltrona}" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>	
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

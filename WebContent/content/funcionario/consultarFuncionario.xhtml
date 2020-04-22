@@ -1,0 +1,31 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">#{msgs.label_consultarFuncionários}</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{consultarFuncionarioBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id = "form">
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${consultarFuncionarioBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="codFuncionario" value="${msgs.label_funcionario_codigoFuncionario}" />
+				<p:inputText id="codFuncionario" value="${consultarFuncionarioBean.funcionario.codigo}"/>
+				<p:commandButton value="${msgs.button_consultar}" action="${consultarFuncionarioBean.consultar}" update="form"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

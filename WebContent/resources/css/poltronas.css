@@ -1,0 +1,62 @@
+body .ui-datagrid .ui-datagrid-content{
+	padding: 0px;
+}
+
+
+
+#dados:dlgSessao{
+	   position: absolute;
+	
+}
+
+.poltronas{
+	text-align: center;
+}
+
+.poltronas #poltrona1,
+.poltronas #poltrona2,
+.poltronas #poltrona3,
+.poltronas #poltrona4,
+.poltronas #poltrona5{
+	padding: 1.9px;
+    margin: 0px;
+    cursor: pointer;
+    width: 35px;
+    font-size: 90%;
+}
+
+.poltronas #poltrona1:HOVER,
+.poltronas #poltrona2:HOVER,
+.poltronas #poltrona3:HOVER,
+.poltronas #poltrona4:HOVER,
+.poltronas #poltrona5:HOVER{
+	background-color: #e6e6e6;
+}
+
+
+.poltronas img{
+	width: 22px;
+}
+
+body .ui-widget.tituloPoltrona, 
+body .ui-widget:not(.pi).tituloPoltrona{
+	font-size:100%;
+}
+
+body .ui-widget .ui-widget.tituloPoltrona, 
+body .ui-widget .ui-widget:not(.pi).tituloPoltrona{
+	font-size: 125%;
+}
+
+body a label{
+	color: #000;
+}
+
+.setor {
+	border: 1px solid #c8c8c8;
+	background-color: #f4f4f4;
+	color: #333;
+	padding: .571em 1em .571em 1em;
+	font-weight: 700;
+	text-align: center;
+}

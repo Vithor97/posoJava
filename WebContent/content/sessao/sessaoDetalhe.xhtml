@@ -1,0 +1,136 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">Consultar sessão</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb"
+			model="#{consultaSessaoDetalheBean.menuModel}"
+			lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+
+		<h:form id="form">
+			<p:autoUpdate></p:autoUpdate>
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true"
+				minHeight="40" width="300">
+				<br />
+				<h:outputText value="${consultaSessaoDetalheBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK"
+					onclick="PF('dlg1').hide()" />
+			</p:dialog>
+			<p:dialog header="Alterar" id="dlg2" widgetVar="dlg2" modal="true"
+				minHeight="40" width="300">
+				<br />
+				<h:outputText value="${alterarSessaoBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK"
+					onclick="PF('dlg2').hide()" />
+			</p:dialog>
+
+			<h:panelGrid cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="codSessao"
+						value="${msgs.label_sessao_codSessao}" />
+					<br />
+					<p:inputNumber id="codSessao" minValue="1"
+						value="${consultaSessaoDetalheBean.sessao.codigo}"
+						decimalPlaces="0"
+						disabled="true" />
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<h:panelGrid columns="3" cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="codEvento"
+						value="${msgs.label_sessao_codEvento}" />
+					<br />
+					<p:inputNumber id="codEvento" minValue="1"
+						value="${consultaSessaoDetalheBean.sessao.evento.codigo}"
+						decimalPlaces="0"
+						disabled="${consultaSessaoDetalheBean.desabilitado}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="dataSessao" value="${msgs.label_cadast_sess_data_sess}" />
+					<br />
+					<!-- ##########   IREI PEGAR AS LABELS DA SESSÃO DEPOIS ############-->
+					<p:datePicker id="dataSessao"
+						value="${consultaSessaoDetalheBean.sessao.dia}"
+						mindate="${consultaSessaoDetalheBean.getDataAtual()}"
+						locale="pt_BR" showIcon="true"
+						disabled="${consultaSessaoDetalheBean.desabilitado}"
+						disabledDays="${cadastrarSessaoBean.getDataAtualList()}" />
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="horarioSessao" value="${msgs.label_cadast_sess_hora_sess}" />
+					<br />
+					<p:column colspan="3" id="horarioSessao">
+						<p:spinner id="horaSessao"
+							value="${consultaSessaoDetalheBean.sessao.horario.hora}" max="23"
+							min="0" size="2"
+							disabled="${consultaSessaoDetalheBean.desabilitado}" />
+						<p:outputLabel value=" : " />
+						<p:spinner id="minutosSessao"
+							value="${consultaSessaoDetalheBean.sessao.horario.minutos}"
+							max="59" min="0" size="2"
+							disabled="${consultaSessaoDetalheBean.desabilitado}" />
+					</p:column>
+				</h:panelGroup>
+			</h:panelGrid>
+
+			<h:panelGrid columns="2" width="100%">
+				<p:column style="float: left;">
+					<h:panelGrid cellspacing="10"
+						rendered="${consultaSessaoDetalheBean.desabilitado}">
+						<p:commandButton id="btnAlterar" update="form"
+							action="${consultaSessaoDetalheBean.altera()}"
+							value="${msgs.label_altera_sess}">
+						</p:commandButton>
+					</h:panelGrid>
+		
+					<h:panelGrid cellspacing="10" columns="2"
+						rendered="${!consultaSessaoDetalheBean.desabilitado}">
+						<p:column>
+							<p:commandButton id="btnSalvar" update="form"
+								action="${consultaSessaoDetalheBean.salvar()}"
+								value="${msgs.label_altera_sess_salvar}">
+							</p:commandButton>
+						</p:column>
+						<p:column>
+							<p:commandButton id="btnCancelar" update="form"
+								action="${consultaSessaoDetalheBean.cancelar()}"
+								value="${msgs.label_altera_sess_cancelar}" immediate="true">
+							</p:commandButton>
+						</p:column>
+					</h:panelGrid>
+				</p:column>
+				<p:column>
+					<h:panelGrid cellspacing="10" style="float: right;">
+						<p:commandButton id="btnExcluir" icon="pi pi-trash"
+							action="${consultaSessaoDetalheBean.exclui()}"
+							value="${msgs.label_altera_sess_excluir}" 
+							immediate="true" style="float: right;">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:column>
+			</h:panelGrid>
+			<h:panelGrid cellspacing="14">
+				<p:column>
+					<p:commandButton id="btnVoltar"
+						action="${consultaSessaoDetalheBean.voltar()}"
+						value="${msgs.label_altera_sess_voltar}" 
+						immediate="true">
+					</p:commandButton>
+				</p:column>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

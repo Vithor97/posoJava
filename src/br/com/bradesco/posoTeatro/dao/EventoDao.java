@@ -3,9 +3,13 @@ package br.com.bradesco.posoTeatro.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.faces.context.FacesContext;
+
 import br.com.bradesco.posoTeatro.model.Evento;
+import br.com.bradesco.posoTeatro.model.Funcionario;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 
 public class EventoDao extends Evento {
@@ -13,18 +17,41 @@ public class EventoDao extends Evento {
 	public String cadastrar(Evento evento) {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement smt0 = conn.prepareStatement("select * from funcionario where cpf_func = '"
+					+ evento.getFuncionario().getCpf().replace(".", "").replace("-", "") + "'");
+			ResultSet rs0 = smt0.executeQuery();
+			if (rs0.next()) {
+				evento.getFuncionario().setCodigo(Integer.parseInt(rs0.getString("cod_func")));
+			}
+			rs0.close();
+			smt0.close();
+			PreparedStatement smt1 = conn.prepareStatement("select * from empresa_responsavel where cnpj_empresa = '"
+					+ evento.getEmpresaResponsavel().getCnpj().replace(".", "").replace("-", "").replace("/", "") + "'");
+			ResultSet rs1 = smt1.executeQuery();
+			if (rs1.next()) {
+				evento.getEmpresaResponsavel().setCodigo(Integer.parseInt(rs1.getString("cod_empresa")));
+			}
+			rs1.close();
+			smt1.close();
+			PreparedStatement smt2 = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?)");
 
-			PreparedStatement smt = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?)");
+			smt2.setInt(1, evento.getEmpresaResponsavel().getCodigo());
+			smt2.setInt(4, evento.getTipoEvento().getCodigo());
+			smt2.setInt(5, evento.getGenero().getCodigo());
+			smt2.setInt(2, evento.getFuncionario().getCodigo());
+			smt2.setString(3, evento.getDescricao());
 
-			smt.setString(1, evento.getCnpjEmpresa());
-			smt.setInt(2, evento.getCodFuncResp());
-			smt.setString(3, evento.getDescEvento());
-			smt.setString(4, evento.getTipoEvento());
-			smt.setString(5, evento.getGeneroEvento());
 
-			smt.executeUpdate();
-
-			smt.close();
+			smt2.executeUpdate();
+			smt2.close();
+			PreparedStatement smt3 = conn.prepareStatement("select top 1 * FROM evento order by cod_evento desc");
+			ResultSet rs2 = smt3.executeQuery();
+			if (rs2.next()) {
+				evento.setCodigo(Integer.parseInt(rs2.getString("cod_evento")));
+			}
+			rs2.close();
+			smt3.close();
+			
 			conn.close();
 
 			return "Evento cadastrado.";
@@ -35,17 +62,131 @@ public class EventoDao extends Evento {
 		}
 	}
 
-	public ArrayList<Evento> listar() {
+	public String voltarCnpj(Evento evento) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement smt0;
+		try {
+			smt0 = conn.prepareStatement("select * from empresa_responsavel where cnpj_empresa = '"
+					+ evento.getEmpresaResponsavel().getCnpj().replace(".", "").replace("-", "").replace("/", "") + "'");
+			ResultSet rs0 = smt0.executeQuery();
+			if (rs0.next()) {
+				evento.getEmpresaResponsavel().setNome(rs0.getString("nomef_empresa"));
+			}else {
+				evento.getEmpresaResponsavel().setNome("CNPJ nao encontrado na base de dados.");
+			}
+			rs0.close();
+			smt0.close();
+			conn.close();
+			return "CNPJ encontrado.";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "CNPJ nao encontrado.";
+		}
+	}
+
+	public String voltarCpf(Evento evento) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement smt0;
+		try {
+			smt0 = conn.prepareStatement("select * from funcionario where cpf_func = '"
+					+ evento.getFuncionario().getCpf().replace(".", "").replace("-", "").replace("/", "") + "'");
+			ResultSet rs0 = smt0.executeQuery();
+			if (rs0.next()) {
+				evento.getFuncionario().setNome(rs0.getString("nome_func"));
+			}else {
+				evento.getFuncionario().setNome("CPF nao encontrado na base de dados.");
+			}
+			rs0.close();
+			smt0.close();
+			conn.close();
+			return "CPF encontrado.";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "CPF nao encontrado.";
+		}
+	}
+	
+	public String voltarPessoaEvento(Evento evento) {
+		Connection conn = new ConnectionFactory().getConnection();
+		PreparedStatement smt0;
+		try {
+			smt0 = conn.prepareStatement("select * from pessoa where cpf_pessoa = '"
+					+ evento.getPessoa().getCpf().replace(".", "").replace("-", "").replace("/", "") + "'");
+			ResultSet rs0 = smt0.executeQuery();
+			if (rs0.next()) {
+				evento.getPessoa().setNome(rs0.getString("nome_pessoa"));
+				evento.getListaCpfPessoa().add(evento.getPessoa().getCpf().replace(".", "").replace("-", "").replace("/", ""));
+			}else {
+				evento.getPessoa().setNome("*");
+			}
+			rs0.close();
+			smt0.close();
+			conn.close();
+			return "CPF encontrado.";
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return "CPF nao encontrado.";
+		}
+	}
+	
+	public String cadastrarPessoaEvento(Evento evento) {
+		try {
+			PreparedStatement smt0;
+			Connection conn = new ConnectionFactory().getConnection();
+			for (int i = 0; i < evento.getListaCpfPessoa().size(); i++) {
+				String cpfPessoa = evento.getListaCpfPessoa().get(i);
+				smt0 = conn.prepareStatement("select * from pessoa where cpf_pessoa = '"+cpfPessoa+"'");
+				ResultSet rs0 = smt0.executeQuery();
+				if (rs0.next()) {
+					evento.getPessoa().setCodigo(Integer.parseInt(rs0.getString("cod_pessoa")));
+				}
+					smt0.close();
+					PreparedStatement smt1 = conn.prepareStatement("insert into pessoa_evento values (?, ?)");
+
+					smt1.setInt(1, evento.getPessoa().getCodigo());
+					smt1.setInt(2, evento.getCodigo());
+					smt1.executeUpdate();
+					smt1.close();	
+			}
+			
+			conn.close();
+
+			return "Evento cadastrado.";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Erro no cadastro de Elenco";
+		}
+	}
+	
+	
+	public ArrayList<Evento> listar(String nome) {
 
 		ArrayList<Evento> eventos = new ArrayList<Evento>();
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement smt = conn.prepareStatement("select cod_evento, desc_evento from evento");
+			
+			FacesContext context = FacesContext.getCurrentInstance();
+			Funcionario funcionario = (Funcionario) context.getExternalContext().getSessionMap().get("funcionarioLogado");						
+			String validacao = "where ";
+	
+			if (funcionario.getCargo().getCodigo() == 2) {
+				if (!nome.trim().isEmpty()) {
+					validacao += "desc_evento like '" + nome + "%' and ";
+				}
+				validacao += " cod_func = " + funcionario.getCodigo();
+			} else if (!nome.trim().isEmpty()) {
+				validacao += "desc_evento like '" + nome + "%'";
+			}else {
+				validacao = "";
+			}
+
+			PreparedStatement smt = conn.prepareStatement("select cod_evento, desc_evento from evento " + validacao);
 			ResultSet rs = smt.executeQuery();
 			while (rs.next()) {
 				Evento evento = new Evento();
 				evento.setCodigo(rs.getInt("cod_evento"));
-				evento.setDescEvento(rs.getString("desc_evento"));
+				evento.setDescricao(rs.getString("desc_evento"));
 				eventos.add(evento);
 			}
 			rs.close();
@@ -58,7 +199,7 @@ public class EventoDao extends Evento {
 		return eventos;
 	}
 	
-	public ArrayList<Pessoa> listarPessoas(Evento evento) {
+	public ArrayList<Pessoa> listarPessoasDoEvento(Evento evento) {
 
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
 		try {
@@ -89,9 +230,15 @@ public class EventoDao extends Evento {
 			PreparedStatement smt = conn.prepareStatement("select * from evento where cod_evento = " + evento.getCodigo());
 			ResultSet rs = smt.executeQuery();
 			if (rs.next()) {
-				evento.setDescEvento(rs.getString("desc_evento"));
-				evento.setGeneroEvento(rs.getString("genr_evento"));
-				evento.setTipoEvento(rs.getString("tipo_evento"));
+				evento.setDescricao(rs.getString("desc_evento"));
+				evento.getFuncionario().setCodigo(rs.getInt("cod_func"));
+				evento.setFuncionario(new FuncionarioDao().consultarFuncionario(evento.getFuncionario()));
+				evento.getEmpresaResponsavel().setCodigo(rs.getInt("cod_empresa"));
+				evento.setEmpresaResponsavel(new EmpresaDao().consultar(evento.getEmpresaResponsavel()));
+				evento.getGenero().setCodigo(rs.getInt("cod_genero"));
+				evento.getTipoEvento().setCodigo(rs.getInt("cod_tipo"));
+				evento.setGenero(new GeneroDao().consultar(evento.getGenero()));
+				evento.setTipoEvento(new TipoEventoDao().consultar(evento.getTipoEvento()));
 			}
 			rs.close();
 			smt.close();
@@ -101,5 +248,60 @@ public class EventoDao extends Evento {
 		}
 
 		return evento;
+	}
+	
+	public int alterar(Evento eventoAltera) {
+		int rs = 0;
+		
+		try {
+			
+			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement smt = conn.prepareStatement("Update evento set desc_evento = ?,  tipo_evento = ?, genr_evento = ?, cnpj_empresa = ?, cod_func_resp = ?");
+			
+			smt.setString(1, eventoAltera.getDescricao());
+			smt.setInt(2, eventoAltera.getTipoEvento().getCodigo());
+			smt.setInt(3, eventoAltera.getGenero().getCodigo());
+			smt.setString(4, eventoAltera.getEmpresaResponsavel().getCnpj());
+			smt.setInt(5, eventoAltera.getFuncionario().getCodigo());
+
+			rs = smt.executeUpdate();
+			
+			
+			System.out.println("rows affected " + rs);
+			
+		} catch (Exception e) {
+			System.out.println("dentro do catch: " + e.getMessage());
+		}
+		
+		return rs;				
+	}
+	
+	Connection conn = new ConnectionFactory().getConnection();
+	
+	public boolean excluir(Evento evento) {
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+
+			PreparedStatement smt = conn.prepareStatement("delete from evento where cod_evento = ?");
+
+			smt.setInt(1, evento.getCodigo());
+
+			smt.executeUpdate();
+
+			smt.close();
+			conn.close();
+
+			return true;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 }

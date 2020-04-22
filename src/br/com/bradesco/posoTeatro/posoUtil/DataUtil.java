@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DataUtil {
+	@SuppressWarnings("deprecation")
 	public boolean validarIdade(int idade, Date data) {
 		Date hoje = new Date();
 		if (hoje.getYear() - data.getYear() < idade) {
@@ -21,17 +22,15 @@ public class DataUtil {
 		return true;
 	}
 	
-	public Date converteData(Date data, String pattern) {
-		
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		String date = simpleDateFormat.format(data);
+	//transforma a data em dd/MM/yyyy
+	public static String transformaData(String dataEntrada) {
+		SimpleDateFormat in= new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat out = new SimpleDateFormat("dd/MM/yyyy");
 		try {
-			data = simpleDateFormat.parse(date);
-			
+			return out.format(in.parse(dataEntrada));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		
-		return data;
+		return null;
 	}
 }

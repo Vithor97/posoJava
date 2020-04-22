@@ -1,0 +1,33 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">#{msgs.label_cadastrarEmpresas}</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{cadastrarEmpresaBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="${cadastrarEmpresaBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="cnpjEmpresa" value="${msgs.label_cnpj_empresa}" />
+				<p:inputMask id="cnpjEmpresa" value="${cadastrarEmpresaBean.empresaResponsavel.cnpj}" size="18" mask="99.999.999/9999-99"/>
+				
+				<p:outputLabel for="nomeEmpresa" value="${msgs.label_nome_empresa}" /> 
+				<p:inputText id="nomeEmpresa" value="${cadastrarEmpresaBean.empresaResponsavel.nome}"/>
+				
+				<p:commandButton value="Salvar" action="${cadastrarEmpresaBean.cadastrar}" update="dlg1" oncomplete="PF('dlg1').show();"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

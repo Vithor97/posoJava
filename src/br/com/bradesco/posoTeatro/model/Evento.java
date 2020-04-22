@@ -1,15 +1,40 @@
 package br.com.bradesco.posoTeatro.model;
 
-import br.com.bradesco.posoTeatro.posoUtil.Validacoes;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Evento {
 
 	private int codigo;
-	private String cnpjEmpresa;
-	private int codFuncResp;
-	private String descEvento;
-	private String tipoEvento;
-	private String generoEvento;
+	private Funcionario funcionario;
+	private EmpresaResponsavel empresaResponsavel;
+	private Pessoa pessoa;
+	private String descricao;
+	private TipoEvento tipoEvento;
+	private Genero genero;
+	
+
+
+	private List<String> pessoaEvento = new ArrayList<String>();
+	private List<String> listaCpfPessoa = new ArrayList<String>();
+	
+	
+
+	public Evento() {
+		setFuncionario(new Funcionario());
+		setEmpresaResponsavel(new EmpresaResponsavel());
+		setPessoa(new Pessoa());
+		setTipoEvento(new TipoEvento());
+		setGenero(new Genero());
+	}
+
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
 	public int getCodigo() {
 		return codigo;
@@ -19,44 +44,64 @@ public class Evento {
 		this.codigo = codigo;
 	}
 
-	public String getCnpjEmpresa() {
-		return cnpjEmpresa;
+	public Pessoa getPessoa() {
+		return pessoa;
 	}
 
-	public void setCnpjEmpresa(String cnpjEmpresa) {
-		this.cnpjEmpresa = cnpjEmpresa;
+	public void setPessoa(Pessoa pessoa) {
+		this.pessoa = pessoa;
 	}
 
-	public int getCodFuncResp() {
-		return codFuncResp;
+	public String getDescricao() {
+		return descricao;
 	}
 
-	public void setCodFuncResp(int codFuncResp) {
-		this.codFuncResp = codFuncResp;
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
-	public String getDescEvento() {
-		return descEvento;
-	}
-
-	public void setDescEvento(String descEvento) {
-		this.descEvento = descEvento;
-	}
-
-	public String getTipoEvento() {
+	public TipoEvento getTipoEvento() {
 		return tipoEvento;
 	}
 
-	public void setTipoEvento(String tipoEvento) {
+	public void setTipoEvento(TipoEvento tipoEvento) {
 		this.tipoEvento = tipoEvento;
 	}
 
-	public String getGeneroEvento() {
-		return generoEvento;
+	public Genero getGenero() {
+		return genero;
 	}
 
-	public void setGeneroEvento(String generoEvento) {
-		this.generoEvento = generoEvento;
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
 
+	public EmpresaResponsavel getEmpresaResponsavel() {
+		return empresaResponsavel;
+	}
+
+	public void setEmpresaResponsavel(EmpresaResponsavel empresaResponsavel) {
+		this.empresaResponsavel = empresaResponsavel;
+	}
+
+	public List<String> getPessoaEvento() {
+		return pessoaEvento;
+	}
+
+	public void setPessoaEvento(List<String> pessoaEvento) {
+		this.pessoaEvento = pessoaEvento;
+	}
+
+	public List<String> getListaCpfPessoa() {
+		return listaCpfPessoa;
+	}
+
+	public void setListaCpfPessoa(List<String> listaCpfPessoa) {
+		this.listaCpfPessoa = listaCpfPessoa;
+	}
+
+	
+	
+	
+	
 }

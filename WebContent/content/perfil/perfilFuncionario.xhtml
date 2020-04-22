@@ -1,0 +1,85 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Perfil</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{perfilFuncionarioBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id = "formPerfil">
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${perfilFuncionarioBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			
+			<p:dialog header="Alterar senha" id="modalAlterarSenha" widgetVar="modalAlterarSenha" modal="true" minHeight="40" width="350">
+				<h:panelGrid columns="1">
+					<h:panelGroup>
+						<p:outputLabel for="senhaAlteracaoFuncionario"  value="${msgs.label_perfil_senhaAtual}" /><br/>
+						<p:password id="senhaAlteracaoFuncionario" value="#{perfilFuncionarioBean.senhaAtual}" size="17"/>
+					</h:panelGroup>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:panelGroup>
+						<p:outputLabel for="novaSenha"  value="${msgs.label_perfil_senhaNova}" />
+						<p:password id="novaSenha" value="#{perfilFuncionarioBean.novaSenha}" maxlength="20" maxsize="17"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="confirmarNovaSenha"  value="${msgs.label_perfil_confirmarSenhaNova}" />
+						<p:password id="confirmarNovaSenha" value="#{perfilFuncionarioBean.confirmarNovaSenha}" maxlength="20" size="17"/>
+					</h:panelGroup>
+				</h:panelGrid>
+				<p:commandButton style="float: left;" value="${msgs.btn_perfil_mudarSenha}" update="formPerfil" action="#{perfilFuncionarioBean.alterarSenha}" oncomplete="PF('modalAlterarSenha').hide()"/>
+				<p:commandButton style="float: right; background-color:red;" value="${msgs.btn_perfil_cancelar}" onclick="PF('modalAlterarSenha').hide()"/>
+			</p:dialog>
+			
+			<h:panelGrid cellspacing="10" columns="2">
+				<h:panelGroup>
+					<p:outputLabel for="codFuncLogado" value="${msgs.label_perfil_codigoFunc}" /><br/>
+					<p:inputText id="codFuncLogado" value="${perfilFuncionarioBean.funcionario.codigo}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<br/>
+					<p:commandButton value="${msgs.btn_perfil_mudarSenha}" oncomplete="PF('modalAlterarSenha').show()"/>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<h:panelGrid cellspacing="10" columns="2">
+				<h:panelGroup>
+					<p:outputLabel for="nomeFuncLogado" value="${msgs.label_perfil_nomeFunc}" /><br/>
+					<p:inputText id="nomeFuncLogado" value="${perfilFuncionarioBean.funcionario.nome}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="emailFuncLogado" value="${msgs.label_perfil_emailFunc}" /><br/>
+					<p:inputText id="emailFuncLogado" value="${perfilFuncionarioBean.funcionario.email}" size="46" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+			
+			<h:panelGrid cellspacing="10" columns="3">
+				<h:panelGroup>
+					<p:outputLabel for="cargoFuncLogado" value="${msgs.label_perfil_cargoFunc}" /><br/>
+					<p:inputText id="cargoFuncLogado" value="${perfilFuncionarioBean.funcionario.cargo}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="telefoneFuncLogado" value="${msgs.label_perfil_telefoneFunc}" /><br/>
+					<p:inputMask id="telefoneFuncLogado" value="${perfilFuncionarioBean.funcionario.telefone}" disabled="true" mask="(99) 9999-9999"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="cpfFuncLogado" value="${msgs.label_perfil_cpfFun}" /><br/>
+					<p:inputMask id="cpfFuncLogado" value="${perfilFuncionarioBean.funcionario.cpf}" disabled="true" mask="999.999.999-99"/>
+				</h:panelGroup>
+			</h:panelGrid>
+					
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+	<link rel="icon" href="#{resource['img/iconeLogo.ico']}" type="image/x-icon"/>
+	<title>#{msgs.label_teatro_bradesco} - Login</title>
+</h:head>
+<h:body>
+	
+	<h:outputStylesheet name="css/menu.css"></h:outputStylesheet>
+
+		<div id="logo">
+			<h:graphicImage name="img/logoPrincipal.jpg" styleClass="logoImagem"/>
+		</div>
+		
+		<h:form id="formLogin">
+			<p:dialog header="Login" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="#{loginBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+		
+			<div id="divLogin">
+				<h:panelGrid columns="2">
+				   <p:outputLabel for="codigoFuncionario" value="${msgs.label_login_codigoFuncionario}" />
+				   <p:inputText id="codigoFuncionario" value="#{loginBean.funcionario.codigo}" size="17"/>
+					
+				   <p:outputLabel for="senhaFuncionario"  value="${msgs.label_login_senhaFuncionario}" />
+				   <p:password id="senhaFuncionario" value="#{loginBean.funcionario.senha}" size="17"/>
+				</h:panelGrid>
+				<p:commandButton value="${msgs.btn_login_logar}"  action="#{loginBean.validaLogin}" update="formLogin"/>
+			</div>
+		</h:form>
+
+</h:body>
+</html>

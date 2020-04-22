@@ -14,6 +14,16 @@ body .ui-widget .ui-widget:not(.pi){
 	font-size: 100%;
 }
 
+body .ui-widget.titulos, 
+body .ui-widget:not(.pi).titulos{
+	font-size:100%;
+}
+
+body .ui-widget .ui-widget.titulos, 
+body .ui-widget .ui-widget:not(.pi).titulos{
+	font-size: 125%;
+}
+
 #logo {
 	text-align: center;
 	height: 137px;
@@ -26,8 +36,17 @@ body .ui-widget .ui-widget:not(.pi){
 	width: 17%;
 }
 
-.menu, .breadCrumb{
+.menu{
 	margin-bottom: 0.5%;
+}
+
+.menu .ui-menuitem.ui-widget.ui-corner-all:last-child,
+.menu .ui-menuitem.ui-widget.ui-corner-all:nth-last-child(2) {
+	float: right;
+}
+
+.breadCrumb{
+	margin-bottom: 1.5%;
 }
 
 .ui-breadcrumb ul li:last-child span{
@@ -37,4 +56,32 @@ body .ui-widget .ui-widget:not(.pi){
 
 .ui-datatable thead th, .ui-datatable tfoot td {
 	
+}
+
+.titulos{
+	font-weight: bold;
+	color: #007ad9;
+}
+
+.botao{
+	color: white;
+    background-color: #007ad9;
+    padding: 0.3%;
+    border-radius: 10%;
+}
+
+td .botao{
+	padding: 26%;
+}
+
+#divLogin{
+	background-color:#DCDCDC;
+	width:220px;
+	margin-left: auto;
+	margin-right: auto;
+	padding:10px;
+}
+
+#divLogin .ui-button{
+	width: 100%;
 }

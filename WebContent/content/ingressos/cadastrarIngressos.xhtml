@@ -1,0 +1,234 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{msgs.label_cadastrarIngressos}</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{cadastrarIngressosBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet name="css/poltronas.css"></h:outputStylesheet>
+		<h:form id="dados">			
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"	minHeight="40" width="300">
+				<h:outputText value="#{cadastrarIngressosBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()" />
+			</p:dialog>
+
+			<p:dialog header="#{msgs.label_cadastrarIngressos_selecionarSessao}" id="dlgSessao"	widgetVar="dlgSessao" modal="true" minHeight="40" width="1000" positionType="absolute">
+				<p:outputLabel value="Dia da Sessão " />
+				<p:calendar value="#{cadastrarIngressosBean.pesquisaSessao}" pattern="dd/MM/yyyy" mask="true" showOn="button" mindate="#{cadastrarIngressosBean.currentDate}" />
+				<p:commandButton style="margin-left: 2px;" value="#{msgs.label_cadastrarIngressos_pesquisar}" action="#{cadastrarIngressosBean.pesquisarSessoes}" update="sessoes" />
+
+				<p:dataTable widgetVar="sessoes" id="sessoes" value="#{cadastrarIngressosBean.sessoes}" style="margin-top: 10px;" var="sessao" 
+					rows="5" 
+					emptyMessage="#{msgs.msg_cadastrarIngressos_sessoes_empty}" 
+					paginator="true" 
+					paginatorPosition="top" 
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+					currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} sessões">
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_sessao_codigo}</c:facet>
+						<p:outputLabel value="#{sessao.codigo}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_sessao_evento_descricao}</c:facet>
+						<p:outputLabel value="#{sessao.evento.descricao}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_sessao_dia}</c:facet>
+						<p:outputLabel value="#{sessao.diaString}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_sessao_horario}</c:facet>
+						<p:outputLabel value="#{sessao.horario}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_acoes}</c:facet>
+						<p:commandButton style="width: 100%;"
+							value="#{msgs.label_cadastrarIngressos_selecionar}" 
+							action="#{cadastrarIngressosBean.selecionarSessao(sessao)}" oncomplete="PF('dlgSessao').hide();" 
+							update=":dados:pgSessoes :dados:pgEstacionamento :dados:poltronas"/>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+			<p:dialog header="#{msgs.label_cadastrarIngressos_selecionarCliente}" id="dlgCliente" widgetVar="dlgCliente" modal="true" minHeight="40" width="1000">
+				<p:outputLabel value="#{msgs.label_cadastrarIngressos_pessoa_nomeCliente} " />
+				<p:inputText value="#{cadastrarIngressosBean.pesquisaPessoa}"/>
+				<p:commandButton style="margin-left: 2px;" value="#{msgs.label_cadastrarIngressos_pesquisar}" action="#{cadastrarIngressosBean.pesquisarPessoas}" update="pessoas" />
+
+				<p:dataTable widgetVar="pessoas" id="pessoas" value="#{cadastrarIngressosBean.pessoas}" style="margin-top: 10px;" var="pessoa" 
+					rows="5" 
+					emptyMessage="#{msgs.msg_detaleEvento_sessoes_empty}" 
+					paginator="true" 
+					paginatorPosition="top" 
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+					currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} pessoas">
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_pessoa_codigo}</c:facet>
+						<p:outputLabel value="#{pessoa.codigo}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_pessoa_nome}</c:facet>
+						<p:outputLabel value="#{pessoa.nome}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_pessoa_cpf}</c:facet>
+						<p:outputLabel value="#{pessoa.cpf}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_cadastrarIngressos_acoes}</c:facet>
+						<p:commandButton style="width: 100%;"
+							value="#{msgs.label_cadastrarIngressos_selecionar}"
+							action="#{cadastrarIngressosBean.selecionarPessoa(pessoa)}"
+							oncomplete="PF('dlgCliente').hide();" update=":dados:pgPessoa">
+						</p:commandButton>
+					</p:column>
+				</p:dataTable>
+			</p:dialog>
+
+			<h:panelGrid columns="1" width="100%" style="margin-bottom: 10px;">
+				<p:panel id="pnSessoes" widgetVar="pnSessoes" header="#{msgs.label_detaleEvento_sessoes}" style="margin-top:10px">
+					<h:panelGrid columns="5" id="pgSessoes">
+						<h:panelGrid columns="2">
+							<p:outputLabel for="codigo" value="#{msgs.label_cadastrarIngressos_sessao_codigo}" />
+							<p:inputText id="codigo" value="#{cadastrarIngressosBean.ingresso.sessao.codigo}" size="4" readonly="true"/>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="descricao" value="#{msgs.label_cadastrarIngressos_sessao_evento_descricao}" />
+							<p:inputText id="descricao" value="#{cadastrarIngressosBean.ingresso.sessao.evento.descricao}" size="50" readonly="true"/>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="dia" value="#{msgs.label_cadastrarIngressos_sessao_dia}" />
+							<p:inputText id="dia" value="#{cadastrarIngressosBean.ingresso.sessao.diaString}" size="10" readonly="true"/>
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="horario" value="#{msgs.label_cadastrarIngressos_sessao_horario}" />
+							<p:inputText id="horario" value="#{cadastrarIngressosBean.ingresso.sessao.horario}" size="5" readonly="true"/>
+						</h:panelGrid>
+						<h:panelGrid columns="1">
+							<p:commandButton value="#{msgs.label_cadastrarIngressos_selecionar}" oncomplete="PF('dlgSessao').show();" />
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+				<h:panelGrid columns="2" width="100%" style="margin-bottom: 10px;">							
+					<p:panel id="pnPessoa" widgetVar="pnPessoa" header="Cliente" style="margin-top:10px">
+						<h:panelGrid columns="4" id="pgPessoa">
+							<h:panelGrid columns="2">
+								<p:outputLabel for="codigo" value="#{msgs.label_cadastrarIngressos_pessoa_codigo}" />
+								<p:inputText id="codigoP" value="#{cadastrarIngressosBean.ingresso.pessoa.codigo}" size="4" readonly="true"/>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="dia" value="#{msgs.label_cadastrarIngressos_pessoa_nome}" />
+								<p:inputText id="nome" value="#{cadastrarIngressosBean.ingresso.pessoa.nome}" size="50" readonly="true"/>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:outputLabel for="horario" value="#{msgs.label_cadastrarIngressos_pessoa_cpf}" />
+								<p:inputText id="cpf" value="#{cadastrarIngressosBean.ingresso.pessoa.cpf}" size="14" readonly="true"/>
+							</h:panelGrid>
+							<h:panelGrid columns="2">
+								<p:commandButton value="#{msgs.label_cadastrarIngressos_selecionar}" oncomplete="PF('dlgCliente').show();" />
+								<p:commandButton disabled="true" value="#{msgs.label_cadastrarIngressos_novoCliente}" action="#{cadastrarIngressosBean.cadastrarCliente}" />
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:panel> 
+					<p:panel id="pnEstacionamento" widgetVar="pnEstacionamento" header="Estacionamento" style="margin-top:10px">
+						<h:panelGrid columns="4" id="pgEstacionamento">
+							<h:panelGrid columns="2">
+								<p:outputLabel for="vagas" value="Vagas " />
+								<p:inputNumber id="vagas" value="#{cadastrarIngressosBean.vagasEstacionamento}" maxValue="#{cadastrarIngressosBean.limiteEstacionamento}" minValue="0" size="9" symbol=" vagas" symbolPosition="s" />
+							</h:panelGrid>
+						</h:panelGrid>
+					</p:panel> 
+				</h:panelGrid>
+			</h:panelGrid>
+			 
+			<p:accordionPanel id="poltronas">
+       			<p:tab title="#{msgs.label_cadastrarIngressos_poltronas} #{msgs.label_cadastrarIngressos_poltronas_obrigatoria}">
+					<h:panelGrid columns="1" style="margin-left: 19.15%;">
+						<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_balcaoNobre}</p>
+						<p:dataGrid id="poltronas1" var="poltrona"  value="#{cadastrarIngressosBean.balcaoNobre}" columns="#{Constantes.BALCAO_NOBRE}" styleClass="poltronas">
+							<div id="poltrona1">
+								<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 1)}">
+									<p:ajax update="poltronas1"/>
+									<p:graphicImage styleClass="imagemGrande" name="img/poltronas/#{poltrona.selecionada}.png" />
+									<br />
+									<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
+								</h:commandLink>
+							</div>
+						</p:dataGrid>
+						<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_camarotePrime}</p>
+						<p:dataGrid id="poltronas2" var="poltrona" value="#{cadastrarIngressosBean.camarotePrime}" columns="#{Constantes.CAMAROTE_PRIME}" styleClass="poltronas">
+							<div id="poltrona2">
+								<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 2)}">
+									<p:ajax update="poltronas2"/>
+									<p:graphicImage styleClass="imagemGrande" name="img/poltronas/#{poltrona.selecionada}.png" />
+									<br />
+									<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
+								</h:commandLink>
+							</div>
+						</p:dataGrid>
+					</h:panelGrid>
+				
+					<h:panelGrid columns="3" style="margin-left: 0.3%;">
+						<p:column>
+							<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_frisas1}</p>
+							<p:dataGrid id="poltronas3" var="poltrona" value="#{cadastrarIngressosBean.frisas1}" columns="#{Constantes.FRISAS_1}" styleClass="poltronas">
+								<div id="poltrona3">
+									<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 3)}">
+										<p:ajax update="poltronas3"/>
+										<p:graphicImage styleClass="imagemPequena" name="img/poltronas/#{poltrona.selecionada}.png" />
+										<br />
+										<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
+									</h:commandLink>
+								</div>
+							</p:dataGrid>
+						</p:column>
+						<p:column>
+							<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_plateia}</p>
+							<p:dataGrid id="poltronas4" var="poltrona" value="#{cadastrarIngressosBean.plateia}" columns="#{Constantes.PLATEIA}" styleClass="poltronas">
+								<div id="poltrona4">
+									<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 4)}">
+										<p:ajax update="poltronas4"/>
+										<p:graphicImage styleClass="imagemPequena" name="img/poltronas/#{poltrona.selecionada}.png" />
+										<br />
+										<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
+									</h:commandLink>
+								</div>
+							</p:dataGrid>
+						</p:column>
+						<p:column>
+							<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_frisas2}</p>
+							<p:dataGrid id="poltronas5" var="poltrona" value="#{cadastrarIngressosBean.frisas2}" columns="#{Constantes.FRISAS_2}" styleClass="poltronas">
+								<div id="poltrona5">
+									<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 5)}">
+										<p:ajax update="poltronas5"/>
+										<p:graphicImage styleClass="imagemPequena" name="img/poltronas/#{poltrona.selecionada}.png" />
+										<br />
+										<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
+									</h:commandLink>
+								</div>
+							</p:dataGrid>
+						</p:column>
+					</h:panelGrid>
+			
+					<h:panelGrid columns="1" style="margin-left: 19.15%; width: 61.7%; text-align: center;">
+							<p class="setor" style="height: 72px; padding-top: 3%;">#{msgs.label_cadastrarIngressos_poltronas_palco}</p>
+					</h:panelGrid>				
+				</p:tab>
+			</p:accordionPanel>
+
+			<p:commandButton disabled="#{cadastrarIngressosBean.telaAnterior == null}" value="#{msgs.label_cadastrarIngressos_voltar}" action="#{cadastrarIngressosBean.voltar}" style="margin-top:10px" />
+			<p:commandButton value="#{msgs.label_cadastrarIngressos_salvar}" action="#{cadastrarIngressosBean.cadastrar}" style="margin-top:10px; float:right;" update="dlg1"/>
+			
+		</h:form>
+	</ui:define>
+
+</ui:composition>

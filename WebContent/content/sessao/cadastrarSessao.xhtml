@@ -1,0 +1,58 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{msgs.label_cadastrarSessões}</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb"
+			model="#{cadastrarSessaoBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:form id="formCadastro">
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"
+				minHeight="40" width="300">
+				<h:outputText value="${cadastrarSessaoBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK"
+					onclick="PF('dlg1').hide();" type="button"/>
+			</p:dialog>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="codEvento"
+					value="${msgs.label_cadast_sess_cod_event}" />
+				<p:inputNumber id="codEvento" minValue="1"
+					value="${cadastrarSessaoBean.sessao.evento.codigo}" decimalPlaces="0" />
+					
+				<p:outputLabel for="dataSessao"
+					value="${msgs.label_cadast_sess_data_sess}" />
+				<p:datePicker id="dataSessao"
+					value="${cadastrarSessaoBean.sessao.dia}"
+					mindate="${cadastrarSessaoBean.getDataAtual()}" locale="pt_BR"
+					showIcon="true" />
+
+				<p:outputLabel for="horaSessao"
+					value="${msgs.label_cadast_sess_hora_sess}" />
+				<p:column>
+					<p:spinner id="horaSessao"
+						value="${cadastrarSessaoBean.sessao.horario.hora}" max="23"
+						min="0" size="2" />
+					<p:outputLabel value=" : " />
+					<p:spinner id="minutosSessao"
+						value="${cadastrarSessaoBean.sessao.horario.minutos}" max="59"
+						min="0" size="2" />
+				</p:column>
+
+
+				<p:commandButton value="Salvar" id="btnSalvar"
+					action="${cadastrarSessaoBean.cadastrar}" update="dlg1"
+					oncomplete="PF('dlg1').show();" />
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

@@ -1,12 +1,8 @@
 package br.com.bradesco.posoTeatro.model;
 
-import java.text.DateFormat;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.logging.SimpleFormatter;
-
-import javax.swing.text.DateFormatter;
 
 import br.com.bradesco.posoTeatro.posoUtil.DataUtil;
 import br.com.bradesco.posoTeatro.posoUtil.Validacoes;
@@ -76,28 +72,28 @@ public class Pessoa {
 	}
 
 	public String getTelefoneFormatado() {
-		if (!getTelefone().equals(null)) {
+		if (getTelefone() != null) {
 			return getTelefone().replace("(", "").replace(")", "").replace(" ", "").replace("-", "");
 		}
 		return "";
 	}
 
 	public String getCpfFormatado() {
-		if(!getCpf().equals(null)) {
+		if(getCpf() != null) {
 			return getCpf().replace(".", "").replace("-", "");
 		}
 		return "";
 	}
 
 	public boolean cpfValido() {
-		if (!getCpf().equals(null)) {
+		if(getCpf() != null) {
 			return new Validacoes().cpfValido(getCpf().replace(".", "").replace("-", ""));
 		}
 		return false;
 	}
 	
 	public boolean emailValido() {
-		if(!getEmail().equals(null)) {
+		if(getEmail() != null) {
 			return new Validacoes().validarEmail(getEmail());
 		}
 		return false;	}

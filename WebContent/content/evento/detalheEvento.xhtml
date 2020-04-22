@@ -6,7 +6,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 
-	<ui:define name="titulo">Listar Eventos</ui:define>
+	<ui:define name="titulo">Detalhe Evento</ui:define>
 
 	<ui:define name="breadCrumb">
 		<p:breadCrumb styleClass="breadCrumb"
@@ -15,74 +15,99 @@
 
 	<ui:define name="conteudo">
 		<h:form>
-			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"
-				minHeight="40" width="300">
-				<h:outputText value="#{detalheEventoBean.mensagem}" />
-				<br />
-				<p:commandButton style="float: right;" value="OK"
-					onclick="dlg1.hide()" />
-			</p:dialog>
-			<h:panelGrid columns="2" cellspacing="20">
-				<h:panelGrid columns="2">
-					<p:outputLabel for="codigoEvento" value="#{msgs.label_detalheEvento_codigo}" />
-					<p:inputText id="codigoEvento"	value="#{detalheEventoBean.evento.codigo}" disabled="true" />
-					<p:outputLabel for="tipoEvento"	value="#{msgs.label_detalheEvento_tipo}" />
-					<p:inputText id="tipoEvento" value="#{detalheEventoBean.evento.tipoEvento}" disabled="true"	size="20" />
+			<p:outputLabel styleClass="titulos" value="Detalhe Evento"/>
+			<p:panel id="pnEvento" header="Evento" style="margin-top:10px">
+				<h:panelGrid columns="2" cellspacing="20">
+					<h:panelGrid columns="2">
+						<p:outputLabel for="codigoEvento" value="#{msgs.label_detalheEvento_codigo}" />
+						<p:inputText id="codigoEvento"	value="#{detalheEventoBean.evento.codigo}" readonly="true" />
+						<p:outputLabel for="tipoEvento"	value="#{msgs.label_detalheEvento_tipo}" />
+						<p:inputText id="tipoEvento" value="#{detalheEventoBean.evento.tipoEvento.nome}" readonly="true"	size="20" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="descricaoEvento" value="#{msgs.label_detalheEvento_descricao}" />
+						<p:inputText id="descricaoEvento" value="#{detalheEventoBean.evento.descricao}" readonly="true" size="50" />				
+						<p:outputLabel for="generoEvento" value="#{msgs.label_detalheEvento_genero}" />
+						<p:inputText id="generoEvento" value="#{detalheEventoBean.evento.genero.nome}" readonly="true"	size="20" />
+					</h:panelGrid>
 				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:outputLabel for="descricaoEvento" value="#{msgs.label_detalheEvento_descricao}" />
-					<p:inputText id="descricaoEvento" value="#{detalheEventoBean.evento.descEvento}" disabled="true" size="50" />				
-					<p:outputLabel for="generoEvento" value="#{msgs.label_detalheEvento_genero}" />
-					<p:inputText id="generoEvento" value="#{detalheEventoBean.evento.generoEvento}" disabled="true"	size="20" />
-				</h:panelGrid>
-			</h:panelGrid>
+			</p:panel>
+			
+			<p:panel id="pnSessoes" header="#{msgs.label_detaleEvento_sessoes}" style="margin-top:10px">
+				<p:dataTable value="#{detalheEventoBean.sessoes}" style="margin-top: 10px;" var="sessao" rows="5" emptyMessage="#{msgs.msg_detaleEvento_sessoes_empty}"
+					paginator="true"
+					paginatorPosition="top"
+	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} sessões">
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalheEvento_sessao_codigo}</c:facet>
+						<p:outputLabel value="#{sessao.codigo}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalheEvento_sessao_dia}</c:facet>
+						<p:outputLabel value="#{sessao.diaString}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalheEvento_sessao_hora}</c:facet>
+						<p:outputLabel value="#{sessao.horario}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalheEvento_sessao_situacao}</c:facet>
+						<p:outputLabel value="#{sessao.situacao}"></p:outputLabel>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
 
-			<p:panel id="pnFuncionario" header="Funcionário Responsável" style="margin-top:10px">
+			<p:panel id="pnFuncionario" header="#{msgs.label_detalheEvento_funcionario}" style="margin-top:10px">
 				<h:panelGrid columns="3" cellpadding="20">
 					<h:panelGrid columns="2">
 						<p:outputLabel for="codigoFuncionario" value="#{msgs.label_detalheEvento_funcionarios_codigo}" />
-						<p:inputText id="codigoFuncionario" value="" size="4" disabled="true"/>
+						<p:inputText id="codigoFuncionario" value="#{detalheEventoBean.evento.funcionario.codigo}" size="4" readonly="true"/>
 						<p:outputLabel for="cargoFuncionario" value="#{msgs.label_detalheEvento_funcionarios_cargo}" />
-						<p:inputText id="cargoFuncionario" value="" size="15" disabled="true" />
+						<p:inputText id="cargoFuncionario" value="#{detalheEventoBean.evento.funcionario.cargo.codigo}" size="15" readonly="true" />
 						<p:outputLabel for="emailFuncionario" value="#{msgs.label_detalheEvento_funcionarios_email}" />
-						<p:inputText id="emailFuncionario" value="" size="50" disabled="true" />
+						<p:inputText id="emailFuncionario" value="#{detalheEventoBean.evento.funcionario.email}" size="50" readonly="true" />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:outputLabel for="nomeFuncionario" value="#{msgs.label_detalheEvento_funcionarios_nome}" />
-						<p:inputText id="nomeFuncionario" value="" size="50" disabled="true" />
+						<p:inputText id="nomeFuncionario" value="#{detalheEventoBean.evento.funcionario.nome}" size="50" readonly="true" />
 						<p:outputLabel for="dataNascFuncionario" value="#{msgs.label_detalheEvento_funcionarios_nascimento}" />
-						<p:inputText id="dataNascFuncionario" value="" disabled="true" />
+						<p:inputText id="dataNascFuncionario" value="#{detalheEventoBean.evento.funcionario.dataNascimentoString}" readonly="true" />
 						<br />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:outputLabel for="cpfFuncionario" value="#{msgs.label_detalheEvento_funcionarios_cpf}" />
-						<p:inputText id="cpfFuncionario" value="" size="14" disabled="true" />
+						<p:inputText id="cpfFuncionario" value="#{detalheEventoBean.evento.funcionario.cpf}" size="14" readonly="true" />
 						<p:outputLabel for="telefoneFuncionario" value="#{msgs.label_detalheEvento_funcionarios_telefone}" />
-						<p:inputText id="telefoneFuncionario" value="" size="15" disabled="true" />
+						<p:inputText id="telefoneFuncionario" value="#{detalheEventoBean.evento.funcionario.telefone}" size="15" readonly="true" />
 						<br />
 					</h:panelGrid>
 				</h:panelGrid>
 			</p:panel>
 
-			<p:panel id="pnEmpresa" header="Empresa Responsável" style="margin-top:10px">
+			<p:panel id="pnEmpresa" header="#{msgs.label_detalheEvento_empresa}" style="margin-top:10px">
 				<h:panelGrid columns="3" cellpadding="20">
 					<h:panelGrid columns="2">
 						<p:outputLabel for="codigoEmpresa" value="#{msgs.label_detalheEvento_empresa_codigo}" />
-						<p:inputText id="codigoEmpresa" value="" size="4" disabled="true" />
+						<p:inputText id="codigoEmpresa" value="#{detalheEventoBean.evento.empresaResponsavel.codigo}" size="4" readonly="true" />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:outputLabel for="cnpjEmpresa" value="#{msgs.label_detalheEvento_empresa_cnpj}" />
-						<p:inputText id="cnpjEmpresa" value="" size="18" disabled="true" />
+						<p:inputText id="cnpjEmpresa" value="#{detalheEventoBean.evento.empresaResponsavel.cnpj}" size="18" readonly="true" />
 					</h:panelGrid>
 					<h:panelGrid columns="2">
 						<p:outputLabel for="nomefEmpresa" value="#{msgs.label_detalheEvento_empresa_nomef}" />
-						<p:inputText id="nomefEmpresa" value="" size="50" disabled="true" />
+						<p:inputText id="nomefEmpresa" value="#{detalheEventoBean.evento.empresaResponsavel.nome}" size="50" readonly="true" />
 					</h:panelGrid>
 				</h:panelGrid>
-
-				<p:dataTable value="#{detalheEventoBean.pessoas}" var="pessoa">
+				<p:outputLabel styleClass="titulos" value="#{msgs.label_detalheEvento_pessoas}"/>
+				<p:dataTable value="#{detalheEventoBean.pessoas}" style="margin-top: 10px;" var="pessoa" rows="3" emptyMessage="Não há pessoas registradas neste esse evento"
+					paginator="true"
+					paginatorPosition="top"
+	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} pesoas">
 					<p:column width="5%">
-						<c:facet name="header">Código</c:facet>
+						<c:facet name="header">#{msgs.label_detalheEvento_pessoa_codigo}</c:facet>
 						<p:outputLabel style="float: right;" value="#{pessoa.codigo}"></p:outputLabel>
 					</p:column>
 					<p:column>
@@ -100,8 +125,8 @@
 				</p:dataTable>
 			</p:panel>
 
-			<p:commandButton value="Voltar"
-				action="#{detalheEventoBean.voltar()}" style="margin-top:10px" />
+			<p:commandButton value="#{msgs.label_detalheEvento_voltar}"
+				action="#{detalheEventoBean.voltar}" style="margin-top:10px" />
 
 		</h:form>
 	</ui:define>

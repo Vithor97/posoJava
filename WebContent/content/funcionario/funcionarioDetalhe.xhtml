@@ -1,0 +1,71 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Consultar ingressos</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{consultarIngressosDetalheBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id = "form">
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${consultarIngressosDetalheBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			
+			<h:panelGrid cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="codFuncionario" value="${msgs.label_funcionario_codigoFuncionario}" /><br/>
+					<p:inputText id="codFuncionario" value="${consultarFuncionarioDetalheBean.funcionario.codigo}" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+				
+			<h:panelGrid columns="3" cellspacing="10">
+				
+				<h:panelGroup>
+					<p:outputLabel for="nomeFunc" value="${msgs.label_funcionario_nomeFuncionario}" /><br/>
+					<p:inputText id="nomeFunc" value="${consultarFuncionarioDetalheBean.funcionario.nome}" disabled="true"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel for="cpfFunc" value="${msgs.label_funcionario_cpfFuncionario}" /><br/>
+					<p:inputText id="cpfFunc" value="${consultarFuncionarioDetalheBean.funcionario.cpf}" disabled="true"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel for="cargoFunc" value="${msgs.label_funcionario_cargoFuncionario}" /><br/>
+					<p:inputText id="cargoFunc" value="${consultarFuncionarioDetalheBean.funcionario.cargo.nome}" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+				
+			<h:panelGrid columns="3" cellspacing="10">	
+				<h:panelGroup>
+					<p:outputLabel for="dtNascFunc" value="${msgs.label_funcionario_dtNascFuncionario}" /><br/>
+					<p:inputText id="dtNascFunc" value="${consultarFuncionarioDetalheBean.funcionario.dataNascimento}" disabled="true"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel for="telFunc" value="${msgs.label_funcionario_telFuncionario}" /><br/>
+					<p:inputText id="telFunc" value="${consultarFuncionarioDetalheBean.funcionario.telefone}" disabled="true"/>
+				</h:panelGroup>
+				
+				<h:panelGroup>
+					<p:outputLabel for="emailFunc" value="${msgs.label_funcionario_emailFuncionario}" /><br/>
+					<p:inputText id="emailFunc" value="${consultarFuncionarioDetalheBean.funcionario.email}" disabled="true"/>
+				</h:panelGroup>
+				
+			</h:panelGrid>
+				
+
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

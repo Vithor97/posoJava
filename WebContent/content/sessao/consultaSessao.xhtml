@@ -1,0 +1,31 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">#{msgs.label_consultarSessões}</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{consultaSessaoBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id = "form">
+			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${consultaSessaoBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			<h:panelGrid columns="2">
+				<p:outputLabel for="codSessao" value="${msgs.label_sessao_codSessao}" />
+				<p:inputText id="codSessao" value="${consultaSessaoBean.sessao.codigo}"/>
+				<p:commandButton value="${msgs.label_sessao_button_consultar}" action="${consultaSessaoBean.consultar}" update="form"/>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>
