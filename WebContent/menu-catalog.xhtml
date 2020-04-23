@@ -52,6 +52,12 @@
 				<p:menuitem value="#{msgs.label_cadastrarFuncionários}" action="#{cadastrarFuncionariosBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarFuncionarios}"></p:menuitem>
 				<p:menuitem value="#{msgs.label_consultarFuncionários}" action="#{consultarFuncionarioBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.consultarFuncionarios}"></p:menuitem>
 			</p:submenu>
+			<p:submenu label="Genero" rendered="#{acessoMenuBean.menuCatalog.menuGenero}">
+				<p:menuitem value="#{msgs.label_cadastrarGenero}" action="#{cadastrarGeneroBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarGenero}"></p:menuitem>
+			</p:submenu>
+			<p:submenu label="Tipo" rendered="#{acessoMenuBean.menuCatalog.menuTipoEvento}">
+				<p:menuitem value="#{msgs.label_cadastrarTipoEvento}" action="#{cadastrarTipoEventoBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarTipoEvento}"></p:menuitem>
+			</p:submenu>
 			<p:menuitem value="#{msgs.btn_menu_desconectar}"  action="#{loginBean.desconectar}"/>
 			<p:menuitem value="#{msgs.btn_menu_perfil}"  action="#{perfilFuncionarioBean.iniciarPagina}"/>
 		</p:menubar>

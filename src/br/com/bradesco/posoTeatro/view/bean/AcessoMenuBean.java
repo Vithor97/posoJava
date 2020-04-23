@@ -76,6 +76,14 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuFuncionarios(true);
 		getMenuCatalog().setCadastrarFuncionarios(true);
 		getMenuCatalog().setConsultarFuncionarios(true);
+		
+		getMenuCatalog().setMenuGenero(true);
+		getMenuCatalog().setCadastrarGenero(true);
+		
+		getMenuCatalog().setMenuTipoEvento(true);
+		getMenuCatalog().setCadastrarTipoEvento(true);
+		
+		
 	}
 	
 	private void liberarCoordenadorEventos() {
