@@ -9,6 +9,7 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
+import br.com.bradesco.posoTeatro.dao.FuncionarioDao;
 import br.com.bradesco.posoTeatro.model.Funcionario;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
@@ -44,8 +45,37 @@ public class PerfilFuncionarioBean extends PosoBean implements BeanInterface{
 		PrimeFaces current = PrimeFaces.current();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle messageBundle = facesContext.getApplication().getResourceBundle(facesContext, "msgs");
-		setMensagem(messageBundle.getString("msg_perfil_senhaAlterada"));
-		current.executeScript("PF('dlg1').show();");
+		if(!getSenhaAtual().equals(getFuncionario().getSenha())) {
+			setMensagem(messageBundle.getString("msg_perfil_senhaAtualIncorreta"));
+		}
+		else if(getNovaSenha().equals("123456")){
+			setMensagem(messageBundle.getString("msg_perfil_senhaDiferente"));
+		}
+		else if(!getNovaSenha().equals(getConfirmarNovaSenha()) || getConfirmarNovaSenha().equals("")) {
+			setMensagem(messageBundle.getString("msg_perfil_senhasNovasConfirmar"));
+		}
+		else if(getNovaSenha().length() < 6) {
+			setMensagem(messageBundle.getString("msg_perfil_senhaMinimo"));
+		}
+		else if(!getNovaSenha().replaceAll(" ", "").equals(getNovaSenha())) {
+			setMensagem(messageBundle.getString("msg_perfil_senhasNovasEspacos"));
+		}
+		else {
+			getFuncionario().setSenha(getNovaSenha());
+			boolean retornoDao = new FuncionarioDao().alterarSenha(getFuncionario());
+			if(retornoDao){
+				facesContext.getExternalContext().getSessionMap().remove("funcionarioLogado");
+				facesContext.getExternalContext().getSessionMap().put("funcionarioLogado", getFuncionario());
+				setMensagem(messageBundle.getString("msg_perfil_senhaAlterada"));
+				setSenhaAtual(null);
+				setNovaSenha(null);
+				setConfirmarNovaSenha(null);
+				current.executeScript("PF('modalAlterarSenha').hide();");
+			}
+			else {
+				setMensagem(messageBundle.getString("msg_perfil_erroAlterarSenha"));
+			}
+		}
 	}
 
 	public Funcionario getFuncionario() {
