@@ -5,7 +5,7 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
-	<ui:define name="titulo">Alterar Empresas </ui:define>
+	<ui:define name="titulo">Alterar Empresas</ui:define>
 	
 	<ui:define name="breadCrumb">
 		<p:breadCrumb styleClass="breadCrumb" model="#{alterarEmpresaBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
@@ -20,7 +20,7 @@
 			</p:dialog>
 			<h:panelGrid columns="2">
 				<p:outputLabel for="codEmpresa" value="${msgs.label_codigo_empresa}" />
-				<p:inputMask id="codEmpresa" value="${alterarEmpresaBean.empresaResponsavel.codigo}" size="5" />
+				<p:inputText id="codEmpresa" value="${alterarEmpresaBean.empresaResponsavel.codigo}" max="1" maxlength="9" />
 				
 				<p:outputLabel for="nomeEmpresa" value="${msgs.label_nome_empresa}" /> 
 				<p:inputText id="nomeEmpresa" value="${alterarEmpresaBean.empresaResponsavel.nome}"/>
@@ -28,7 +28,10 @@
 				<p:outputLabel for="cnpjEmpresa" value="${msgs.label_cnpj_empresa}" />
 				<p:inputMask id="cnpjEmpresa" value="${alterarEmpresaBean.empresaResponsavel.cnpj}" size="18" mask="99.999.999/9999-99"/>
 				
+				<!--  <p:commandButton value="Voltar" action="#{alterarEmpresaBean.iniciarPagina}" style="margin-right:10px"/>-->
 				<p:commandButton value="Alterar" action="${alterarEmpresaBean.alterar}" update="dlg1" oncomplete="PF('dlg1').show();"/>
+				<!-- <p:confirm header="Confirmar" message="Are you sure?" icon="ui-icon-alert" /> 
+				</p:commandButton>	-->
 			</h:panelGrid>
 		</h:form>
 	</ui:define>

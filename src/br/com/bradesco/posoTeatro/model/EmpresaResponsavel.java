@@ -3,12 +3,12 @@ package br.com.bradesco.posoTeatro.model;
 import br.com.bradesco.posoTeatro.posoUtil.Validacoes;
 
 public class EmpresaResponsavel {
+
 	private int codigo;
 	private String cnpj;
 	private String nome;
+	private int sit;
 
-
-	
 	public int getCodigo() {
 		return codigo;
 	}
@@ -33,8 +33,16 @@ public class EmpresaResponsavel {
 		this.nome = nome;
 	}
 
+	public int getSit() {
+		return sit;
+	}
+
+	public void setSit(int sit) {
+		this.sit = sit;
+	}
+
 	public String getCnpjFormatado() {
-		if(!getCnpj().equals(null)) {
+		if (!getCnpj().equals(null)) {
 			return getCnpj().replace(".", "").replace("-", "").replace("/", "");
 		}
 		return "";
@@ -46,5 +54,4 @@ public class EmpresaResponsavel {
 		}
 		return false;
 	}
-
 }
