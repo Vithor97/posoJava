@@ -138,6 +138,11 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>excluirEmpresas</from-outcome>
+			<to-view-id>/content/empresaResponsavel/excluirEmpresaResp.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>cadastrarGenero</from-outcome>
 			<to-view-id>/content/genero/cadastrarGenero.xhtml</to-view-id>
 		</navigation-case>

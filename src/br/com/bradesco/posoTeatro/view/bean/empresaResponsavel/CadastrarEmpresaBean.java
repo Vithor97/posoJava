@@ -5,6 +5,8 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import org.primefaces.PrimeFaces;
+
 import br.com.bradesco.posoTeatro.dao.EmpresaDao;
 import br.com.bradesco.posoTeatro.model.EmpresaResponsavel;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
@@ -30,19 +32,19 @@ public class CadastrarEmpresaBean extends PosoBean {
 		return empresaResponsavel;
 	}
 
-	public void setEmpresaResp(EmpresaResponsavel empresaResponsavel) {
+	public void setEmpresaResponsavel(EmpresaResponsavel empresaResponsavel) {
 		this.empresaResponsavel = empresaResponsavel;
 	}
 
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Cadastrar Empresas", "cadastrarEmpresas", titulosBread, urlsBread);
-		setEmpresaResp(new EmpresaResponsavel());
+		setEmpresaResponsavel(new EmpresaResponsavel());
 		return "cadastrarEmpresas";
 	}
 
 	public String iniciarPagina() {
 		super.iniciarPagina("Cadastrar Empresas", "cadastrarEmpresas");
-		setEmpresaResp(new EmpresaResponsavel());
+		setEmpresaResponsavel(new EmpresaResponsavel());
 		return "cadastrarEmpresas";
 	}
 

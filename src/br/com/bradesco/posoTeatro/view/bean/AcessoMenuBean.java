@@ -72,6 +72,8 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuEmpresas(true);
 		getMenuCatalog().setCadastrarEmpresas(true);
 		getMenuCatalog().setConsultarEmpresas(true);
+		getMenuCatalog().setAlterarEmpresas(true);
+		getMenuCatalog().setExcluirEmpresas(true);
 		
 		getMenuCatalog().setMenuFuncionarios(true);
 		getMenuCatalog().setCadastrarFuncionarios(true);
@@ -110,6 +112,9 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuEmpresas(true);
 		getMenuCatalog().setCadastrarEmpresas(true);
 		getMenuCatalog().setConsultarEmpresas(true);
+		getMenuCatalog().setAlterarEmpresas(true);
+		getMenuCatalog().setExcluirEmpresas(true);
+
 		
 		getMenuCatalog().setMenuPessoas(true);
 		getMenuCatalog().setCadastrarPessoas(true);

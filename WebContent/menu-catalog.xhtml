@@ -47,6 +47,8 @@
 			<p:submenu label="Empresas" rendered="#{acessoMenuBean.menuCatalog.menuEmpresas}">
 				<p:menuitem value="#{msgs.label_cadastrarEmpresas}" action="#{cadastrarEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarEmpresas}"></p:menuitem>
 				<p:menuitem value="#{msgs.label_consultarEmpresas}" action="#{consultarEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.consultarEmpresas}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_alterarEmpresas}" action="#{alterarEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.alterarEmpresas}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_excluirEmpresas}" action="#{excluirEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.excluirEmpresas}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="Funcionários" rendered="#{acessoMenuBean.menuCatalog.menuFuncionarios}">
 				<p:menuitem value="#{msgs.label_cadastrarFuncionários}" action="#{cadastrarFuncionariosBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarFuncionarios}"></p:menuitem>

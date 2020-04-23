@@ -21,6 +21,8 @@ public class MenuCatalog {
 	private boolean menuEmpresas;
 	private boolean cadastrarEmpresas;
 	private boolean consultarEmpresas;
+	private boolean alterarEmpresas;
+	private boolean excluirEmpresas;
 	
 	private boolean menuFuncionarios;
 	private boolean cadastrarFuncionarios;
@@ -98,6 +100,23 @@ public class MenuCatalog {
 	public void setConsultarEmpresas(boolean consultarEmpresas) {
 		this.consultarEmpresas = consultarEmpresas;
 	}
+
+	public boolean getAlterarEmpresas() {
+		return alterarEmpresas;
+	}
+
+	public void setAlterarEmpresas(boolean alterarEmpresas) {
+		this.alterarEmpresas = alterarEmpresas;
+	}
+
+	public boolean getExcluirEmpresas() {
+		return excluirEmpresas;
+	}
+
+	public void setExcluirEmpresas(boolean excluirEmpresas) {
+		this.excluirEmpresas = excluirEmpresas;
+	}
+
 	public boolean getCadastrarFuncionarios() {
 		return cadastrarFuncionarios;
 	}
