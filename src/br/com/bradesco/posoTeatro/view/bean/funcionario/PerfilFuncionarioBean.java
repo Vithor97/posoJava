@@ -45,7 +45,10 @@ public class PerfilFuncionarioBean extends PosoBean implements BeanInterface{
 		PrimeFaces current = PrimeFaces.current();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle messageBundle = facesContext.getApplication().getResourceBundle(facesContext, "msgs");
-		if(!getSenhaAtual().equals(getFuncionario().getSenha())) {
+		if(getSenhaAtual().equals("") || getNovaSenha().equals("") || getConfirmarNovaSenha().equals("")) {
+			setMensagem(messageBundle.getString("msg_perfil_camposObrigatorios"));
+		}
+		else if(!getSenhaAtual().equals(getFuncionario().getSenha())) {
 			setMensagem(messageBundle.getString("msg_perfil_senhaAtualIncorreta"));
 		}
 		else if(getNovaSenha().equals("123456")){
@@ -70,6 +73,8 @@ public class PerfilFuncionarioBean extends PosoBean implements BeanInterface{
 				setSenhaAtual(null);
 				setNovaSenha(null);
 				setConfirmarNovaSenha(null);
+				current.ajax().update("formPerfil");
+				current.ajax().update("formMenuCatalog");
 				current.executeScript("PF('modalAlterarSenha').hide();");
 			}
 			else {
