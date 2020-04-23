@@ -17,8 +17,6 @@ public class Evento {
 
 	private List<String> pessoaEvento = new ArrayList<String>();
 	private List<String> listaCpfPessoa = new ArrayList<String>();
-	
-	
 
 	public Evento() {
 		setFuncionario(new Funcionario());

@@ -26,6 +26,12 @@ public class MenuCatalog {
 	private boolean cadastrarFuncionarios;
 	private boolean consultarFuncionarios;
 	
+	private boolean menuGenero;
+	private boolean cadastrarGenero;
+	
+	private boolean menuTipoEvento;
+	private boolean cadastrarTipoEvento;
+	
 	public boolean getMenuEventos() {
 		return menuEventos;
 	}
@@ -133,6 +139,30 @@ public class MenuCatalog {
 	}
 	public void setMenuFuncionarios(boolean menuFuncionarios) {
 		this.menuFuncionarios = menuFuncionarios;
+	}
+	public boolean isMenuGenero() {
+		return menuGenero;
+	}
+	public void setMenuGenero(boolean menuGenero) {
+		this.menuGenero = menuGenero;
+	}
+	public boolean isCadastrarGenero() {
+		return cadastrarGenero;
+	}
+	public void setCadastrarGenero(boolean cadastrarGenero) {
+		this.cadastrarGenero = cadastrarGenero;
+	}
+	public boolean isMenuTipoEvento() {
+		return menuTipoEvento;
+	}
+	public void setMenuTipoEvento(boolean menuTipoEvento) {
+		this.menuTipoEvento = menuTipoEvento;
+	}
+	public boolean isCadastrarTipoEvento() {
+		return cadastrarTipoEvento;
+	}
+	public void setCadastrarTipoEvento(boolean cadastrarTipoEvento) {
+		this.cadastrarTipoEvento = cadastrarTipoEvento;
 	}
 	
 }

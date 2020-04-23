@@ -73,4 +73,26 @@ public class FuncionarioDao extends Funcionario {
 			}
 		}
 	}
+	
+	public boolean alterarSenha(Funcionario funcionario) {
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+				
+			PreparedStatement smt = conn.prepareStatement("UPDATE funcionario SET senha_func = ? WHERE cod_func = ?");
+			
+			smt.setString(1, funcionario.getSenha());
+			smt.setInt(2, funcionario.getCodigo());
+			
+			smt.executeUpdate();	
+			
+			smt.close();
+			conn.close();
+			
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }
