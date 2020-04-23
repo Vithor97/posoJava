@@ -100,9 +100,15 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 		int RowAffected = 0;
 		
 		RowAffected = dao.deletaPessoa(pessoa);
-		
+		pessoa = dao.consultar(pessoa);
 		if(RowAffected !=0) {
-			setMensagem("Exclusão realizada");
+			if(pessoa.getSituacaoPessoa() !=1) {				
+				setMensagem("Exclusão realizada");
+				return "consultarPessoas?faces-redirect=true";
+			}
+			else {
+				return iniciarPagina();
+			}
 //			FacesContext context = FacesContext.getCurrentInstance();
 //	        Application application = context.getApplication();
 //	        ValueBinding binding = application.createValueBinding("#{consultarPessoaDetalheBean}");
@@ -110,7 +116,6 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 //			
 //	        return consulta.iniciarPagina()+"?faces-redirect=true";
 			//setPessoa(dao.consultar(pessoa));
-			return "consultarPessoas?faces-redirect=true";
 		}
 		else {
 			setMensagem("Exclusão não realizada");

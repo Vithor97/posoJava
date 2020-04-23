@@ -38,15 +38,16 @@ public class PessoaDao extends Pessoa {
 		produto.setCodigo(pessoa.getCodigo());
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement smt = conn.prepareStatement("select * from pessoa where cpf_pessoa=? OR cod_pessoa = ?");
+			PreparedStatement smt = conn.prepareStatement("select * from pessoa where cpf_pessoa=? OR cod_pessoa = ? and situacao_pessoa = 1");
 			
 			smt.setString(1, produto.getCpf());
 			smt.setInt(2, produto.getCodigo());
 			
+			
 			ResultSet rs = smt.executeQuery();
 			if (rs.next()) {
 				produto.setCodigo(rs.getInt("cod_pessoa"));
-				System.out.println("nome: " + produto.getCodigo());
+				System.out.println("Codigo: " + produto.getCodigo());
 				
 				produto.setNome(rs.getString("nome_pessoa"));
 				System.out.println("nome: " + produto.getNome());
@@ -60,7 +61,11 @@ public class PessoaDao extends Pessoa {
 				produto.setCpf(rs.getString("cpf_pessoa"));
 				System.out.println("CPF: " + produto.getCpf());
 				
-				produto.setDataNascimento(rs.getDate("dtnasc_pessoa"));	
+				produto.setDataNascimento(rs.getDate("dtnasc_pessoa"));
+				
+				
+				produto.setSituacaoPessoa(rs.getInt("situacao_pessoa"));
+				System.out.println("Situção pessoa: " + produto.getSituacaoPessoa());
 			}
 			
 			System.out.println("produto todo " + produto);
@@ -92,20 +97,8 @@ public class PessoaDao extends Pessoa {
 			stm.setInt(6, pessoaAltera.getCodigo());
 			
 			rs = stm.executeUpdate();
-			
-			
+	
 			System.out.println("rows affected " + rs);
-			
-			
-			
-//			if(rs.next()) {	
-//				pessoaAltera.setNome(rs.getString("nome_pessoa"));
-//				pessoaAltera.setCpf(rs.getString("cpf_pessoa"));
-//				pessoaAltera.setDataNascimento(rs.getDate("dtnasc_pessoa"));	
-//				pessoaAltera.setTelefone(rs.getString("tel_pessoa"));
-//				pessoaAltera.setEmail(rs.getString("email_pessoa"));
-//			}
-			
 			
 		} catch (SQLException e) {
 			System.out.println("dentro do catch: " + e.getMessage());
@@ -124,8 +117,10 @@ public class PessoaDao extends Pessoa {
 		try {
 			
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement stm = conn.prepareStatement("DELETE FROM pessoa WHERE cod_pessoa=?");
-			stm.setInt(1, pessoa.getCodigo());
+			PreparedStatement stm = conn.prepareStatement("update pessoa set situacao_pessoa = ? where cod_pessoa= ?");
+			//Desativa a pessoa dando set na situacao_pessoa para 0;
+			stm.setInt(1, 0);
+			stm.setInt(2, pessoa.getCodigo());
 			
 			rowAffected = stm.executeUpdate();
 			

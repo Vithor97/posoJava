@@ -3,6 +3,7 @@ package br.com.bradesco.posoTeatro.view.bean.evento;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import br.com.bradesco.posoTeatro.dao.EventoDao;
@@ -22,14 +23,8 @@ public class DetalheEventoBean extends PosoBean implements BeanInterface{
 	private List<Pessoa> pessoas;
 	private List<Sessao> sessoes;
 	private String mensagem;
-
-	public Evento getEvento() {
-		return evento;
-	}
-
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
+	
+	
 
 	public List<Pessoa> getPessoas() {
 		return pessoas;
@@ -55,6 +50,13 @@ public class DetalheEventoBean extends PosoBean implements BeanInterface{
 		this.mensagem = mensagem;
 	}
 	
+	public Evento getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
+	}
 
 	
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
@@ -72,11 +74,6 @@ public class DetalheEventoBean extends PosoBean implements BeanInterface{
 		setSessoes(new SessaoDao().listarSessoes(getEvento()));
 		return "detalheEvento";
 	}
-	
-//	public String alteracao() {
-//		alterarEventoBean.setEvento(evento);
-//		return alterarEventoBean.iniciarPagina();
-//	}
 	
 
 

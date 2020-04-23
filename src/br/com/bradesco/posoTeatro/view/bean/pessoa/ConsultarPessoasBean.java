@@ -53,20 +53,22 @@ public class ConsultarPessoasBean extends PosoBean implements BeanInterface{
 	}
 	
 	public String consultaPessoa() {
+		final int situacaoPessoaAtiva = 1;
+		
 		System.out.println("cpf do individuo na tela  " + pessoa.getCpfFormatado());
 		if(validarDados()) {
 			pessoa =  new PessoaDao().consultar(pessoa);	
 			
-			if(pessoa.getNome() != null) {
+			if(pessoa.getNome() != null && pessoa.getSituacaoPessoa() == situacaoPessoaAtiva) {
 				setDtNasc(pessoa.getDataNascimentoString());
 				pessoa.setTelefone(formatString(pessoa.getTelefone(), "(##) ####-####"));
-				detalhePessoa.setMensagem("Consulta realixada com sucesso");
+				detalhePessoa.setMensagem("Consulta realizada com sucesso");
 				detalhePessoa.setPessoa(pessoa);
 				return detalhePessoa.iniciarPagina();
 				
 			}
 			else {
-				setMensagem("Não existe essa pessoa");
+				setMensagem("Não existe essa pessoa cadastrada.");
 				return "";
 			}
 			
