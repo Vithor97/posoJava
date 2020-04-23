@@ -33,7 +33,7 @@ public class EventoDao extends Evento {
 			}
 			rs1.close();
 			smt1.close();
-			PreparedStatement smt2 = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?)");
+			PreparedStatement smt2 = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?, default)");
 
 			smt2.setInt(1, evento.getEmpresaResponsavel().getCodigo());
 			smt2.setInt(4, evento.getTipoEvento().getCodigo());
