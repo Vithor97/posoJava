@@ -42,8 +42,12 @@
                 <p:column width="12%">
 					<c:facet name="header">#{msgs.label_listarEvento_acoes}</c:facet>
                     <p:commandButton style="width: 100%;" value="#{msgs.label_listarEvento_detalhar}" action="#{listarEventosBean.detalhar(evento)}"></p:commandButton>
- 					<p:commandButton value="Alterar" action="#{listarEventosBean.alteracao}" style= "margin-top:10px; margin-right:10px;width: 46.25%;"/>
-                	<p:commandButton value="Excluir" action="#{excluirEventoBean.iniciarPagina}" style="width: 46.25%;" />               
+ 					<p:commandButton value="Alterar" action="#{listarEventosBean.alteracao(evento)}" style= "margin-top:10px; margin-right:10px;width: 46.25%;"/>
+                	
+                	<p:commandButton value="Excluir" action="#{listarEventosBean.excluir(evento)}">
+                	<p:confirm header="Exlusão de Evento" message="Deseja apagar?" icon="ui-icon-alert" />
+                	</p:commandButton> 
+                	           
                 </p:column>	
 			</p:dataTable>
 			
@@ -51,6 +55,13 @@
 				action="#{listarEventosBean.voltar}" style="margin-top:10px" />
 				
 				
+		</h:form>
+		
+		<h:form>
+			<p:confirmDialog global="true" width="300">
+			        <p:commandButton value="Sim"   type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
 		</h:form>
 	</ui:define>
 	
