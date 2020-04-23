@@ -12,13 +12,9 @@ public class Evento {
 	private String descricao;
 	private TipoEvento tipoEvento;
 	private Genero genero;
-	
-
 
 	private List<String> pessoaEvento = new ArrayList<String>();
 	private List<String> listaCpfPessoa = new ArrayList<String>();
-	
-	
 
 	public Evento() {
 		setFuncionario(new Funcionario());

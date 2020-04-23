@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15850288949900" configfile="/posoJava/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="4018" id="pf15851357609810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15851357609821 pf158513819225911 pf15856735254440 pf15857079403632 pf15857445589600 pf15875808665700 pf15875808665701 pf15875808665702 pf15875808665703 pf15875808665704 pf15875808665705 pf15875808665706 pf15875808665707 pf15875808665708 pf15875808665709 pf158758086657010 pf158758086657011 pf158758086657012 pf158758086657013 pf158758086657014 pf158758086657015 pf158758086657016 pf158758086657017" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="4018" id="pf15851357609810" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15851357609821 pf158513819225911 pf15856735254440 pf15857079403632 pf15857445589600 pf15875808665700 pf15875808665701 pf15875808665702 pf15875808665703 pf15875808665704 pf15875808665705 pf15875808665706 pf15875808665707 pf15875808665708 pf15875808665709 pf158758086657010 pf158758086657011 pf158758086657012 pf158758086657013 pf158758086657014 pf158758086657015 pf158758086657016 pf158758086657017 pf15876556688240 pf15876585421644" path="*"/>
   <nodes xsi:type="pageflow:PFPage" name="content/index.xhtml" x="338" y="178" id="pf15851357609823" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15851357609821 pf15875808665702" path="/content/index.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/pessoas/cadastrarPessoas.xhtml" x="338" y="562" id="pf158513819225912" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf158513819225911" path="/content/pessoas/cadastrarPessoas.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/evento/listarEventos.xhtml" x="338" y="946" id="pf15856735254441" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf15856735254440" path="/content/evento/listarEventos.xhtml"/>
@@ -23,6 +23,8 @@
   <nodes xsi:type="pageflow:PFPage" name="content/sessao/cadastrarSessao.xhtml" x="338" y="7474" id="pf158758086657032" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf158758086657015" path="/content/sessao/cadastrarSessao.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/cadastrarEmpresaResp.xhtml" x="338" y="7858" id="pf158758086657033" referenceLink="//@navigationRule.0/@navigationCase.21/@toViewId|" inlinks="pf158758086657016" path="/content/empresaResponsavel/cadastrarEmpresaResp.xhtml"/>
   <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/alterarEmpresaResp.xhtml" x="338" y="8242" id="pf158758086657134" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf158758086657017" path="/content/empresaResponsavel/alterarEmpresaResp.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/genero/cadastrarGenero.xhtml" id="pf15876556688251" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf15876556688240" path="/content/genero/cadastrarGenero.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/tipoEvento/cadastrarTipoEvento.xhtml" id="pf15876585421645" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf15876585421644" path="/content/tipoEvento/cadastrarTipoEvento.xhtml"/>
   <links id="pf15851357609821" target="pf15851357609823" source="pf15851357609810" outcome="index" redirect="true"/>
   <links id="pf158513819225911" target="pf158513819225912" source="pf15851357609810" outcome="cadastrarPessoas"/>
   <links id="pf15856735254440" target="pf15856735254441" source="pf15851357609810" outcome="listarEventos"/>
@@ -46,4 +48,6 @@
   <links id="pf158758086657015" target="pf158758086657032" source="pf15851357609810" outcome="cadastrarSessao"/>
   <links id="pf158758086657016" target="pf158758086657033" source="pf15851357609810" outcome="cadastrarEmpresas"/>
   <links id="pf158758086657017" target="pf158758086657134" source="pf15851357609810" outcome="alterarEmpresas"/>
+  <links id="pf15876556688240" target="pf15876556688251" source="pf15851357609810" outcome="cadastrarGenero"/>
+  <links id="pf15876585421644" target="pf15876585421645" source="pf15851357609810" outcome="cadastrarTipoEvento"/>
 </pageflow:Pageflow>
