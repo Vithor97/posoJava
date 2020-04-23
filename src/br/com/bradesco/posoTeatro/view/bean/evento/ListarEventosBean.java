@@ -20,6 +20,13 @@ public class ListarEventosBean extends PosoBean implements BeanInterface{
 	@ManagedProperty("#{detalheEventoBean}")
 	private DetalheEventoBean detalheEventoBean;
 	
+	@ManagedProperty(value = "#{alterarEventoBean}")
+	private AlterarEventoBean alterarEventoBean;
+	
+	private Evento evento;
+	
+
+
 	private String mensagem;
 	private ArrayList<Evento> eventos;
 	private String pesquisaEvento = "";
@@ -52,6 +59,23 @@ public class ListarEventosBean extends PosoBean implements BeanInterface{
 		this.pesquisaEvento = pesquisaEvento;
 	}
 	
+	public Evento getEvento() {
+		return evento;
+	}
+
+	public void setEvento(Evento evento) {
+		this.evento = evento;
+	}
+
+	
+	public AlterarEventoBean getAlteraPessoaBean() {
+		return alterarEventoBean;
+	}
+	
+	public void setAlterarEventoBean(AlterarEventoBean alterarEventoBean) {
+		this.alterarEventoBean = alterarEventoBean;
+	}
+	
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Listar Eventos", "listarEventos", titulosBread, urlsBread);
 		setEventos(new EventoDao().listar(getPesquisaEvento()));
@@ -75,4 +99,13 @@ public class ListarEventosBean extends PosoBean implements BeanInterface{
 		detalheEventoBean.setTelaAnterior(this);
 		return detalheEventoBean.iniciarPagina(getTitulosBread(), getUrlsBread());
 	}
+ 	
+ 
+	
+	public String alteracao() {
+		alterarEventoBean.setEvento(evento);
+		return alterarEventoBean.iniciarPagina();
+	}
+
+
 }
