@@ -15,11 +15,12 @@ public class SessaoDao {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 				
-			PreparedStatement smt = conn.prepareStatement("insert into sessao values (?, ?, ?)");
+			PreparedStatement smt = conn.prepareStatement("insert into sessao values (?, ?, ?, ?)");
 			
 			smt.setLong(1, sessao.getEvento().getCodigo());
 			smt.setString(2, sessao.getDataFormatada());
 			smt.setString(3, sessao.getHoraFormatada());
+			smt.setLong(4, 1);
 			
 			smt.executeUpdate();	
 			
@@ -40,7 +41,7 @@ public class SessaoDao {
 	public Sessao consultaSessao(Sessao sessao) {
 		Sessao sessaoRetorno = new Sessao();
 		try {
-			PreparedStatement smt = conn.prepareStatement("SELECT * FROM sessao WHERE cod_sessao = ?");
+			PreparedStatement smt = conn.prepareStatement("SELECT * FROM sessao WHERE cod_sessao = ? AND situacao_sessao <> 0");
 			smt.setInt(1,sessao.getCodigo());
 			ResultSet rs = smt.executeQuery();
 			if(rs.next()) {
@@ -193,7 +194,7 @@ public class SessaoDao {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 
-			PreparedStatement smt = conn.prepareStatement("delete from sessao where cod_sessao = ?");
+			PreparedStatement smt = conn.prepareStatement("update sessao set situacao_sessao = 0 where cod_sessao = ?");
 
 			smt.setLong(1, sessao.getCodigo());
 
