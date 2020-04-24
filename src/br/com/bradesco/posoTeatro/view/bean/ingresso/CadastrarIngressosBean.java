@@ -20,6 +20,7 @@ import br.com.bradesco.posoTeatro.model.Pessoa;
 import br.com.bradesco.posoTeatro.model.Poltrona;
 import br.com.bradesco.posoTeatro.model.Sessao;
 import br.com.bradesco.posoTeatro.posoUtil.Constantes;
+import br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 import br.com.bradesco.posoTeatro.view.bean.pessoa.CadastrarPessoasBean;
@@ -205,7 +206,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		while (letra >= 'A') {
 			numero = 1;
 			for (int j = 0; j < Constantes.BALCAO_NOBRE; j++) {
-				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, 1);
+				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, TipoPoltrona.BalcaoNobre);
 				getBalcaoNobre().add(poltrona);
 				numero++;
 			}
@@ -216,7 +217,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		while (letra >= 'A') {
 			numero = 1;
 			for (int j = 0; j < Constantes.CAMAROTE_PRIME; j++) {
-				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, 2);
+				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, TipoPoltrona.CamarotePrime);
 				getCamarotePrime().add(poltrona);
 				numero++;
 			}
@@ -227,7 +228,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		while (numero > 0) {
 			letra = 'F';
 			for (int j = 0; j < Constantes.FRISAS_1; j++) {
-				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, 3);
+				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, TipoPoltrona.Frisas1);
 				getFrisas1().add(poltrona);
 				letra--;
 			}
@@ -238,7 +239,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		while (letra >= 'A') {
 			numero = 1;
 			for (int j = 0; j < Constantes.PLATEIA; j++) {
-				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, 4);
+				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, TipoPoltrona.Plateia);
 				getPlateia().add(poltrona);
 				numero++;
 			}
@@ -249,7 +250,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		while (numero > 0) {
 			letra = 'A';
 			for (int j = 0; j < Constantes.FRISAS_2; j++) {
-				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, 3);
+				Poltrona poltrona = new Poltrona("" + letra + String.format("%02d", numero), 0, TipoPoltrona.Frisas2);
 				getFrisas2().add(poltrona);
 				letra++;
 			}
@@ -325,6 +326,12 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		getIngresso().getPessoa().setCodigo(pessoa.getCodigo());
 		getIngresso().getPessoa().setNome(pessoa.getNome());
 		getIngresso().getPessoa().setCpf(pessoa.getCpf());
+		
+		getEstacionamento().getPessoa().setCodigo(pessoa.getCodigo());
+		getEstacionamento().getPessoa().setNome(pessoa.getNome());
+		getEstacionamento().getPessoa().setCpf(pessoa.getCpf());
+		
+		
 		setPesquisaPessoa("");
 		setPessoas(new ArrayList<Pessoa>());
 	}
@@ -344,22 +351,23 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 			List<Poltrona> lista = null;
 			
 			switch (poltrona.getTipoPoltrona()) {
-			case 1: // Balcão Nobre
+			case BalcaoNobre: // Balcão Nobre
 				lista = getBalcaoNobre();
 				break;
-			case 2: // Camarote Prime
+			case CamarotePrime: // Camarote Prime
 				lista = getCamarotePrime();
 				break;
-			case 3: // Frisas 1
+			case Frisas1: // Frisas 1
 				lista = getFrisas1();
 				break;
-			case 4: // 	Platéia
+			case Plateia: // 	Platéia
 				lista = getPlateia();
 				break;
-			case 5: // Frisas 2
+			case Frisas2: // Frisas 2
 				lista = getFrisas2();
 				break;
 			}
+
 			
 			Poltrona poltronaDaLista = lista.get(lista.indexOf(poltrona));
 			poltronaDaLista.setSelecionada(1);
@@ -419,7 +427,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 				new EstacionamentoDao().cadastrar(getEstacionamento());
 			}
 			
-			showDialog();
+			//showDialog();
 			iniciarPagina();
 		}
 	}
