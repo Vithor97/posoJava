@@ -33,7 +33,7 @@
 				<p:datePicker id="dataSessao"
 					value="${cadastrarSessaoBean.sessao.dia}"
 					mindate="${cadastrarSessaoBean.getDataAtual()}" locale="pt_BR"
-					showIcon="true" />
+					showIcon="true" disabledDates="${cadastrarSessaoBean.getDataAtualList()}" />
 
 				<p:outputLabel for="horaSessao"
 					value="${msgs.label_cadast_sess_hora_sess}" />

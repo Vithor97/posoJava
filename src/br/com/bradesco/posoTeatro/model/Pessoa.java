@@ -14,6 +14,7 @@ public class Pessoa {
 	private Date dataNascimento;
 	private String telefone;
 	private String email;
+	private int situacaoPessoa;
 
 	public int getCodigo() {
 		return codigo;
@@ -61,6 +62,14 @@ public class Pessoa {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public int getSituacaoPessoa() {
+		return situacaoPessoa;
+	}
+
+	public void setSituacaoPessoa(int situacaoPessoa) {
+		this.situacaoPessoa = situacaoPessoa;
 	}
 
 	public String getDataNascimentoString() {

@@ -12,7 +12,7 @@ public class EmpresaDao extends EmpresaResponsavel {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 
-			PreparedStatement smt = conn.prepareStatement("INSERT INTO Empresa_Responsavel VALUES (?, ?)");
+			PreparedStatement smt = conn.prepareStatement("INSERT INTO Empresa_Responsavel VALUES (?, ?, DEFAULT)");
 
 			smt.setString(1, empresaResponsavel.getCnpj().replace(".", "").replace("-", "").replace("/", ""));
 			smt.setString(2, empresaResponsavel.getNome());
@@ -30,41 +30,45 @@ public class EmpresaDao extends EmpresaResponsavel {
 		}
 	}
 
-	public String alterar(EmpresaResponsavel empresaResponsavel) {
+	public int alterar(EmpresaResponsavel empresaResponsavel) {
+		int rs = 0;
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement smt = conn.prepareStatement(
+					"UPDATE Empresa_Responsavel SET NOMEF_EMPRESA=?, CNPJ_EMPRESA=? WHERE COD_EMPRESA=?");
 
-			PreparedStatement smt = conn.prepareStatement("UPDATE Empresa_Responsavel SET CNPJ_EMPRESA=?, NOMEF_EMPRESA=? WHERE CNPJ_EMPRESA=?");
-			smt.setString(1, empresaResponsavel.getCnpj().replace(".", "").replace("-", "").replace("/", ""));
-			smt.setString(2, empresaResponsavel.getNome());
+			smt.setString(1, empresaResponsavel.getNome());
+			smt.setString(2, empresaResponsavel.getCnpj().replace(".", "").replace("-", "").replace("/", ""));
+			smt.setInt(3, empresaResponsavel.getCodigo());
 
-			smt.executeUpdate();
+			rs = smt.executeUpdate();
+			System.out.println("Linhas afetadas: " + rs);
 
-			smt.close();
-			conn.close();
-			return "Empresa alterada!";
 		} catch (Exception e) {
-			e.printStackTrace();
-			return "Erro na alteração!";
+			System.out.println("Dentro do catch: " + e.getMessage());
 		}
+		return rs;
 	}
 	
-	public String excluir(EmpresaResponsavel empresaResponsavel) {
+	public int excluir(EmpresaResponsavel empresaResponsavel) {
+		int rs = 0;
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement smt = conn.prepareStatement("UPDATE Empresa_Responsavel SET SITUACAO_EMPRESA=0 WHERE COD_EMPRESA=?");
 
-			PreparedStatement smt = conn.prepareStatement("DELETE FROM Empresa_Responsavel WHERE COD_EMPRESA=?");
+			smt.setInt(1, empresaResponsavel.getCodigo());
 
-			smt.executeUpdate();
+			rs = smt.executeUpdate();
+			System.out.println("Linhas afetadas: " + rs);
 
 			smt.close();
 			conn.close();
-			return "Empresa excluida!";
 		} catch (Exception e) {
-			e.printStackTrace();
-			return "Erro na exclusão!";
+			System.out.println("Dentro do catch: " + e.getMessage());
 		}
+		return rs;
 	}
+
 
 	public EmpresaResponsavel consultar(EmpresaResponsavel empresaResponsavel) {
 		try {

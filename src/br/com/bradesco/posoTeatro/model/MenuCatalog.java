@@ -21,10 +21,18 @@ public class MenuCatalog {
 	private boolean menuEmpresas;
 	private boolean cadastrarEmpresas;
 	private boolean consultarEmpresas;
+	private boolean alterarEmpresas;
+	private boolean excluirEmpresas;
 	
 	private boolean menuFuncionarios;
 	private boolean cadastrarFuncionarios;
 	private boolean consultarFuncionarios;
+	
+	private boolean menuGenero;
+	private boolean cadastrarGenero;
+	
+	private boolean menuTipoEvento;
+	private boolean cadastrarTipoEvento;
 	
 	public boolean getMenuEventos() {
 		return menuEventos;
@@ -92,6 +100,23 @@ public class MenuCatalog {
 	public void setConsultarEmpresas(boolean consultarEmpresas) {
 		this.consultarEmpresas = consultarEmpresas;
 	}
+
+	public boolean getAlterarEmpresas() {
+		return alterarEmpresas;
+	}
+
+	public void setAlterarEmpresas(boolean alterarEmpresas) {
+		this.alterarEmpresas = alterarEmpresas;
+	}
+
+	public boolean getExcluirEmpresas() {
+		return excluirEmpresas;
+	}
+
+	public void setExcluirEmpresas(boolean excluirEmpresas) {
+		this.excluirEmpresas = excluirEmpresas;
+	}
+
 	public boolean getCadastrarFuncionarios() {
 		return cadastrarFuncionarios;
 	}
@@ -133,6 +158,30 @@ public class MenuCatalog {
 	}
 	public void setMenuFuncionarios(boolean menuFuncionarios) {
 		this.menuFuncionarios = menuFuncionarios;
+	}
+	public boolean isMenuGenero() {
+		return menuGenero;
+	}
+	public void setMenuGenero(boolean menuGenero) {
+		this.menuGenero = menuGenero;
+	}
+	public boolean isCadastrarGenero() {
+		return cadastrarGenero;
+	}
+	public void setCadastrarGenero(boolean cadastrarGenero) {
+		this.cadastrarGenero = cadastrarGenero;
+	}
+	public boolean isMenuTipoEvento() {
+		return menuTipoEvento;
+	}
+	public void setMenuTipoEvento(boolean menuTipoEvento) {
+		this.menuTipoEvento = menuTipoEvento;
+	}
+	public boolean isCadastrarTipoEvento() {
+		return cadastrarTipoEvento;
+	}
+	public void setCadastrarTipoEvento(boolean cadastrarTipoEvento) {
+		this.cadastrarTipoEvento = cadastrarTipoEvento;
 	}
 	
 }

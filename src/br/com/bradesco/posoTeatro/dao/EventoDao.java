@@ -33,7 +33,7 @@ public class EventoDao extends Evento {
 			}
 			rs1.close();
 			smt1.close();
-			PreparedStatement smt2 = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?)");
+			PreparedStatement smt2 = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?, default)");
 
 			smt2.setInt(1, evento.getEmpresaResponsavel().getCodigo());
 			smt2.setInt(4, evento.getTipoEvento().getCodigo());
@@ -162,43 +162,43 @@ public class EventoDao extends Evento {
 	
 	public ArrayList<Evento> listar(String nome) {
 
-		ArrayList<Evento> eventos = new ArrayList<Evento>();
-		try {
-			Connection conn = new ConnectionFactory().getConnection();
-			
-			FacesContext context = FacesContext.getCurrentInstance();
-			Funcionario funcionario = (Funcionario) context.getExternalContext().getSessionMap().get("funcionarioLogado");						
-			String validacao = "where ";
-	
-			if (funcionario.getCargo().getCodigo() == 2) {
-				if (!nome.trim().isEmpty()) {
-					validacao += "desc_evento like '" + nome + "%' and ";
-				}
-				validacao += " cod_func = " + funcionario.getCodigo();
-			} else if (!nome.trim().isEmpty()) {
-				validacao += "desc_evento like '" + nome + "%'";
-			}else {
-				validacao = "";
-			}
+        ArrayList<Evento> eventos = new ArrayList<Evento>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
 
-			PreparedStatement smt = conn.prepareStatement("select cod_evento, desc_evento from evento " + validacao);
-			ResultSet rs = smt.executeQuery();
-			while (rs.next()) {
-				Evento evento = new Evento();
-				evento.setCodigo(rs.getInt("cod_evento"));
-				evento.setDescricao(rs.getString("desc_evento"));
-				eventos.add(evento);
-			}
-			rs.close();
-			smt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+            FacesContext context = FacesContext.getCurrentInstance();
+            Funcionario funcionario = (Funcionario) context.getExternalContext().getSessionMap().get("funcionarioLogado");
+            String validacao = "where ";
 
-		return eventos;
-	}
-	
+            if (funcionario.getCargo().getCodigo() == 2) {
+                if (!nome.trim().isEmpty()) {
+                    validacao += "desc_evento like '" + nome + "%' and ";
+                }
+                validacao += " cod_func = " + funcionario.getCodigo() + " and ";
+            } else if (!nome.trim().isEmpty()) {
+                validacao += "desc_evento like '" + nome + "%' and ";
+            }else {
+                validacao += " situacao_evento = 1";
+            }
+
+            PreparedStatement smt = conn.prepareStatement("select cod_evento, desc_evento from evento " + validacao);
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+                Evento evento = new Evento();
+                evento.setCodigo(rs.getInt("cod_evento"));
+                evento.setDescricao(rs.getString("desc_evento"));
+                eventos.add(evento);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return eventos;
+    }
+
 	public ArrayList<Pessoa> listarPessoasDoEvento(Evento evento) {
 
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
@@ -256,13 +256,14 @@ public class EventoDao extends Evento {
 		try {
 			
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement smt = conn.prepareStatement("Update evento set desc_evento = ?,  tipo_evento = ?, genr_evento = ?, cnpj_empresa = ?, cod_func_resp = ?");
+			PreparedStatement smt = conn.prepareStatement("Update evento set desc_evento = ?, cod_tipo = ?, cod_genero = ?, cod_empresa = ?, cod_func = ? where cod_evento = ?");
 			
 			smt.setString(1, eventoAltera.getDescricao());
 			smt.setInt(2, eventoAltera.getTipoEvento().getCodigo());
 			smt.setInt(3, eventoAltera.getGenero().getCodigo());
-			smt.setString(4, eventoAltera.getEmpresaResponsavel().getCnpj());
+			smt.setInt(4, eventoAltera.getEmpresaResponsavel().getCodigo());
 			smt.setInt(5, eventoAltera.getFuncionario().getCodigo());
+			smt.setInt(6, eventoAltera.getCodigo());
 
 			rs = smt.executeUpdate();
 			
@@ -278,30 +279,26 @@ public class EventoDao extends Evento {
 	
 	Connection conn = new ConnectionFactory().getConnection();
 	
-	public boolean excluir(Evento evento) {
+	public int excluirEvento(Evento evento) {
+		
+		int rowAffected = 0;
+		
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 
-			PreparedStatement smt = conn.prepareStatement("delete from evento where cod_evento = ?");
+			PreparedStatement smt = conn.prepareStatement("update evento set situacao_evento = ? where cod_evento = ?");
+			
+			smt.setInt(1, 0);
+			smt.setInt(2, evento.getCodigo());
 
-			smt.setInt(1, evento.getCodigo());
+			rowAffected = smt.executeUpdate();
 
-			smt.executeUpdate();
-
-			smt.close();
-			conn.close();
-
-			return true;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		} finally {
-			try {
-				conn.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
+				System.out.println(e.getMessage());
 			}
-		}
+		
+			return rowAffected;
+		
 	}
 }
