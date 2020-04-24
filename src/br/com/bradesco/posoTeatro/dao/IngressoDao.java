@@ -10,6 +10,7 @@ import java.util.List;
 import br.com.bradesco.posoTeatro.model.Ingresso;
 import br.com.bradesco.posoTeatro.model.Poltrona;
 import br.com.bradesco.posoTeatro.model.Sessao;
+import br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona;
 
 public class IngressoDao {
 	
@@ -24,7 +25,7 @@ public class IngressoDao {
 			smt.setInt(1, ingresso.getSessao().getCodigo());
 			smt.setInt(2, ingresso.getPessoa().getCodigo());
 			smt.setString(3, ingresso.getPoltrona().getCodigo());
-			smt.setInt(4, ingresso.getPoltrona().getTipoPoltrona());
+			smt.setInt(4, ingresso.getPoltrona().getTipoPoltrona().getCodigo());
 	
 			smt.executeUpdate();	
 			
@@ -49,7 +50,7 @@ public class IngressoDao {
 				ingressoRetorno.setCodigoIngresso(rs.getInt("cod_ingresso"));
 				ingressoRetorno.getPessoa().setCodigo(rs.getInt("cod_pessoa"));
 				ingressoRetorno.getPoltrona().setCodigo(rs.getString("cod_poltrona"));
-				ingressoRetorno.getPoltrona().setTipoPoltrona(rs.getInt("tipo_poltrona"));
+				ingressoRetorno.getPoltrona().setTipoPoltrona(TipoPoltrona.codigo(rs.getInt("tipo_poltrona")));
 				ingressoRetorno.getSessao().setCodigo(rs.getInt("cod_sessao"));
 				rs.close();
 				smt.close();
@@ -91,7 +92,7 @@ public class IngressoDao {
 			while (rs.next()) {
 				Poltrona poltrona = new Poltrona();
 				poltrona.setCodigo(rs.getString("cod_poltrona"));
-				poltrona.setTipoPoltrona(rs.getInt("tipo_poltrona"));
+				poltrona.setTipoPoltrona(TipoPoltrona.codigo(rs.getInt("tipo_poltrona")));
 				poltrona.setSelecionada(1);
 				poltronas.add(poltrona);
 			}

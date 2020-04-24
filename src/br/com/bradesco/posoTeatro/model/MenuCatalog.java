@@ -9,6 +9,7 @@ public class MenuCatalog {
 	private boolean menuSessoes;
 	private boolean cadastrarSessoes;
 	private boolean consultarSessoes;
+	private boolean listarSessoes;
 	
 	private boolean menuPessoas;
 	private boolean cadastrarPessoas;
@@ -182,6 +183,12 @@ public class MenuCatalog {
 	}
 	public void setCadastrarTipoEvento(boolean cadastrarTipoEvento) {
 		this.cadastrarTipoEvento = cadastrarTipoEvento;
+	}
+	public boolean isListarSessoes() {
+		return listarSessoes;
+	}
+	public void setListarSessoes(boolean listarSessoes) {
+		this.listarSessoes = listarSessoes;
 	}
 	
 }
