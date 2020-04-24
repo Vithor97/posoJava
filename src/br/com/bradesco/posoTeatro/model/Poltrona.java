@@ -1,9 +1,11 @@
 package br.com.bradesco.posoTeatro.model;
 
+import br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona;
+
 public class Poltrona {
 	private String codigo;
 	private int selecionada;
-	private int tipoPoltrona;
+	private TipoPoltrona tipoPoltrona;
 
 	public String getCodigo() {
 		return codigo;
@@ -21,15 +23,15 @@ public class Poltrona {
 		this.selecionada = selecionada;
 	}
 
-	public int getTipoPoltrona() {
+	public TipoPoltrona getTipoPoltrona() {
 		return tipoPoltrona;
 	}
 
-	public void setTipoPoltrona(int tipoPoltrona) {
+	public void setTipoPoltrona(TipoPoltrona tipoPoltrona) {
 		this.tipoPoltrona = tipoPoltrona;
 	}
 
-	public Poltrona(String codigo, int selecionada, int tipoPoltrona) {
+	public Poltrona(String codigo, int selecionada, TipoPoltrona tipoPoltrona) {
 		setCodigo(codigo);
 		setSelecionada(selecionada);
 		setTipoPoltrona(tipoPoltrona);
@@ -44,7 +46,6 @@ public class Poltrona {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
-		result = prime * result + tipoPoltrona;
 		result = prime * result + selecionada;
 		return result;
 	}

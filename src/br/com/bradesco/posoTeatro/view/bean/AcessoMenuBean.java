@@ -1,5 +1,6 @@
 package br.com.bradesco.posoTeatro.view.bean;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -25,25 +26,29 @@ public class AcessoMenuBean{
 		
 		FacesContext context = FacesContext.getCurrentInstance();
 		Funcionario funcionario = (Funcionario) context.getExternalContext().getSessionMap().get("funcionarioLogado");
-		
-		switch (funcionario.getCargo().getCodigo()) {
-		case 1:
-			liberarGerente();
-			break;
-		case 2:
-			liberarCoordenadorEventos();
-			break;
-		case 3:
-			liberarCaixa();
-			break;
-		case 4:
-			liberarCoordenadorGeralEventos();
-			break;
-		case 5:
-			liberarCoordenadorGeralSessoes();
-			break;
-		default:
-			break;
+		if(funcionario.getSenha().equals("123456")) {
+			context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,"Por favor vá no seu perfil e altere sua senha para ter acesso ao menu!",""));
+		}
+		else {
+			switch (funcionario.getCargo().getCodigo()) {
+			case 1:
+				liberarGerente();
+				break;
+			case 2:
+				liberarCoordenadorEventos();
+				break;
+			case 3:
+				liberarCaixa();
+				break;
+			case 4:
+				liberarCoordenadorGeralEventos();
+				break;
+			case 5:
+				liberarCoordenadorGeralSessoes();
+				break;
+			default:
+				break;
+			}
 		}
 	}
 
@@ -55,6 +60,7 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuSessoes(true);
 		getMenuCatalog().setCadastrarSessoes(true);
 		getMenuCatalog().setConsultarSessoes(true);
+		getMenuCatalog().setListarSessoes(true);
 		
 		getMenuCatalog().setMenuPessoas(true);
 		getMenuCatalog().setCadastrarPessoas(true);
@@ -67,6 +73,8 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuEmpresas(true);
 		getMenuCatalog().setCadastrarEmpresas(true);
 		getMenuCatalog().setConsultarEmpresas(true);
+		getMenuCatalog().setAlterarEmpresas(true);
+		getMenuCatalog().setExcluirEmpresas(true);
 		
 		getMenuCatalog().setMenuFuncionarios(true);
 		getMenuCatalog().setCadastrarFuncionarios(true);
@@ -92,6 +100,7 @@ public class AcessoMenuBean{
 		
 		getMenuCatalog().setMenuSessoes(true);
 		getMenuCatalog().setConsultarSessoes(true);
+		getMenuCatalog().setListarSessoes(true);
 		
 		getMenuCatalog().setMenuIngressos(true);
 		getMenuCatalog().setConsultarIngressos(true);
@@ -105,6 +114,9 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuEmpresas(true);
 		getMenuCatalog().setCadastrarEmpresas(true);
 		getMenuCatalog().setConsultarEmpresas(true);
+		getMenuCatalog().setAlterarEmpresas(true);
+		getMenuCatalog().setExcluirEmpresas(true);
+
 		
 		getMenuCatalog().setMenuPessoas(true);
 		getMenuCatalog().setCadastrarPessoas(true);
@@ -118,6 +130,7 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuSessoes(true);
 		getMenuCatalog().setCadastrarSessoes(true);
 		getMenuCatalog().setConsultarSessoes(true);
+		getMenuCatalog().setListarSessoes(true);
 		
 		getMenuCatalog().setMenuEventos(true);
 		getMenuCatalog().setListarEventos(true);

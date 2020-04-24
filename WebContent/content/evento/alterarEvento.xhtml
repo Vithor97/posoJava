@@ -26,21 +26,21 @@
 			<h:panelGrid columns="2" cellspacing="20">
 				<h:panelGrid columns="2">
 					<p:outputLabel for="codigoEvento" value="#{msgs.label_detalheEvento_codigo}" />
-					<p:inputText id="codigoEvento"	value="#{detalheEventoBean.evento.codigo}"  />
+					<p:inputText id="codigoEvento"	value="#{alterarEventoBean.evento.codigo}"  />
 					<p:outputLabel for="tipoEvento"	value="#{msgs.label_detalheEvento_tipo}" />
-					<p:inputText id="tipoEvento" value="#{detalheEventoBean.evento.tipoEvento.codigo}" size="20" />
+					<p:inputText id="tipoEvento" value="#{alterarEventoBean.evento.tipoEvento.codigo}" size="20" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:outputLabel for="descricaoEvento" value="#{msgs.label_detalheEvento_descricao}" />
-					<p:inputText id="descricaoEvento" value="#{detalheEventoBean.evento.descricao}" size="50" />				
+					<p:inputText id="descricaoEvento" value="#{alterarEventoBean.evento.descricao}" size="50" />				
 					<p:outputLabel for="generoEvento" value="#{msgs.label_detalheEvento_genero}" />
-					<p:inputText id="generoEvento" value="#{detalheEventoBean.evento.genero.codigo}" size="20" />
+					<p:inputText id="generoEvento" value="#{alterarEventoBean.evento.genero.codigo}" size="20" />
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<p:outputLabel for="codigoFuncionario" value="#{msgs.label_cod_funcionario_resp}" />
-					<p:inputText id="codigoFuncionario" value="#{detalheEventoBean.evento.funcionario.codigo}" />
+					<p:inputText id="codigoFuncionario" value="#{alterarEventoBean.evento.funcionario.codigo}" />
 					<p:outputLabel for="codigoEmpresa" value="#{msgs.label_cod_empresa_resp}" />
-					<p:inputText id="codigoEmpresa" value="#{detalheEventoBean.evento.empresaResponsavel.cnpj}" />
+					<p:inputText id="codigoEmpresa" value="#{alterarEventoBean.evento.empresaResponsavel.cnpj}" />
 				</h:panelGrid>
 			</h:panelGrid>
 			

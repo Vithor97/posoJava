@@ -15,4 +15,13 @@
 		<pattern value="/perfil" />
 		<view-id value="/content/perfil/perfilFuncionario.xhtml" />
 	</url-mapping>
+	<url-mapping id="alterarEvento">
+		<pattern value="/alterarEvento" />
+		<view-id value="/content/evento/alterarEvento.xhtml" />
+	</url-mapping>
+	
+	<url-mapping id="listarEventos">
+		<pattern value="/listarEventos" />
+		<view-id value="/content/evento/listarEventos.xhtml" />
+	</url-mapping>
 </pretty-config>

@@ -9,6 +9,7 @@ public class MenuCatalog {
 	private boolean menuSessoes;
 	private boolean cadastrarSessoes;
 	private boolean consultarSessoes;
+	private boolean listarSessoes;
 	
 	private boolean menuPessoas;
 	private boolean cadastrarPessoas;
@@ -21,6 +22,8 @@ public class MenuCatalog {
 	private boolean menuEmpresas;
 	private boolean cadastrarEmpresas;
 	private boolean consultarEmpresas;
+	private boolean alterarEmpresas;
+	private boolean excluirEmpresas;
 	
 	private boolean menuFuncionarios;
 	private boolean cadastrarFuncionarios;
@@ -98,6 +101,23 @@ public class MenuCatalog {
 	public void setConsultarEmpresas(boolean consultarEmpresas) {
 		this.consultarEmpresas = consultarEmpresas;
 	}
+
+	public boolean getAlterarEmpresas() {
+		return alterarEmpresas;
+	}
+
+	public void setAlterarEmpresas(boolean alterarEmpresas) {
+		this.alterarEmpresas = alterarEmpresas;
+	}
+
+	public boolean getExcluirEmpresas() {
+		return excluirEmpresas;
+	}
+
+	public void setExcluirEmpresas(boolean excluirEmpresas) {
+		this.excluirEmpresas = excluirEmpresas;
+	}
+
 	public boolean getCadastrarFuncionarios() {
 		return cadastrarFuncionarios;
 	}
@@ -163,6 +183,12 @@ public class MenuCatalog {
 	}
 	public void setCadastrarTipoEvento(boolean cadastrarTipoEvento) {
 		this.cadastrarTipoEvento = cadastrarTipoEvento;
+	}
+	public boolean isListarSessoes() {
+		return listarSessoes;
+	}
+	public void setListarSessoes(boolean listarSessoes) {
+		this.listarSessoes = listarSessoes;
 	}
 	
 }

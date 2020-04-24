@@ -100,6 +100,33 @@ public class SessaoDao {
 
 		return sessoes;
 	}
+	
+	public ArrayList<Sessao> listarSessoesAtivas() {
+		
+		ArrayList<Sessao> sessoes = new ArrayList<Sessao>();
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement smt = conn.prepareStatement(
+					"select * from sessao where dia_sessao >= getdate() and situacao_sessao <> 0");
+			ResultSet rs = smt.executeQuery();
+			while (rs.next()) {
+				Sessao sessao = new Sessao();
+				sessao.setCodigo(rs.getInt("cod_sessao"));
+				sessao.setDia(rs.getDate("dia_sessao"));
+				sessao.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").split(":")[0])));
+				sessao.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").split(":")[1])));
+				sessao.setSituacao("Sessão futura");
+				sessoes.add(sessao);
+			}
+			rs.close();
+			smt.close();
+			conn.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return sessoes;
+	}
 
 	public ArrayList<Sessao> listarSessoes(Evento evento) {
 
@@ -135,7 +162,7 @@ public class SessaoDao {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 			PreparedStatement smt = conn.prepareStatement(
-					"select *, case when dia_sessao >= getdate() then 'Sessão futura' else 'Sessão já realizada' end as situacao from sessao where dia_sessao = ?");
+					"select *, case when dia_sessao >= getdate() then 'Sessão futura' else 'Sessão já realizada' end as situacao from sessao where dia_sessao = ? and situacao_sessao = 1");
 			smt.setString(1, dia);
 			ResultSet rs = smt.executeQuery();
 			while (rs.next()) {

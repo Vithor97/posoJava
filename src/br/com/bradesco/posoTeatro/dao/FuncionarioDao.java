@@ -14,7 +14,7 @@ public class FuncionarioDao extends Funcionario {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 				
-			PreparedStatement smt = conn.prepareStatement("insert into funcionario values (?, ?, ?, ?, ?, ?, default)");
+			PreparedStatement smt = conn.prepareStatement("insert into funcionario values (?, ?, ?, ?, ?, ?, default, default)");
 			
 			smt.setInt(3, funcionario.getCargo().getCodigo());
 			smt.setString(1, funcionario.getNome());
@@ -71,6 +71,28 @@ public class FuncionarioDao extends Funcionario {
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	public boolean alterarSenha(Funcionario funcionario) {
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+				
+			PreparedStatement smt = conn.prepareStatement("UPDATE funcionario SET senha_func = ? WHERE cod_func = ?");
+			
+			smt.setString(1, funcionario.getSenha());
+			smt.setInt(2, funcionario.getCodigo());
+			
+			smt.executeUpdate();	
+			
+			smt.close();
+			conn.close();
+			
+			return true;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
 		}
 	}
 }

@@ -12,6 +12,8 @@ public class Evento {
 	private String descricao;
 	private TipoEvento tipoEvento;
 	private Genero genero;
+	private int situacaoEvento;
+	
 
 	private List<String> pessoaEvento = new ArrayList<String>();
 	private List<String> listaCpfPessoa = new ArrayList<String>();
@@ -24,6 +26,14 @@ public class Evento {
 		setGenero(new Genero());
 	}
 
+	public int getSituacaoEvento() {
+		return situacaoEvento;
+	}
+
+	public void setSituacaoEvento(int situacaoEvento) {
+		this.situacaoEvento = situacaoEvento;
+	}
+	
 	public Funcionario getFuncionario() {
 		return funcionario;
 	}

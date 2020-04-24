@@ -18,7 +18,8 @@
 	<h:outputStylesheet name="css/menu.css"></h:outputStylesheet>
 	<h:outputStylesheet name="primeicons/primeicons.css" library="primefaces"/>	
 	
-	<h:form>
+	<h:form id="formMenuCatalog">
+		<p:messages/>
 		<p:importConstants type="br.com.bradesco.posoTeatro.posoUtil.Constantes" var="Constantes" />
 		
 		
@@ -34,6 +35,7 @@
 			<p:submenu label="Sessões" rendered="#{acessoMenuBean.menuCatalog.menuSessoes}">
 				<p:menuitem value="#{msgs.label_cadastrarSessões}" action="#{cadastrarSessaoBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarSessoes}"></p:menuitem>
 				<p:menuitem value="#{msgs.label_consultarSessões}" action="#{consultaSessaoBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.consultarSessoes}"></p:menuitem>
+				<p:menuitem value="Listar Sessões" action="#{listarSessoesBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.listarSessoes}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="Pessoas" rendered="#{acessoMenuBean.menuCatalog.menuPessoas}">
 				<p:menuitem value="#{msgs.label_cadastrarPessoas}" action="#{cadastrarPessoasBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarPessoas}"></p:menuitem>
@@ -46,6 +48,8 @@
 			<p:submenu label="Empresas" rendered="#{acessoMenuBean.menuCatalog.menuEmpresas}">
 				<p:menuitem value="#{msgs.label_cadastrarEmpresas}" action="#{cadastrarEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarEmpresas}"></p:menuitem>
 				<p:menuitem value="#{msgs.label_consultarEmpresas}" action="#{consultarEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.consultarEmpresas}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_alterarEmpresas}" action="#{alterarEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.alterarEmpresas}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_excluirEmpresas}" action="#{excluirEmpresaBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.excluirEmpresas}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="Funcionários" rendered="#{acessoMenuBean.menuCatalog.menuFuncionarios}">
 				<p:menuitem value="#{msgs.label_cadastrarFuncionários}" action="#{cadastrarFuncionariosBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarFuncionarios}"></p:menuitem>

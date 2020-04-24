@@ -1,27 +1,35 @@
 package br.com.bradesco.posoTeatro.view.bean.empresaResponsavel;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
+
+import org.primefaces.PrimeFaces;
 
 import br.com.bradesco.posoTeatro.dao.EmpresaDao;
 import br.com.bradesco.posoTeatro.model.EmpresaResponsavel;
+import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
 @ManagedBean(name = "alterarEmpresaBean")
 @SessionScoped
 
-public class AlterarEmpresaBean extends PosoBean {
+public class AlterarEmpresaBean extends PosoBean implements Serializable, BeanInterface {
+// aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+	private static final long serialVersionUID = 1L;
 
-	private EmpresaResponsavel empresaResponsavel;
+	private EmpresaResponsavel empresaResponsavel = new EmpresaResponsavel();
 	private String mensagem;
-
+	
 	public EmpresaResponsavel getEmpresaResponsavel() {
 		return empresaResponsavel;
 	}
 
-	public void setEmpresaResp(EmpresaResponsavel empresaResponsavel) {
+	public void setEmpresaResponsavel(EmpresaResponsavel empresaResponsavel) {
 		this.empresaResponsavel = empresaResponsavel;
 	}
 
@@ -34,8 +42,23 @@ public class AlterarEmpresaBean extends PosoBean {
 	}
 
 	public void alterar() {
-		if (validarDados())
-			setMensagem(new EmpresaDao().alterar(getEmpresaResponsavel()));
+		int linhasAfetadas;
+		if (validarDados()) {
+			linhasAfetadas = new EmpresaDao().alterar(getEmpresaResponsavel());
+			if (linhasAfetadas != 0) {
+				setMensagem("Alteração realizada com sucesso");
+
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(getMensagem()));
+
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+
+			} else {
+				setMensagem("Alteração não realizada");
+			}
+		} else {
+
+		}
+
 	}
 
 	public boolean validarDados() {
@@ -54,11 +77,12 @@ public class AlterarEmpresaBean extends PosoBean {
 		return true;
 	}
 
+	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
-		super.iniciarPagina("Alterar Empresas", "alterarEmpresas", titulosBread, urlsBread);
-		return "alterarEmpresas";
+		return null;
 	}
 
+	@Override
 	public String iniciarPagina() {
 		super.iniciarPagina("Alterar Empresas", "alterarEmpresas");
 		return "alterarEmpresas";

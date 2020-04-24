@@ -13,7 +13,7 @@
 	
 	<ui:define name="conteudo">
 		<h:form id = "formPerfil">
-			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			<p:dialog header="Mudar senha" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
                 <br/>
 			    <h:outputText value="${perfilFuncionarioBean.mensagem}" />
 			    <br/>
@@ -34,11 +34,11 @@
 						<p:password id="novaSenha" value="#{perfilFuncionarioBean.novaSenha}" maxlength="20" maxsize="17"/>
 					</h:panelGroup>
 					<h:panelGroup>
-						<p:outputLabel for="confirmarNovaSenha"  value="${msgs.label_perfil_confirmarSenhaNova}" />
+						<p:outputLabel for="confirmarNovaSenha" value="${msgs.label_perfil_confirmarSenhaNova}" />
 						<p:password id="confirmarNovaSenha" value="#{perfilFuncionarioBean.confirmarNovaSenha}" maxlength="20" size="17"/>
 					</h:panelGroup>
 				</h:panelGrid>
-				<p:commandButton style="float: left;" value="${msgs.btn_perfil_mudarSenha}" update="formPerfil" action="#{perfilFuncionarioBean.alterarSenha}" oncomplete="PF('modalAlterarSenha').hide()"/>
+				<p:commandButton style="float: left;" value="${msgs.btn_perfil_mudarSenha}" update="dlg1" action="#{perfilFuncionarioBean.alterarSenha}" oncomplete="PF('dlg1').show()" />
 				<p:commandButton style="float: right; background-color:red;" value="${msgs.btn_perfil_cancelar}" onclick="PF('modalAlterarSenha').hide()"/>
 			</p:dialog>
 			
