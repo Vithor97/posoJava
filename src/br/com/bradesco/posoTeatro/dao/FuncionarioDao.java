@@ -14,7 +14,7 @@ public class FuncionarioDao extends Funcionario {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 				
-			PreparedStatement smt = conn.prepareStatement("insert into funcionario values (?, ?, ?, ?, ?, ?, default)");
+			PreparedStatement smt = conn.prepareStatement("insert into funcionario values (?, ?, ?, ?, ?, ?, default, default)");
 			
 			smt.setInt(3, funcionario.getCargo().getCodigo());
 			smt.setString(1, funcionario.getNome());
