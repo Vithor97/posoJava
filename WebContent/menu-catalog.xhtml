@@ -35,6 +35,7 @@
 			<p:submenu label="Sessões" rendered="#{acessoMenuBean.menuCatalog.menuSessoes}">
 				<p:menuitem value="#{msgs.label_cadastrarSessões}" action="#{cadastrarSessaoBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarSessoes}"></p:menuitem>
 				<p:menuitem value="#{msgs.label_consultarSessões}" action="#{consultaSessaoBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.consultarSessoes}"></p:menuitem>
+				<p:menuitem value="Listar Sessões" action="#{listarSessoesBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.listarSessoes}"></p:menuitem>
 			</p:submenu>
 			<p:submenu label="Pessoas" rendered="#{acessoMenuBean.menuCatalog.menuPessoas}">
 				<p:menuitem value="#{msgs.label_cadastrarPessoas}" action="#{cadastrarPessoasBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarPessoas}"></p:menuitem>
