@@ -51,6 +51,7 @@ public class SessaoDao {
 				sessaoRetorno.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").substring(3, 5))));
 				sessaoRetorno.setDiaString(rs.getString("dia_sessao"));
 				sessaoRetorno.setDataSessao(rs.getString("dia_sessao"));
+				sessaoRetorno.setValorBase(rs.getDouble("valor_base_sessao"));
 				rs.close();
 				smt.close();
 				return sessaoRetorno;
@@ -88,6 +89,7 @@ public class SessaoDao {
 				sessao.setDia(rs.getDate("dia_sessao"));
 				sessao.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").split(":")[0])));
 				sessao.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").split(":")[1])));
+				sessao.setValorBase(rs.getDouble("valor_base_sessao"));
 				sessao.setSituacao(rs.getString("situacao"));
 				sessoes.add(sessao);
 			}
@@ -115,6 +117,7 @@ public class SessaoDao {
 				sessao.setDia(rs.getDate("dia_sessao"));
 				sessao.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").split(":")[0])));
 				sessao.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").split(":")[1])));
+				sessao.setValorBase(rs.getDouble("valor_base_sessao"));
 				sessao.setSituacao("Sessão futura");
 				sessoes.add(sessao);
 			}
@@ -173,6 +176,7 @@ public class SessaoDao {
 				sessao.setDia(rs.getDate("dia_sessao"));
 				sessao.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").split(":")[0])));
 				sessao.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").split(":")[0])));
+				sessao.setValorBase(rs.getDouble("valor_base_sessao"));
 				sessao.setSituacao(rs.getString("situacao"));
 				sessoes.add(sessao);
 			}

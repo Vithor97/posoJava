@@ -54,7 +54,7 @@
 						<p:commandButton style="width: 100%;"
 							value="#{msgs.label_cadastrarIngressos_selecionar}" 
 							action="#{cadastrarIngressosBean.selecionarSessao(sessao)}" oncomplete="PF('dlgSessao').hide();" 
-							update=":dados:pgSessoes :dados:pgEstacionamento :dados:poltronas"/>
+							update=":dados:pgSessoes :dados:pgEstacionamento :dados:poltronas "/>
 					</p:column>
 				</p:dataTable>
 			</p:dialog>
@@ -144,7 +144,7 @@
 							<h:panelGrid columns="2">
 								<p:outputLabel for="vagas" value="Vagas " />
 								<p:inputNumber id="vagas" value="#{cadastrarIngressosBean.vagasEstacionamento}" maxValue="#{cadastrarIngressosBean.limiteEstacionamento}" minValue="0" size="9" symbol=" vagas" symbolPosition="s">
-									<f:validateRegex pattern="^[0-9]+$" />
+									
 								</p:inputNumber>
 							</h:panelGrid>
 						</h:panelGrid>
@@ -152,25 +152,29 @@
 				</h:panelGrid>
 			</h:panelGrid>
 			 
+			<p:importEnum type="br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona" var="tipoPoltrona" allSuffix="ALL_ENUM_VALUES" />  
+			 
+			<p:growl id="growl" showDetail="true" keepAlive="true" life="3	000" />
+			 
 			<p:accordionPanel id="poltronas">
        			<p:tab title="#{msgs.label_cadastrarIngressos_poltronas} #{msgs.label_cadastrarIngressos_poltronas_obrigatoria}">
 					<h:panelGrid columns="1" style="margin: auto;">
-						<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_balcaoNobre}</p>
+						<p class="setor">#{tipoPoltrona.BalcaoNobre.descricao} - R$ #{cadastrarIngressosBean.ingresso.sessao.getValorPoltronaString(tipoPoltrona.BalcaoNobre.porcentagem)}</p>
 						<p:dataGrid id="poltronas1" var="poltrona"  value="#{cadastrarIngressosBean.balcaoNobre}" columns="#{Constantes.BALCAO_NOBRE}" styleClass="poltronas">
 							<div id="poltrona1">
 								<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 1)}">
-									<p:ajax update="poltronas1"/>
+									<p:ajax update="poltronas1 :dados:growl"/>
 									<p:graphicImage styleClass="imagemGrande" name="img/poltronas/#{poltrona.selecionada}.png" />
 									<br />
 									<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
 								</h:commandLink>
 							</div>
 						</p:dataGrid>
-						<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_camarotePrime}</p>
+						<p class="setor">#{tipoPoltrona.CamarotePrime.descricao} - R$ #{cadastrarIngressosBean.ingresso.sessao.getValorPoltronaString(tipoPoltrona.CamarotePrime.porcentagem)}</p>
 						<p:dataGrid id="poltronas2" var="poltrona" value="#{cadastrarIngressosBean.camarotePrime}" columns="#{Constantes.CAMAROTE_PRIME}" styleClass="poltronas">
 							<div id="poltrona2">
 								<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 2)}">
-									<p:ajax update="poltronas2"/>
+									<p:ajax update="poltronas2 :dados:growl"/>
 									<p:graphicImage styleClass="imagemGrande" name="img/poltronas/#{poltrona.selecionada}.png" />
 									<br />
 									<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
@@ -181,11 +185,11 @@
 				
 					<h:panelGrid columns="3" style="margin: auto;">
 						<p:column>
-							<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_frisas1}</p>
+						<p class="setor">#{tipoPoltrona.Frisas1.descricao} - R$ #{cadastrarIngressosBean.ingresso.sessao.getValorPoltronaString(tipoPoltrona.Frisas1.porcentagem)}</p>
 							<p:dataGrid id="poltronas3" var="poltrona" value="#{cadastrarIngressosBean.frisas1}" columns="#{Constantes.FRISAS_1}" styleClass="poltronas">
 								<div id="poltrona3">
 									<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 3)}">
-										<p:ajax update="poltronas3"/>
+										<p:ajax update="poltronas3 :dados:growl"/>
 										<p:graphicImage styleClass="imagemPequena" name="img/poltronas/#{poltrona.selecionada}.png" />
 										<br />
 										<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
@@ -194,11 +198,11 @@
 							</p:dataGrid>
 						</p:column>
 						<p:column>
-							<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_plateia}</p>
+						<p class="setor">#{tipoPoltrona.Plateia.descricao} - R$ #{cadastrarIngressosBean.ingresso.sessao.getValorPoltronaString(tipoPoltrona.Plateia.porcentagem)}</p>
 							<p:dataGrid id="poltronas4" var="poltrona" value="#{cadastrarIngressosBean.plateia}" columns="#{Constantes.PLATEIA}" styleClass="poltronas">
 								<div id="poltrona4">
 									<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 4)}">
-										<p:ajax update="poltronas4"/>
+										<p:ajax update="poltronas4 :dados:growl"/>
 										<p:graphicImage styleClass="imagemPequena" name="img/poltronas/#{poltrona.selecionada}.png" />
 										<br />
 										<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
@@ -207,11 +211,11 @@
 							</p:dataGrid>
 						</p:column>
 						<p:column>
-							<p class="setor">#{msgs.label_cadastrarIngressos_poltronas_frisas2}</p>
+						<p class="setor">#{tipoPoltrona.Frisas2.descricao} - R$ #{cadastrarIngressosBean.ingresso.sessao.getValorPoltronaString(tipoPoltrona.Frisas2.porcentagem)}</p>
 							<p:dataGrid id="poltronas5" var="poltrona" value="#{cadastrarIngressosBean.frisas2}" columns="#{Constantes.FRISAS_2}" styleClass="poltronas">
 								<div id="poltrona5">
 									<h:commandLink action="#{cadastrarIngressosBean.reservar(poltrona, 5)}">
-										<p:ajax update="poltronas5"/>
+										<p:ajax update="poltronas5 :dados:growl"/>
 										<p:graphicImage styleClass="imagemPequena" name="img/poltronas/#{poltrona.selecionada}.png" />
 										<br />
 										<p:outputLabel value="#{poltrona.codigo}"></p:outputLabel>
@@ -228,7 +232,7 @@
 			</p:accordionPanel>
 
 			<p:commandButton disabled="#{cadastrarIngressosBean.telaAnterior == null}" value="#{msgs.label_cadastrarIngressos_voltar}" action="#{cadastrarIngressosBean.voltar}" style="margin-top:10px" />
-			<p:commandButton value="#{msgs.label_cadastrarIngressos_salvar}" action="#{cadastrarIngressosBean.cadastrar}" style="margin-top:10px; float:right;" update="dlg1"/>
+			<p:commandButton value="#{msgs.label_cadastrarIngressos_salvar}" action="#{cadastrarIngressosBean.cadastrar}" style="margin-top:10px; float:right;" oncomplete="PF('dlg1').show();" update="dlg1"/>
 			
 		</h:form>
 	</ui:define>

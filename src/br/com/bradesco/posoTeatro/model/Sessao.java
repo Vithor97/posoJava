@@ -13,6 +13,7 @@ public class Sessao {
 	private Horario horario = new Horario();
 	private String dataSessao;
 	private Date dia;	
+	private double valorBase;
 	private String situacao;
 	
 	public Sessao() {
@@ -51,6 +52,14 @@ public class Sessao {
 
 	public void setDia(Date dia) {
 		this.dia = dia;
+	}
+
+	public double getValorBase() {
+		return valorBase;
+	}
+
+	public void setValorBase(double valorBase) {
+		this.valorBase = valorBase;
 	}
 
 	public String getSituacao() {
@@ -110,6 +119,18 @@ public class Sessao {
 
 	public void setDataSessao(String dataSessao) {
 		this.dataSessao = dataSessao;
+	}
+	
+	public String getValorBaseString() {
+		return String.format("%.2f", getValorBase());
+	}
+	
+	public String getValorPoltronaString(double porcentagem) {
+		return String.format("%.2f", getValorBase() * porcentagem);
+	}
+	
+	public double getValorPoltrona(double porcentagem) {
+		return getValorBase() * porcentagem;
 	}
 
 }

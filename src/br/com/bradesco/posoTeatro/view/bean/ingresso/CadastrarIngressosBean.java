@@ -6,9 +6,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import br.com.bradesco.posoTeatro.dao.EstacionamentoDao;
 import br.com.bradesco.posoTeatro.dao.IngressoDao;
@@ -260,38 +263,55 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		
 	}
 
+	private double valorTotal = 0;
+	
 	public void reservar(Poltrona poltrona, int setor) {
-		
-		List<Poltrona> lista = null;
-		
-		switch (setor) {
-		case 1: // Balcão Nobre
-			lista = getBalcaoNobre();
+		if(getIngresso().getSessao().getCodigo() != 0) {
+			List<Poltrona> lista = null;
+			FacesContext context = FacesContext.getCurrentInstance();
+			TipoPoltrona tipoPoltrona = null;
+			switch (setor) {
+			case 1: // Balcão Nobre
+				lista = getBalcaoNobre();
+				tipoPoltrona = TipoPoltrona.BalcaoNobre;
+				break;
+			case 2: // Camarote Prime
+				lista = getCamarotePrime();
+				tipoPoltrona = TipoPoltrona.CamarotePrime;
 			break;
-		case 2: // Camarote Prime
-			lista = getCamarotePrime();
-			break;
-		case 3: // Frisas 1
-			lista = getFrisas1();
-			break;
-		case 4: // 	Platéia
-			lista = getPlateia();
-			break;
-		case 5: // Frisas 2
-			lista = getFrisas2();
-			break;
-		}
-		
-		Poltrona poltronaDaLista = lista.get(lista.indexOf(poltrona));
-		if (poltronaDaLista.getSelecionada() != 1) {		
-			if (poltronaDaLista.getSelecionada() == 0) {	
-				poltronaDaLista.setSelecionada(2);				
-			}else {											
-				poltronaDaLista.setSelecionada(0);				
+			case 3: // Frisas 1
+				lista = getFrisas1();
+				tipoPoltrona = TipoPoltrona.Frisas1;
+				break;
+			case 4: // 	Platéia
+				lista = getPlateia();
+				tipoPoltrona = TipoPoltrona.Plateia;
+				break;
+			case 5: // Frisas 2
+				lista = getFrisas2();
+				tipoPoltrona = TipoPoltrona.Frisas2;
+				break;
 			}
+			
+			String situacao = "";
+			Severity severity = null;
+			Poltrona poltronaDaLista = lista.get(lista.indexOf(poltrona));
+			if (poltronaDaLista.getSelecionada() != 1) {		
+				if (poltronaDaLista.getSelecionada() == 0) {	
+					poltronaDaLista.setSelecionada(2);				
+					valorTotal += getIngresso().getSessao().getValorBase() * tipoPoltrona.getPorcentagem();
+					situacao = "reservada";
+					severity = FacesMessage.SEVERITY_INFO;
+				}else {											
+					poltronaDaLista.setSelecionada(0);
+					valorTotal -= getIngresso().getSessao().getValorBase() * tipoPoltrona.getPorcentagem();
+					situacao = "removida";
+					severity = FacesMessage.SEVERITY_ERROR;
+				}
+				context.addMessage(null, new FacesMessage(severity,	"Poltrona " + poltrona.getCodigo() + " do setor " + tipoPoltrona.getDescricao() + " " + situacao + ".Valor total: R$ " + String.format("%.2f", valorTotal), ""));
+			}
+			
 		}
-		
-		
 	}
 
 	public void pesquisarSessoes() {
@@ -309,11 +329,13 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 		getIngresso().getSessao().setDia(sessao.getDia());
 		getIngresso().getSessao().setHorario(sessao.getHorario());
 		getIngresso().getSessao().setEvento(sessao.getEvento());
+		getIngresso().getSessao().setValorBase(sessao.getValorBase());
 		
 		getEstacionamento().getSessao().setCodigo(sessao.getCodigo());
 		getEstacionamento().getSessao().setDia(sessao.getDia());
 		getEstacionamento().getSessao().setHorario(sessao.getHorario());
 		getEstacionamento().getSessao().setEvento(sessao.getEvento());
+		getEstacionamento().getSessao().setValorBase(sessao.getValorBase());
 		
 		setLimiteEstacionamento(new EstacionamentoDao().limiteDisponivel(sessao));
 		

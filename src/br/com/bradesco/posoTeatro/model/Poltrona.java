@@ -6,6 +6,7 @@ public class Poltrona {
 	private String codigo;
 	private int selecionada;
 	private TipoPoltrona tipoPoltrona;
+	private double valorPoltrona;  // resultado do calculo sobre o valorBase da sessao
 
 	public String getCodigo() {
 		return codigo;

@@ -20,7 +20,7 @@ public class IngressoDao {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 				
-			PreparedStatement smt = conn.prepareStatement("insert into ingresso values (?, ?, ?, ?)");
+			PreparedStatement smt = conn.prepareStatement("insert into ingresso values (?, ?, ?, ?, default)");
 			
 			smt.setInt(1, ingresso.getSessao().getCodigo());
 			smt.setInt(2, ingresso.getPessoa().getCodigo());

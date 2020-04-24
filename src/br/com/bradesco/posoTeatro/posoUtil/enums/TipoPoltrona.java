@@ -5,17 +5,21 @@ import java.util.List;
 
 public enum TipoPoltrona {
 
-	BalcaoNobre("Balcao Nobre", 1, 110), 
-	CamarotePrime("Camarote Prime", 2, 105), 
-	Frisas1("Frisas 1", 3, -10),
-	Plateia("Plateia", 4, 0), 
-	Frisas2("Frisas 2", 5, -10);
+	BalcaoNobre("Balcao Nobre", 1, 2.1), 
+	CamarotePrime("Camarote Prime", 2, 2.05), 
+	Frisas1("Frisas 1", 3, 0.9),
+	Plateia("Plateia", 4, 1), 
+	Frisas2("Frisas 2", 5, 0.9);
 
     private final int codigo;       
     private final String descricao;       
-    private final int porcentagem;       
+    private final double porcentagem;       
 
-    private TipoPoltrona(String descricao, int codigo, int porcentagem) {
+    public double getPorcentagem() {
+		return porcentagem;
+	}
+
+	private TipoPoltrona(String descricao, int codigo, double porcentagem) {
     	this.descricao = descricao;
     	this.codigo = codigo;
     	this.porcentagem = porcentagem;
