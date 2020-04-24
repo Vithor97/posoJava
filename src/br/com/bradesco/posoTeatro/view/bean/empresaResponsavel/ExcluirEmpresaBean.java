@@ -43,22 +43,22 @@ public class ExcluirEmpresaBean extends PosoBean implements Serializable, BeanIn
 		this.mensagem = mensagem;
 	}
 
-	public String excluir() {
+	public void excluir() {
 		int linhasAfetadas;
 		if (validarDados()) {
 			linhasAfetadas = new EmpresaDao().excluir(getEmpresaResponsavel());
 			if (linhasAfetadas != 0) {
-			} else {
+
 				setMensagem("Exclusão realizada com sucesso");
 
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(getMensagem()));
 				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+			} else {
+				setMensagem("Exclusão não realizada, 0 linhas afetadas!");
 			}
-
-		} else {
-			setMensagem("Exclusão não realizada");
+			
 		}
-		return "tralala";
+
 	}
 
 	public boolean validarDados() {
