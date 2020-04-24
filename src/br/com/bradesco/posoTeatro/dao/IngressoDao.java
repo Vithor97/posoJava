@@ -106,4 +106,27 @@ public class IngressoDao {
 
 	}
 	
-}
+	public int reembolsoIngresso(Ingresso ingresso) {
+		int rs = 0;
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+
+			PreparedStatement smt = conn.prepareStatement("delete from ingresso where cod_ingresso = ?");
+
+			smt.setLong(1, ingresso.getCodigoIngresso());
+
+			rs = smt.executeUpdate();
+			System.out.println("Linhas afetadas: " + rs);
+
+			smt.close();
+			conn.close();
+
+			
+
+		} catch (Exception e) {
+			System.out.println("Dentro do catch: " + e.getMessage());
+			
+		}
+		return rs;
+	  }
+	}

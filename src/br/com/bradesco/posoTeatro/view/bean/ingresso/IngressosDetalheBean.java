@@ -3,6 +3,7 @@
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import br.com.bradesco.posoTeatro.dao.PessoaDao;
@@ -22,6 +23,16 @@ public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 	private String hora;
 	
 	private String mensagem;
+	@ManagedProperty(value = "#{reembolsoIngressoBean}")
+	private ReembolsoIngressoBean excluir;
+	
+	public ReembolsoIngressoBean getExcluir() {
+		return excluir;
+	}
+	
+	public void setExcluir(ReembolsoIngressoBean excluir) {
+		this.excluir = excluir;
+	}
 
 	public Ingresso getIngresso() {
 		return ingresso;
@@ -62,5 +73,9 @@ public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 	public void setHora(String hora) {
 		this.hora = hora;
 	}
-
+	public String exclui() {
+		excluir.setIngresso(this.ingresso);
+		excluir.excluir();
+		return this.iniciarPagina();
+	}
 }

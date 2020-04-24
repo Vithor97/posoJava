@@ -63,7 +63,16 @@
 					<p:outputLabel for="tipoPoltrona" value="${msgs.label_ingressos_tipoPoltrona}" /><br/>
 					<p:inputText id="tipoPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.tipoPoltrona}" disabled="true"/>
 				</h:panelGroup>
-			</h:panelGrid>	
+			</h:panelGrid>
+			<p:column>
+					<h:panelGrid cellspacing="10" style="float: right;">
+						<p:commandButton id="btnExcluir" icon="pi pi-trash"
+							action="${ingressosDetalheBean.exclui()}"
+							value="${msgs.label_reemb_ingresso}" 
+							immediate="true" style="float: right;">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:column>	
 		</h:form>
 	</ui:define>
 	
