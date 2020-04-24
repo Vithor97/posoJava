@@ -177,9 +177,9 @@ public class EventoDao extends Evento {
                 validacao += " cod_func = " + funcionario.getCodigo() + " and ";
             } else if (!nome.trim().isEmpty()) {
                 validacao += "desc_evento like '" + nome + "%' and ";
-            }else {
-                validacao += " situacao_evento = 1";
             }
+            
+            validacao += " situacao_evento = 1";
 
             PreparedStatement smt = conn.prepareStatement("select cod_evento, desc_evento from evento " + validacao);
             ResultSet rs = smt.executeQuery();

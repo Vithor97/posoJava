@@ -135,7 +135,7 @@ public class SessaoDao {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 			PreparedStatement smt = conn.prepareStatement(
-					"select *, case when dia_sessao >= getdate() then 'Sessão futura' else 'Sessão já realizada' end as situacao from sessao where dia_sessao = ?");
+					"select *, case when dia_sessao >= getdate() then 'Sessão futura' else 'Sessão já realizada' end as situacao from sessao where dia_sessao = ? and situacao_sessao = 1");
 			smt.setString(1, dia);
 			ResultSet rs = smt.executeQuery();
 			while (rs.next()) {

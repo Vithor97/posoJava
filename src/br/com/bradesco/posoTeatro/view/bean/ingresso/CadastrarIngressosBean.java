@@ -427,7 +427,7 @@ public class CadastrarIngressosBean extends PosoBean implements BeanInterface {
 				new EstacionamentoDao().cadastrar(getEstacionamento());
 			}
 			
-			//showDialog();
+			showDialog();
 			iniciarPagina();
 		}
 	}
