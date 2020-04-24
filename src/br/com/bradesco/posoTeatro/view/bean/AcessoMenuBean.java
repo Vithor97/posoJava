@@ -60,6 +60,7 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuSessoes(true);
 		getMenuCatalog().setCadastrarSessoes(true);
 		getMenuCatalog().setConsultarSessoes(true);
+		getMenuCatalog().setListarSessoes(true);
 		
 		getMenuCatalog().setMenuPessoas(true);
 		getMenuCatalog().setCadastrarPessoas(true);
@@ -99,6 +100,7 @@ public class AcessoMenuBean{
 		
 		getMenuCatalog().setMenuSessoes(true);
 		getMenuCatalog().setConsultarSessoes(true);
+		getMenuCatalog().setListarSessoes(true);
 		
 		getMenuCatalog().setMenuIngressos(true);
 		getMenuCatalog().setConsultarIngressos(true);
@@ -128,6 +130,7 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuSessoes(true);
 		getMenuCatalog().setCadastrarSessoes(true);
 		getMenuCatalog().setConsultarSessoes(true);
+		getMenuCatalog().setListarSessoes(true);
 		
 		getMenuCatalog().setMenuEventos(true);
 		getMenuCatalog().setListarEventos(true);

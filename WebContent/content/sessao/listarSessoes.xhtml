@@ -1,0 +1,56 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Listar Sessões</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{listarSessoesBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id="form">
+			<p:dialog header="Listar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${listarSessoesBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			
+			<p:dataTable id="tabelaSessoes" var="sessao" 
+				value="#{listarSessoesBean.sessoes}" scrollable="true">
+				<p:autoUpdate/>
+				<p:column headerText="Código da Sessão">
+					<h:outputText value="#{sessao.codigo}"/>
+				</p:column>
+				<p:column headerText="Código do Evento">
+					<h:outputLabel value="#{sessao.evento.codigo}"/>
+				</p:column>
+				<p:column headerText="Dia da Sessão">
+					<h:outputLabel value="#{sessao.dataFormatada}"/>
+				</p:column>
+				<p:column headerText="Hora da Sessão">
+					<h:outputLabel value="#{sessao.horario.horarioCompleto}"/>
+				</p:column>
+				<p:column colspan="3" width="15%">
+					<h:panelGroup style="float: right;">
+						<p:commandButton icon="pi pi-search" style="margin-right:5px;"
+							action="#{listarSessoesBean.detalhar(sessao)}" update="tabelaSessoes"/>
+						<p:commandButton value="Alterar" style="margin-right:5px;"
+							action="#{listarSessoesBean.alterar(sessao)}" update="tabelaSessoes"/>
+						<p:commandButton icon="pi pi-trash" 
+							action="#{listarSessoesBean.excluir(sessao)}">
+							<c:ajax execute="@form" render="@form"/>
+						</p:commandButton>
+					</h:panelGroup>
+					
+				</p:column>
+			</p:dataTable>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

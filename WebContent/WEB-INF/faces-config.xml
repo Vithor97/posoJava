@@ -151,5 +151,10 @@
 			<from-outcome>cadastrarTipoEvento</from-outcome>
 			<to-view-id>/content/tipoEvento/cadastrarTipoEvento.xhtml</to-view-id>
 		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>listarSessoes</from-outcome>
+			<to-view-id>/content/sessao/listarSessoes.xhtml</to-view-id>
+		</navigation-case>
 	</navigation-rule>
 </faces-config>
