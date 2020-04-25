@@ -47,6 +47,7 @@ public class SessaoDao {
 			if(rs.next()) {
 				sessaoRetorno.setCodigo(rs.getInt("cod_sessao"));
 				sessaoRetorno.getEvento().setCodigo(rs.getInt("cod_evento"));
+				sessaoRetorno.setEvento(new EventoDao().consultar(sessaoRetorno.getEvento()));
 				sessaoRetorno.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").substring(0, 2))));
 				sessaoRetorno.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").substring(3, 5))));
 				sessaoRetorno.setDiaString(rs.getString("dia_sessao"));

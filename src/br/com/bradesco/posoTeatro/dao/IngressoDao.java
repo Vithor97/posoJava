@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.bradesco.posoTeatro.model.Ingresso;
+import br.com.bradesco.posoTeatro.model.Pessoa;
 import br.com.bradesco.posoTeatro.model.Poltrona;
 import br.com.bradesco.posoTeatro.model.Sessao;
 import br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona;
@@ -73,7 +74,28 @@ public class IngressoDao {
 		}
 	}
 	
-	
+	public List<Ingresso> listar(Pessoa pessoa){
+		List<Ingresso> ingressos = new ArrayList<Ingresso>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("select * from Ingresso where cod_pessoa = ?");
+            smt.setInt(1, pessoa.getCodigo());       
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Ingresso ingresso = new Ingresso();
+            	ingresso.getSessao().setCodigo(rs.getInt("cod_sessao"));
+            	ingresso.setSessao(new SessaoDao().consultaSessao(ingresso.getSessao()));
+            	ingresso.getPoltrona().setTipoPoltrona(TipoPoltrona.codigo(rs.getInt("tipo_poltrona")));
+            	ingressos.add(ingresso);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return ingressos;
+	}
 	
 	
 	

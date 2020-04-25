@@ -47,28 +47,20 @@ public class PessoaDao extends Pessoa {
 			ResultSet rs = smt.executeQuery();
 			if (rs.next()) {
 				produto.setCodigo(rs.getInt("cod_pessoa"));
-				System.out.println("Codigo: " + produto.getCodigo());
 				
 				produto.setNome(rs.getString("nome_pessoa"));
-				System.out.println("nome: " + produto.getNome());
 				
 				produto.setEmail(rs.getString("email_pessoa"));
-				System.out.println("Email: " + produto.getEmail());
 				
 				produto.setTelefone(rs.getString("tel_pessoa"));
-				System.out.println("Tel: " + produto.getTelefone());
 				
 				produto.setCpf(rs.getString("cpf_pessoa"));
-				System.out.println("CPF: " + produto.getCpf());
 				
 				produto.setDataNascimento(rs.getDate("dtnasc_pessoa"));
 				
-				
 				produto.setSituacaoPessoa(rs.getInt("situacao_pessoa"));
-				System.out.println("Situção pessoa: " + produto.getSituacaoPessoa());
 			}
 			
-			System.out.println("produto todo " + produto);
 			rs.close();
 			smt.close();
 			conn.close();

@@ -1,0 +1,26 @@
+table{
+	width: 100%;
+}
+
+
+
+.clientes .ui-tabs.ui-tabs-left .ui-tabs-nav{
+	width: 15%;
+}
+
+.clientes .ui-tabs.ui-tabs-left .ui-tabs-panels{
+	width: 85%;
+}
+
+.clientes .ui-tabs.ui-tabs-left .ui-tabs-panels td:first-child{
+	width: 45%;
+	vertical-align: top;
+}
+
+.ui-spinner .ui-spinner-input{
+	font-size: 100%;
+}
+
+.ui-chart{
+	height: 314px;
+}

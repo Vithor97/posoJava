@@ -61,6 +61,13 @@
 			<p:submenu label="Tipo" rendered="#{acessoMenuBean.menuCatalog.menuTipoEvento}">
 				<p:menuitem value="#{msgs.label_cadastrarTipoEvento}" action="#{cadastrarTipoEventoBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.cadastrarTipoEvento}"></p:menuitem>
 			</p:submenu>
+			<p:submenu label="#{msgs.label_relatorio}" rendered="#{acessoMenuBean.menuCatalog.relatorio	}">
+				<p:menuitem value="#{msgs.label_relatorioClientes}" action="#{relatorioClienteBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.relatorioCliente}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_relatorioEventos}" action="#{relatorioEventoBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.relatorioEvento}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_relatorioTiposGeneros}" action="#{relatorioTipoGeneroBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.relatorioTipoGenero}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_relatorioFuncionarios}" action="#{relatorioFuncionarioBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.relatorioFuncionario}"></p:menuitem>
+				<p:menuitem value="#{msgs.label_relatorioEmpresas}" action="#{relatorioEmpresasBean.iniciarPagina}" rendered="#{acessoMenuBean.menuCatalog.relatorioEmpresa}"></p:menuitem>
+			</p:submenu>
 			<p:menuitem value="#{msgs.btn_menu_desconectar}"  action="#{loginBean.desconectar}"/>
 			<p:menuitem value="#{msgs.btn_menu_perfil}"  action="#{perfilFuncionarioBean.iniciarPagina}"/>
 		</p:menubar>

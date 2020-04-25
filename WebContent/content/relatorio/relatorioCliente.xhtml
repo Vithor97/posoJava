@@ -1,0 +1,135 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{msgs.label_relatorio} - #{msgs.label_relatorioClientes}</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{relatorioClienteBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet name="css/relatorio.css"></h:outputStylesheet>	
+		<h:form id="dados">			
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"	minHeight="40" width="300">
+				<h:outputText value="#{relatorioClienteBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()" />
+			</p:dialog>
+				
+			<p:dialog header="Dados do Cliente" id="dlgCliente"	widgetVar="dlgCliente" modal="true" minHeight="40" width="1100" positionType="absolute">
+				<p:panel id="pnPessoa" header="#{msgs.label_relatorio_cliente}" style="margin-top:10px">
+					<h:panelGrid columns="3" cellpadding="20">
+						<h:panelGrid columns="2">
+							<p:outputLabel for="codigoPessoa" value="#{msgs.label_relatorioCliente_pessoa_codigo}" />
+							<p:inputText id="codigoPessoa" value="#{relatorioClienteBean.clienteDetalhe.codigo}" size="4" readonly="true"/>
+							<p:outputLabel for="dataNascPessoa" value="#{msgs.label_relatorioCliente_pessoa_nascimento}" />
+							<p:inputText id="dataNascPessoa" value="#{relatorioClienteBean.clienteDetalhe.dataNascimentoString}" readonly="true" />						
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="nomePessoa" value="#{msgs.label_relatorioCliente_pessoa_nome}" />
+							<p:inputText id="nomePessoa" value="#{relatorioClienteBean.clienteDetalhe.nome}" size="50" readonly="true" />
+							<p:outputLabel for="emailPessoa" value="#{msgs.label_relatorioCliente_pessoa_email}" />
+							<p:inputText id="emailPessoa" value="#{relatorioClienteBean.clienteDetalhe.email}" size="50" readonly="true" />
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="cpfPessoa" value="#{msgs.label_relatorioCliente_pessoa_cpf}" />
+							<p:inputText id="cpfPessoa" value="#{relatorioClienteBean.clienteDetalhe.cpf}" size="14" readonly="true" />
+							<p:outputLabel for="telefonePessoa" value="#{msgs.label_relatorioCliente_pessoa_telefone}" />
+							<p:inputText id="telefonePessoa" value="#{relatorioClienteBean.clienteDetalhe.telefone}" size="15" readonly="true" />
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+
+				<p:dataTable widgetVar="ingressosCliente" id="ingressosCliente" value="#{relatorioClienteBean.comprasCliente}" style="margin-top: 10px;" var="ingresso" 
+					rows="5" 
+					paginator="true" 
+					paginatorPosition="top" 
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+					currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} compras">
+					<c:facet name="header">
+				        Compras
+				    </c:facet>
+					<p:column>
+						<c:facet name="header">Evento</c:facet>
+						<p:outputLabel value="#{ingresso.sessao.evento.descricao}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">Dia</c:facet>
+						<p:outputLabel value="#{ingresso.sessao.diaString}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">Horario</c:facet>
+						<p:outputLabel value="#{ingresso.sessao.horario}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">Setor</c:facet>
+						<p:outputLabel value="#{ingresso.poltrona.tipoPoltrona.descricao}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">Valor</c:facet>
+						<p:outputLabel value="R$ #{ingresso.sessao.getValorPoltronaString(ingresso.poltrona.tipoPoltrona.porcentagem)}"></p:outputLabel>
+					</p:column>
+				</p:dataTable>	
+			</p:dialog>
+								 
+       			<p:tab title="#{msgs.label_relatorioCliente_clientes}" style="width: 100%;">	
+					<h:panelGrid columns="1" styleClass="clientes">
+						<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
+        					<p:tab id="principaisClientes" title="Principais Clientes">
+								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="aaa">
+									<h:column >
+										<p:toolbar>
+											<c:facet name="left">
+												<p:outputLabel value="Quantidade a ser exibida:   " for="principaisClientesQuantidade"/>
+												<p:spinner id="principaisClientesQuantidade" value="#{relatorioClienteBean.principaisClientesQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
+													<p:ajax update="principaisClientesLista principaisClientesGrafico principaisClientesQuantidade" listener="#{relatorioClienteBean.carregarPrincipaisClientes}"/>
+												</p:spinner>
+											</c:facet>
+										</p:toolbar>
+										
+										<p:barChart id="principaisClientesGrafico" model="#{relatorioClienteBean.principaisClientesGrafico}"/>		
+									</h:column>
+									<p:dataTable widgetVar="principaisClientesLista" id="principaisClientesLista" value="#{relatorioClienteBean.principaisClientesLista}" style="margin-top: 10px; " var="principalCliente">
+										<p:column width="10%">
+											<c:facet name="header">Código</c:facet>
+											<p:outputLabel value="#{principalCliente.pessoa.codigo}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Nome</c:facet>
+											<p:outputLabel value="#{principalCliente.pessoa.nome}"></p:outputLabel>
+										</p:column>
+										<p:column width="20%">
+											<c:facet name="header">Qtde. de compras</c:facet>
+											<p:outputLabel value="#{principalCliente.quantidadeCompras}"></p:outputLabel>
+										</p:column>
+										<p:column width="15%">
+											<c:facet name="header">Ações</c:facet>
+ 											<p:commandButton value="Detalhar" action="#{relatorioClienteBean.detalharPessoas(principalCliente.pessoa)}" oncomplete="PF('dlgCliente').show();" update=":dados:dlgCliente"/>
+ 										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Vendas por faixa etária" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="faixaEtariaClientesColunas" model="#{relatorioClienteBean.faixaEtariaClientesGraficoColunas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="faixaEtariaClientesPizza" model="#{relatorioClienteBean.faixaEtariaClientesGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        				</p:tabView>
+					</h:panelGrid>
+				</p:tab>
+
+			<p:commandButton disabled="#{relatorioClienteBean.telaAnterior == null}" value="#{msgs.label_relatorioCliente_voltar}" action="#{relatorioClienteBean.voltar}" style="margin-top:10px" />			
+		</h:form>
+	</ui:define>
+
+</ui:composition>

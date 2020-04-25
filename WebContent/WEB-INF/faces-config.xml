@@ -156,5 +156,12 @@
 			<from-outcome>listarSessoes</from-outcome>
 			<to-view-id>/content/sessao/listarSessoes.xhtml</to-view-id>
 		</navigation-case>
+		
+		
+		<navigation-case>
+			<from-outcome>relatorioCliente</from-outcome>
+			<to-view-id>/content/relatorio/relatorioCliente.xhtml</to-view-id>
+		</navigation-case>
+		
 	</navigation-rule>
 </faces-config>

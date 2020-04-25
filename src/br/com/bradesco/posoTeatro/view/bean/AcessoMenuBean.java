@@ -86,7 +86,12 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuTipoEvento(true);
 		getMenuCatalog().setCadastrarTipoEvento(true);
 		
-		
+		getMenuCatalog().setRelatorio(true);
+		getMenuCatalog().setRelatorioCliente(true);
+		getMenuCatalog().setRelatorioEvento(true);
+		getMenuCatalog().setRelatorioTipoGenero(true);
+		getMenuCatalog().setRelatorioFuncionario(true);
+		getMenuCatalog().setRelatorioEmpresa(true);
 	}
 	
 	private void liberarCoordenadorEventos() {
