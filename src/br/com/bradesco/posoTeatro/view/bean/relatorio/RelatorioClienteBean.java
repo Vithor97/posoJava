@@ -115,14 +115,14 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
 	}
 
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
-		super.iniciarPagina("Relatórios", "relatorio", titulosBread, urlsBread);
+		super.iniciarPagina("Relatórios de Clientes", "relatorioCliente", titulosBread, urlsBread);
 		iniciarComponentes();
 		return "relatorioCliente";
 	}
 
 	@Override
 	public String iniciarPagina() {
-		super.iniciarPagina("Relatórios", "relatorio");
+		super.iniciarPagina("Relatórios de Clientes", "relatorioCliente");
 		iniciarComponentes();
 		return "relatorioCliente";
 	}
@@ -155,7 +155,7 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
 
         data.setLabels(nomes);       
         hbarDataSet.setData(quantidades);
-        hbarDataSet.setLabel("");
+        hbarDataSet.setLabel("Quantidade de ingressos comprados");
         hbarDataSet.setBackgroundColor(setCorBarras(getPrincipaisClientesLista().size()));
         hbarDataSet.setBorderColor(setBordaBarras(getPrincipaisClientesLista().size()));
         hbarDataSet.setBorderWidth(1);      
@@ -185,7 +185,7 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
 
         data.setLabels(nomes);       
         hbarDataSet.setData(quantidades);
-        hbarDataSet.setLabel("");
+        hbarDataSet.setLabel("Quantidade de clientes");
         hbarDataSet.setBackgroundColor(setCorBarras(5));
         hbarDataSet.setBorderColor(setBordaBarras(5));
         hbarDataSet.setBorderWidth(1);      
@@ -197,7 +197,7 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
         
         
         setFaixaEtariaClientesGraficoPizza(new PieChartModel());
-       data = new ChartData();
+        data = new ChartData();
          
         PieChartDataSet dataSet = new PieChartDataSet();
         dataSet.setData(quantidades);

@@ -114,7 +114,7 @@
 									</p:dataTable>
 								</h:panelGrid>
         					</p:tab>
-        					<p:tab title="Vendas por faixa etária" >
+        					<p:tab title="Clientes por faixa etária" >
         						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
 									<h:column>						
 										<p:barChart id="faixaEtariaClientesColunas" model="#{relatorioClienteBean.faixaEtariaClientesGraficoColunas}"/>		
@@ -128,7 +128,7 @@
 					</h:panelGrid>
 				</p:tab>
 
-			<p:commandButton disabled="#{relatorioClienteBean.telaAnterior == null}" value="#{msgs.label_relatorioCliente_voltar}" action="#{relatorioClienteBean.voltar}" style="margin-top:10px" />			
+			<p:commandButton disabled="#{relatorioClienteBean.telaAnterior == null}" value="#{msgs.label_relatorio_voltar}" action="#{relatorioClienteBean.voltar}" style="margin-top:10px" />			
 		</h:form>
 	</ui:define>
 
