@@ -53,6 +53,7 @@ public class IngressoDao {
 				ingressoRetorno.getPoltrona().setCodigo(rs.getString("cod_poltrona"));
 				ingressoRetorno.getPoltrona().setTipoPoltrona(TipoPoltrona.codigo(rs.getInt("tipo_poltrona")));
 				ingressoRetorno.getSessao().setCodigo(rs.getInt("cod_sessao"));
+				ingressoRetorno.setSituacaoIngresso(rs.getInt("situacao_ingresso"));
 				rs.close();
 				smt.close();
 				return ingressoRetorno;

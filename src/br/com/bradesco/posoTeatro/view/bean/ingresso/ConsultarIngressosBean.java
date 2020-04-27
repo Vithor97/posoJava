@@ -49,6 +49,11 @@ public class ConsultarIngressosBean extends PosoBean {
 			current.executeScript("PF('dlg1').show();");
 			return "";
 		}
+		else if(ingressoRetorno.getSituacaoIngresso() != 1){
+			setMensagem(messageBundle.getString("msg_ingressoDesabilitado"));
+			current.executeScript("PF('dlg1').show();");
+			return "";
+		}
 		else {
 			ingresso = ingressoRetorno;
 			detalhe.setIngresso(getIngresso());

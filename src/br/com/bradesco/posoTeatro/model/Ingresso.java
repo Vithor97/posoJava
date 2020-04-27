@@ -5,6 +5,7 @@ public class Ingresso {
 	private Sessao sessao = new Sessao();
 	private Pessoa pessoa = new Pessoa();
 	private Poltrona poltrona = new Poltrona();
+	private int situacaoIngresso;
 	
 	public int getCodigoIngresso() {
 		return codigoIngresso;
@@ -73,6 +74,14 @@ public class Ingresso {
 		if (sessao.getCodigo() != other.sessao.getCodigo())
 			return false;
 		return true;
+	}
+
+	public int getSituacaoIngresso() {
+		return situacaoIngresso;
+	}
+
+	public void setSituacaoIngresso(int situacaoIngresso) {
+		this.situacaoIngresso = situacaoIngresso;
 	}
 	
 	
