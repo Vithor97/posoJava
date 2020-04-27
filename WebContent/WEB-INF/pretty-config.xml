@@ -24,4 +24,9 @@
 		<pattern value="/listarEventos" />
 		<view-id value="/content/evento/listarEventos.xhtml" />
 	</url-mapping>
+	
+	<url-mapping id="listarPessoas">
+		<pattern value="/listarPessoas" />
+		<view-id value="/content/pessoas/listarPessoas.xhtml" />
+	</url-mapping>
 </pretty-config>

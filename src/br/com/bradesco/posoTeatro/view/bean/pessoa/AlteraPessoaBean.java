@@ -15,68 +15,54 @@ import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
 @ManagedBean(name="alteraPessoaBean")
 @SessionScoped
-public class AlteraPessoaBean extends PosoBean implements Serializable,  BeanInterface {
-	
-	
-	private static final long serialVersionUID = 1L;
-	
 
-	
+public class AlteraPessoaBean extends PosoBean implements Serializable, BeanInterface {
+
+	private static final long serialVersionUID = 1L;
 	private Pessoa pessoa;
 	private String mensagem;
-	
-	
-	
+
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
+
 	public void setPessoa(Pessoa pessoa) {
 		this.pessoa = pessoa;
 	}
-	
+
 	public String getMensagem() {
 		return mensagem;
 	}
+
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
-	
-	public String teste() {
-		setMensagem("Teste");
-		return getMensagem();
-	}
-	
-	
+
 	public String altera() {
 		int linhasAfetadas;
 		System.out.println(getMensagem());
-		if(validarDados()) {
-			linhasAfetadas	= new PessoaDao().alterar(getPessoa());
-			if(linhasAfetadas != 0) {
-				setMensagem("Alteração realizada com sucesso");					
-				
-				FacesContext.getCurrentInstance().addMessage(
-				        null, new FacesMessage(getMensagem()));
-				 
-				  FacesContext.getCurrentInstance().getExternalContext()
-				      .getFlash().setKeepMessages(true);
-							
-	
-				return "consultarPessoas?faces-redirect=true";			
-			}
-			else {
+		if (validarDados()) {
+			linhasAfetadas = new PessoaDao().alterar(getPessoa());
+			if (linhasAfetadas != 0) {
+				setMensagem("Alteração realizada com sucesso");
+
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(getMensagem()));
+
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+
+				return "listarPessoas?faces-redirect=true";
+				// return listarPessoasBean.iniciarPagina();
+			} else {
 				setMensagem("Alteração não realizada");
 				return iniciarPagina();
 			}
-		}
-		else {
-			
+		} else {
+
 			return iniciarPagina();
 		}
-			
-		
+
 	}
-	
+
 	public boolean validarDados() {
 		if (getPessoa().getNome().equals(null) || getPessoa().getNome().isEmpty()) {
 			setMensagem("O preenchimento do campo nome é obrigatório.");
@@ -111,19 +97,17 @@ public class AlteraPessoaBean extends PosoBean implements Serializable,  BeanInt
 		}
 		return true;
 	}
-	
-	
+
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
-		// TODO Auto-generated method stub
-		return null;
+		super.iniciarPagina("Altera Pessoa", "alteraPessoas", titulosBread, urlsBread);
+		return "alteraPessoas";
 	}
+
 	@Override
 	public String iniciarPagina() {
 		super.iniciarPagina("Altera Pessoa", "alteraPessoas");
 		return "alteraPessoas";
 	}
-	
-	
 
 }

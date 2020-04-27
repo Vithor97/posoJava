@@ -7,7 +7,6 @@
 	
 	<ui:define name="titulo">Altera Pessoas</ui:define>
 	
-	<meta http-equiv="refresh" content="3;url=/content/pessoas/consultarPessoas.xhtml" />
 	
 	<ui:define name="breadCrumb">
 		<p:breadCrumb styleClass="breadCrumb" model="#{alteraPessoaBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
@@ -22,53 +21,54 @@
 				<p:commandButton style="float: right;" value="OK" 
 								 onclick="PF('dlg1').hide()"/>
 			</p:dialog>
-
-			<h:panelGrid cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="cpfPessoa" value="${msgs.label_pessoas_cpf}" />
-					<br />
-					<p:inputMask id="cpfPessoa" value="${alteraPessoaBean.pessoa.cpf}" size="14" mask="999.999.999-99"/>
-				</h:panelGroup>
-			</h:panelGrid>
-
-
-			<h:panelGrid columns="2" cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="nomePessoa" value="Nome da pessoa" />
-					<br />
-					<p:inputText id="nomePessoa"
-						value="${alteraPessoaBean.pessoa.nome}" />
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="emailPessoa"
-						value="${msgs.label_pessoas_email}" />
-					<br />
-					<p:inputText id="emailPessoa"
-						value="${alteraPessoaBean.pessoa.email}" size="25"/>
-				</h:panelGroup>
-			</h:panelGrid>
-
-			<h:panelGrid columns="2" cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="dtNascimento"
-						value="${msgs.label_pessoas_nascimento}" />
-					<br />
-					<p:calendar id="dtNascimento" value="${alteraPessoaBean.pessoa.dataNascimento}" pattern="dd/MM/yyyy" mask="true" showOn="button"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="telPessoa"
-						value="${msgs.label_pessoas_telefone}" />
-					<br />
-					<p:inputMask id="telPessoa"
-						value="${alteraPessoaBean.pessoa.telefone}"  size="15" mask="(99) 9999-9999"/>
-				</h:panelGroup>
-			</h:panelGrid>
-
-				<br/>
-				
-			<p:commandButton value="Confirmar" action="${alteraPessoaBean.altera}" update="dlg1" oncomplete="PF('dlg1').show();">
-				<p:confirm header="Confirmation" message="Deseja Alterar?" icon="ui-icon-alert" /> 
-			</p:commandButton>
+			<p:panel id="pnPessoas" header="Pessoas" style="margin-top:10px">	
+				<h:panelGrid cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="cpfPessoa" value="${msgs.label_pessoas_cpf}" />
+						<br />
+						<p:inputMask id="cpfPessoa" value="${alteraPessoaBean.pessoa.cpf}" size="14" mask="999.999.999-99"/>
+					</h:panelGroup>
+				</h:panelGrid>
+	
+	
+				<h:panelGrid columns="2" cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="nomePessoa" value="Nome da pessoa" />
+						<br />
+						<p:inputText id="nomePessoa"
+							value="${alteraPessoaBean.pessoa.nome}" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="emailPessoa"
+							value="${msgs.label_pessoas_email}" />
+						<br />
+						<p:inputText id="emailPessoa"
+							value="${alteraPessoaBean.pessoa.email}" size="25"/>
+					</h:panelGroup>
+				</h:panelGrid>
+	
+				<h:panelGrid columns="2" cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="dtNascimento"
+							value="${msgs.label_pessoas_nascimento}" />
+						<br />
+						<p:calendar id="dtNascimento" value="${alteraPessoaBean.pessoa.dataNascimento}" pattern="dd/MM/yyyy" mask="true" showOn="button"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="telPessoa"
+							value="${msgs.label_pessoas_telefone}" />
+						<br />
+						<p:inputMask id="telPessoa"
+							value="${alteraPessoaBean.pessoa.telefone}"  size="15" mask="(99) 9999-9999"/>
+					</h:panelGroup>
+				</h:panelGrid>
+	
+					<br/>
+					
+				<p:commandButton value="Confirmar" action="#{alteraPessoaBean.altera}"  update="dlg1" oncomplete="PF('dlg1').show();">
+					<p:confirm header="Confirmation" message="Deseja Alterar?" icon="ui-icon-alert" /> 
+				</p:commandButton>
+			</p:panel>	
 		</h:form>
 		
 		<h:form>

@@ -65,6 +65,7 @@ public class AcessoMenuBean{
 		getMenuCatalog().setMenuPessoas(true);
 		getMenuCatalog().setCadastrarPessoas(true);
 		getMenuCatalog().setConsultarPessoas(true);
+		getMenuCatalog().setListarPessoas(true);
 		
 		getMenuCatalog().setMenuIngressos(true);
 		getMenuCatalog().setCadastrarIngressos(true);

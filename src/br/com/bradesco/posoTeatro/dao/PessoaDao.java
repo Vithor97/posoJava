@@ -6,8 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
-import java.util.List;
 
+import javax.faces.context.FacesContext;
+
+import br.com.bradesco.posoTeatro.model.Funcionario;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 
 public class PessoaDao extends Pessoa {
@@ -38,6 +40,10 @@ public class PessoaDao extends Pessoa {
 		produto.setCodigo(pessoa.getCodigo());
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
+			
+			 FacesContext context = FacesContext.getCurrentInstance();
+	         Funcionario funcionario = (Funcionario) context.getExternalContext().getSessionMap().get("funcionarioLogado");
+	         
 			PreparedStatement smt = conn.prepareStatement("select * from pessoa where cpf_pessoa=? OR cod_pessoa = ? and situacao_pessoa = 1");
 			
 			smt.setString(1, produto.getCpf());
@@ -126,11 +132,21 @@ public class PessoaDao extends Pessoa {
 		return rowAffected;
 	}
 
-	public List<Pessoa> listarPessoas(String nome) {
-		List<Pessoa> pessoas = new ArrayList<Pessoa>();
+	public ArrayList<Pessoa> listarPessoas(String nome) {
+		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();
+		
+		String query = "";
 		try {
+			
+			if(nome == "") {
+				query = "Select * from pessoa where situacao_pessoa = 1";
+			}
+			else {
+				query = "SELECT * FROM pessoa WHERE upper(nome_pessoa) like upper('" + nome + "%') and situacao_pessoa = 1";
+			}
+			
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement smt = conn.prepareStatement("SELECT * FROM pessoa WHERE upper(nome_pessoa) like upper('" + nome + "%')");
+			PreparedStatement smt = conn.prepareStatement(query);
 			ResultSet rs = smt.executeQuery();
 			while (rs.next()) {
 				Pessoa pessoa = new Pessoa();
