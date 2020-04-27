@@ -50,8 +50,9 @@ public class AlteraPessoaBean extends PosoBean implements Serializable, BeanInte
 
 				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
 
-				return "listarPessoas?faces-redirect=true";
-				// return listarPessoasBean.iniciarPagina();
+				//return "listarPessoas?faces-redirect=true";
+				return super.voltar(); 
+				
 			} else {
 				setMensagem("Alteração não realizada");
 				return iniciarPagina();
