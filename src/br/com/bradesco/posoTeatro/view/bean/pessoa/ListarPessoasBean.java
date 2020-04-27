@@ -3,9 +3,13 @@ package br.com.bradesco.posoTeatro.view.bean.pessoa;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.event.CellEditEvent;
 
 import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.model.Pessoa;
@@ -30,6 +34,17 @@ public class ListarPessoasBean extends PosoBean implements BeanInterface{
 	@ManagedProperty(value = "#{alteraPessoaBean}")
 	private AlteraPessoaBean alteraPessoaBean;
 	
+	
+    public void onCellEdit(CellEditEvent event) {
+        Object oldValue = event.getOldValue();
+        Object newValue = event.getNewValue();
+         
+        if(newValue != null && !newValue.equals(oldValue)) {
+        	System.out.println("Mudou os valores");
+//            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cell Changed", "Old: " + oldValue + ", New:" + newValue);
+//            FacesContext.getCurrentInstance().addMessage(null, msg);
+        }
+    }
 	
 	public void setDetalhePessoa(DetalharPessoaBean detalhePessoa) {
 		this.detalhePessoa = detalhePessoa;
@@ -102,7 +117,33 @@ public class ListarPessoasBean extends PosoBean implements BeanInterface{
 			alteraPessoaBean.setTelaAnterior(this);
 			return alteraPessoaBean.iniciarPagina();
 
+	}
+	
+	public void excluir(Pessoa pessoa) {
+		System.out.println("Dentro do metodo de exclusão");
+		int RowAffected = 0;
 		
+		RowAffected = new PessoaDao().deletaPessoa(pessoa);
+		pessoa = new PessoaDao().consultar(pessoa);
+		if(RowAffected !=0) {
+			if(pessoa.getSituacaoPessoa() !=1) {
+				System.out.println("Excluiu");
+				setMensagem("Exclusão realizada");
+				
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(getMensagem()));
+
+				FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+				
+				setPessoas(new PessoaDao().listarPessoas(getPesquisaPessoa()));
+			}
+			else {
+				
+			}
+		}
+		else {
+			setMensagem("Exclusão não realizada");
+			
+		}
 	}
 	
 	
