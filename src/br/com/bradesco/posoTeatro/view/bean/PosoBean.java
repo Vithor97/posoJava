@@ -11,12 +11,13 @@ import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.model.menu.MenuModel;
 
+import br.com.bradesco.posoTeatro.posoUtil.Conversoes;
 import br.com.bradesco.posoTeatro.view.breadCrumb.BreadCrumb;
 
 @ManagedBean(name = "posoBean")
 @SessionScoped
 
-public class PosoBean {
+public class PosoBean extends Conversoes{
 
 	private MenuModel menuModel;
 	private List<String> titulosBread;

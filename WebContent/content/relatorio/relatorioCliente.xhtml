@@ -77,45 +77,47 @@
 				</p:dataTable>	
 			</p:dialog>
 								 
-       			<p:tab title="#{msgs.label_relatorioCliente_clientes}" style="width: 100%;">	
-					<h:panelGrid columns="1" styleClass="clientes">
-						<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
-        					<p:tab id="principaisClientes" title="Principais Clientes">
-								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="aaa">
-									<h:column >
-										<p:toolbar>
-											<c:facet name="left">
-												<p:outputLabel value="Quantidade a ser exibida:   " for="principaisClientesQuantidade"/>
-												<p:spinner id="principaisClientesQuantidade" value="#{relatorioClienteBean.principaisClientesQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
-													<p:ajax update="principaisClientesLista principaisClientesGrafico principaisClientesQuantidade" listener="#{relatorioClienteBean.carregarPrincipaisClientes}"/>
-												</p:spinner>
-											</c:facet>
-										</p:toolbar>
-										
-										<p:barChart id="principaisClientesGrafico" model="#{relatorioClienteBean.principaisClientesGrafico}"/>		
-									</h:column>
-									<p:dataTable widgetVar="principaisClientesLista" id="principaisClientesLista" value="#{relatorioClienteBean.principaisClientesLista}" style="margin-top: 10px; " var="principalCliente">
-										<p:column width="10%">
-											<c:facet name="header">Código</c:facet>
-											<p:outputLabel value="#{principalCliente.pessoa.codigo}"></p:outputLabel>
-										</p:column>
-										<p:column>
-											<c:facet name="header">Nome</c:facet>
-											<p:outputLabel value="#{principalCliente.pessoa.nome}"></p:outputLabel>
-										</p:column>
-										<p:column width="20%">
-											<c:facet name="header">Qtde. de compras</c:facet>
-											<p:outputLabel value="#{principalCliente.quantidadeCompras}"></p:outputLabel>
-										</p:column>
-										<p:column width="15%">
-											<c:facet name="header">Ações</c:facet>
- 											<p:commandButton value="Detalhar" action="#{relatorioClienteBean.detalharPessoas(principalCliente.pessoa)}" oncomplete="PF('dlgCliente').show();" update=":dados:dlgCliente"/>
- 										</p:column>
-									</p:dataTable>
-								</h:panelGrid>
-        					</p:tab>
-        					<p:tab title="Clientes por faixa etária" >
-        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+			<h:panelGrid columns="1" styleClass="clientes">
+				<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
+     				<p:tab id="principaisClientes" title="Principais Clientes">
+						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="aaa">
+							<h:column >
+								<p:toolbar>
+									<c:facet name="left">
+										<p:outputLabel value="Quantidade a ser exibida:   " for="principaisClientesQuantidade"/>
+										<p:spinner id="principaisClientesQuantidade" value="#{relatorioClienteBean.principaisClientesQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
+											<p:ajax update="principaisClientesLista principaisClientesGrafico principaisClientesQuantidade" listener="#{relatorioClienteBean.carregarPrincipaisClientes}"/>
+										</p:spinner>
+									</c:facet>
+								</p:toolbar>
+								
+								<p:barChart id="principaisClientesGrafico" model="#{relatorioClienteBean.principaisClientesGrafico}"/>
+								
+							</h:column>
+							<p:dataTable widgetVar="principaisClientesLista" id="principaisClientesLista" value="#{relatorioClienteBean.principaisClientesLista}" style="margin-top: 10px; " var="principalCliente">
+								<p:column width="10%">
+									<c:facet name="header">Código</c:facet>
+									<p:outputLabel value="#{principalCliente.item.codigo}" style="float: right"></p:outputLabel>
+								</p:column>
+								<p:column>
+									<c:facet name="header">Nome</c:facet>
+									<p:outputLabel value="#{principalCliente.item.nome}"></p:outputLabel>
+								</p:column>
+								<p:column width="20%">
+									<c:facet name="header">Qtde. de compras</c:facet>
+									<p:outputLabel value="#{principalCliente.valor.intValue()}" style="float: right"></p:outputLabel>
+								</p:column>
+								<p:column width="15%">
+									<c:facet name="header">Ações</c:facet>
+										<p:commandButton value="Detalhar" action="#{relatorioClienteBean.detalharPessoas(principalCliente.item)}" oncomplete="PF('dlgCliente').show();" update=":dados:dlgCliente"/>
+									</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+     				</p:tab>
+     				<p:tab title="Clientes por faixa etária" >
+     					<p:tabView style="width: 100%;  overflow: hidden;" orientation="left">
+        					<p:tab title="Quantidade">
+								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
 									<h:column>						
 										<p:barChart id="faixaEtariaClientesColunas" model="#{relatorioClienteBean.faixaEtariaClientesGraficoColunas}"/>		
 									</h:column>
@@ -124,9 +126,37 @@
 									</h:column>
 								</h:panelGrid>
         					</p:tab>
+        					<p:tab title="Vendas" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="faixaEtariaClientesVendas" model="#{relatorioClienteBean.faixaEtariaClientesGraficoVendas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="faixaEtariaClientesGraficoVendasPizza" model="#{relatorioClienteBean.faixaEtariaClientesGraficoVendasPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Arrecadação" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="faixaEtariaClientesArrecadacao" model="#{relatorioClienteBean.faixaEtariaClientesGraficoArrecadacao}"/>		
+									</h:column>
+									<p:dataTable widgetVar="faixaEtariaClientesListaArrecadacao" id="faixaEtariaClientesListaArrecadacao" value="#{relatorioClienteBean.faixaEtariaClientesListaArrecadacao}" style="margin-top: 10px; " var="faixa">
+										<p:column width="30%">
+											<c:facet name="header">Faixa Etária</c:facet>
+											<p:outputLabel value="#{faixa.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<p:outputLabel value="#{relatorioClienteBean.getReal(faixa.valor)}" style="float: right"></p:outputLabel>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
         				</p:tabView>
-					</h:panelGrid>
-				</p:tab>
+     				</p:tab>
+      			</p:tabView>
+			</h:panelGrid>
 
 			<p:commandButton disabled="#{relatorioClienteBean.telaAnterior == null}" value="#{msgs.label_relatorio_voltar}" action="#{relatorioClienteBean.voltar}" style="margin-top:10px" />			
 		</h:form>

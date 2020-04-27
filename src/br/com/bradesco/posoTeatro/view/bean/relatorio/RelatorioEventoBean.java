@@ -1,8 +1,6 @@
 package br.com.bradesco.posoTeatro.view.bean.relatorio;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -10,28 +8,20 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.charts.ChartData;
-import org.primefaces.model.charts.axes.cartesian.CartesianScales;
-import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
-import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
-import org.primefaces.model.charts.bar.BarChartOptions;
 import org.primefaces.model.charts.hbar.HorizontalBarChartDataSet;
 import org.primefaces.model.charts.hbar.HorizontalBarChartModel;
-import org.primefaces.model.charts.optionconfig.title.Title;
-import org.primefaces.model.charts.pie.PieChartOptions;
 
 import br.com.bradesco.posoTeatro.dao.EventoDao;
 import br.com.bradesco.posoTeatro.dao.RelatorioDao;
 import br.com.bradesco.posoTeatro.model.Evento;
 import br.com.bradesco.posoTeatro.model.relatorio.Grafico;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
-import br.com.bradesco.posoTeatro.view.bean.PosoBean;
-import br.com.bradesco.posoTeatro.view.bean.evento.AlterarEventoBean;
 import br.com.bradesco.posoTeatro.view.bean.evento.DetalheEventoBean;
 
 @ManagedBean(name = "relatorioEventoBean")
 @SessionScoped
 
-public class RelatorioEventoBean extends PosoBean implements BeanInterface {
+public class RelatorioEventoBean extends RelatorioBean implements BeanInterface {
 	
 	@ManagedProperty("#{detalheEventoBean}")
 	private DetalheEventoBean detalheEventoBean;
@@ -91,11 +81,6 @@ public class RelatorioEventoBean extends PosoBean implements BeanInterface {
 		this.publicoEventosQuantidade = publicoEventosQuantidade;
 	}
 
-	
-	
-	
-	
-	
 	public HorizontalBarChartModel getPublicoMediaEventosGrafico() {
 		return publicoMediaEventosGrafico;
 	}
@@ -119,7 +104,6 @@ public class RelatorioEventoBean extends PosoBean implements BeanInterface {
 	public void setPublicoMediaEventosQuantidade(int publicoMediaEventosQuantidade) {
 		this.publicoMediaEventosQuantidade = publicoMediaEventosQuantidade;
 	}
-
 	
 	public HorizontalBarChartModel getArrecadacaoGrafico() {
 		return arrecadacaoGrafico;
@@ -169,8 +153,6 @@ public class RelatorioEventoBean extends PosoBean implements BeanInterface {
 		this.arrecadacaoMediaQuantidade = arrecadacaoMediaQuantidade;
 	}
 
-	
-	
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Relatórios de Eventos", "relatorioEvento", titulosBread, urlsBread);
 		iniciarComponentes();
@@ -226,8 +208,8 @@ public class RelatorioEventoBean extends PosoBean implements BeanInterface {
         hbarDataSet.setBorderWidth(1);      
         data.addChartDataSet(hbarDataSet);        
         getPublicoEventosGrafico().setData(data);
-        getPublicoEventosGrafico().setOptions(getOptionsBar(getPublicoEventosQuantidade() + " eventos com mais público."));
-        ordenar(getPublicoEventosLista());
+        getPublicoEventosGrafico().setOptions(getOptionsHorizontalBar(getPublicoEventosQuantidade() + " eventos com mais público."));
+        new Grafico<Evento>(null).ordenar(getPublicoEventosLista());
 	}
 
 	public void carregarPublicoMediaEventos() {
@@ -258,8 +240,8 @@ public class RelatorioEventoBean extends PosoBean implements BeanInterface {
         hbarDataSet.setBorderWidth(1);      
         data.addChartDataSet(hbarDataSet);        
         getPublicoMediaEventosGrafico().setData(data);
-        getPublicoMediaEventosGrafico().setOptions(getOptionsBar(getPublicoMediaEventosQuantidade() + " eventos com maior média de público."));
-        ordenar(getPublicoMediaEventosLista());
+        getPublicoMediaEventosGrafico().setOptions(getOptionsHorizontalBar(getPublicoMediaEventosQuantidade() + " eventos com maior média de público."));
+        new Grafico<Evento>(null).ordenar(getPublicoMediaEventosLista());
 
 	}
 
@@ -291,13 +273,13 @@ public class RelatorioEventoBean extends PosoBean implements BeanInterface {
         hbarDataSet.setBorderWidth(1);      
         data.addChartDataSet(hbarDataSet);        
         getArrecadacaoGrafico().setData(data);
-        getArrecadacaoGrafico().setOptions(getOptionsBar(getArrecadacaoQuantidade() + " eventos com maior arrecadação."));
-        ordenar(getArrecadacaoLista());
+        getArrecadacaoGrafico().setOptions(getOptionsHorizontalBar(getArrecadacaoQuantidade() + " eventos com maior arrecadação."));
+        new Grafico<Evento>(null).ordenar(getArrecadacaoLista());
 
 	}
 	
 	public void carregarArrecadacaoMedia() {
-		setArrecadacaoMediaLista(new RelatorioDao().arrecadacaoMedia(getArrecadacaoQuantidade()));
+		setArrecadacaoMediaLista(new RelatorioDao().arrecadacaoMedia(getArrecadacaoMediaQuantidade()));
 		
 		if (getArrecadacaoMediaLista().size() < getArrecadacaoMediaQuantidade()) {
 			setArrecadacaoMediaQuantidade(getArrecadacaoMediaLista().size());
@@ -324,65 +306,8 @@ public class RelatorioEventoBean extends PosoBean implements BeanInterface {
         hbarDataSet.setBorderWidth(1);      
         data.addChartDataSet(hbarDataSet);        
         getArrecadacaoMediaGrafico().setData(data);
-        getArrecadacaoMediaGrafico().setOptions(getOptionsBar(getArrecadacaoMediaQuantidade() + " eventos com maior média dearrecadação."));
-        ordenar(getArrecadacaoMediaLista());
-	}
-
-	public List<Grafico<Evento>> ordenar(List<Grafico<Evento>> lista){
-        Collections.sort(lista, new Comparator<Grafico<Evento>>() {
-            @Override
-        	public int compare(Grafico<Evento> o1, Grafico<Evento> o2) {
-                return o2.getValor().compareTo(o1.getValor());
-            }
-        });
-        return lista;
-	}
-	
-	public List<String> setCorBarras(int dados) {
-		List<String> cores = new ArrayList<String>();
-		for (int i = 0; i < dados; i++) {
-			cores.add("rgba(0, 122, 217, 0.4)");			
-		}
-        return cores;
-	}
-	
-	public List<String> setBordaBarras(int dados) {
-		List<String> cores = new ArrayList<String>();
-		for (int i = 0; i < dados; i++) {
-			cores.add("rgba(0, 71, 126, 1)");			
-		}
-        return cores;
-	}
-
-	public BarChartOptions getOptionsBar(String titulo) {
-		BarChartOptions options = new BarChartOptions();
-        CartesianScales cScales = new CartesianScales();
-        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
-        CartesianLinearTicks ticks = new CartesianLinearTicks();
-        ticks.setBeginAtZero(true);
-        linearAxes.setTicks(ticks);
-        cScales.addXAxesData(linearAxes);
-        options.setScales(cScales);
-        Title title = new Title();
-        title.setText(titulo);
-        title.setDisplay(true);
-        options.setTitle(title);
-        return options;
-	}
-	
-	public PieChartOptions getOptionsPie(String titulo) {
-		PieChartOptions options = new PieChartOptions();
-        CartesianScales cScales = new CartesianScales();
-        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
-        CartesianLinearTicks ticks = new CartesianLinearTicks();
-        ticks.setBeginAtZero(true);
-        linearAxes.setTicks(ticks);
-        cScales.addXAxesData(linearAxes);
-        Title title = new Title();
-        title.setText(titulo);
-        title.setDisplay(true);
-        options.setTitle(title);
-        return options;
+        getArrecadacaoMediaGrafico().setOptions(getOptionsHorizontalBar(getArrecadacaoMediaQuantidade() + " eventos com maior média de arrecadação."));
+        new Grafico<Evento>(null).ordenar(getArrecadacaoMediaLista());
 	}
 
  	public String detalhar(Evento evento) {

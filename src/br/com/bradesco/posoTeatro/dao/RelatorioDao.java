@@ -7,24 +7,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.bradesco.posoTeatro.model.Evento;
+import br.com.bradesco.posoTeatro.model.Pessoa;
 import br.com.bradesco.posoTeatro.model.relatorio.Grafico;
-import br.com.bradesco.posoTeatro.model.relatorio.clientes.PrincipaisClientes;
 
 public class RelatorioDao {
 
 	//CLIENTES
 	
-	public List<PrincipaisClientes> principaisClientes(int quantidade){
-		List<PrincipaisClientes> resultado = new ArrayList<PrincipaisClientes>();
+	public List<Grafico<Pessoa>> principaisClientes(int quantidade){
+		List<Grafico<Pessoa>> resultado = new ArrayList<Grafico<Pessoa>>();
         try {
             Connection conn = new ConnectionFactory().getConnection();
             PreparedStatement smt = conn.prepareStatement("select count(cod_ingresso) as quantidade, b.nome_pessoa, b.cod_pessoa from Ingresso a inner join Pessoa b on a.cod_pessoa = b.cod_pessoa group by b.nome_pessoa, b.cod_pessoa order by 1  desc offset 0 rows fetch next " + quantidade + " rows only");
             ResultSet rs = smt.executeQuery();
             while (rs.next()) {
-            	PrincipaisClientes principaisClientes = new PrincipaisClientes();
-            	principaisClientes.getPessoa().setCodigo(rs.getInt("cod_pessoa"));
-            	principaisClientes.getPessoa().setNome(rs.getString("nome_pessoa"));
-            	principaisClientes.setQuantidadeCompras(rs.getInt("quantidade"));
+            	Grafico<Pessoa> principaisClientes = new Grafico<Pessoa>(new Pessoa());
+            	principaisClientes.getItem().setCodigo(rs.getInt("cod_pessoa"));
+            	principaisClientes.getItem().setNome(rs.getString("nome_pessoa"));
+            	principaisClientes.setValor(rs.getDouble("quantidade"));
             	resultado.add(principaisClientes);
             }
             rs.close();
@@ -36,14 +36,71 @@ public class RelatorioDao {
 		return resultado;
 	}
 	
-	public List<Integer> faixaEtariaClientes(){
-		List<Integer> resultado = new ArrayList<Integer>();
+	public List<Grafico<String>> faixaEtariaClientes(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
         try {
             Connection conn = new ConnectionFactory().getConnection();
-            PreparedStatement smt = conn.prepareStatement("select count(cod_pessoa) as quantidade, '18 - 25' from Pessoa where dbo.FaixaEtaria(dtnasc_pessoa) = '18 - 25' union select count(cod_pessoa), '25 - 35' from Pessoa where dbo.FaixaEtaria(dtnasc_pessoa) = '25 - 35' union select count(cod_pessoa), '35 - 50' from Pessoa where dbo.FaixaEtaria(dtnasc_pessoa) = '35 - 50' union select count(cod_pessoa), '50 - 60' from Pessoa where dbo.FaixaEtaria(dtnasc_pessoa) = '50 - 60' union select count(cod_pessoa), '60+' from Pessoa where dbo.FaixaEtaria(dtnasc_pessoa) = '60+' order by 2");
+            PreparedStatement smt = conn.prepareStatement("select count(cod_pessoa) as quantidade, dbo.FaixaEtaria(dtnasc_pessoa) from Pessoa group by dbo.FaixaEtaria(dtnasc_pessoa)");
             ResultSet rs = smt.executeQuery();
             while (rs.next()) {
-            	resultado.add(rs.getInt("quantidade"));
+            	Grafico<String> retorno = new Grafico<String>("");
+            	if (rs.getString(2).equals("60")) {
+                	retorno.setItem("Acima de " + rs.getString(2));
+				}else {
+	            	retorno.setItem("" + rs.getString(2));
+				}
+            	retorno.setValor(rs.getDouble("quantidade"));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
+	public List<Grafico<String>> faixaEtariaVendas(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("Select dbo.faixaEtaria(b.dtnasc_pessoa), count(a.cod_ingresso) from ingresso a inner join pessoa b on a.cod_pessoa = b.cod_pessoa group by dbo.faixaEtaria(b.dtnasc_pessoa)");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	if (rs.getString(1).equals("60")) {
+                	retorno.setItem("Acima de " + rs.getString(1));
+				}else {
+	            	retorno.setItem("" + rs.getString(1));
+				}
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
+	public List<Grafico<String>> faixaEtariaArrecadacao(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("Select dbo.faixaEtaria(b.dtnasc_pessoa), sum(c.valor_base_sessao) from ingresso a inner join pessoa b on a.cod_pessoa = b.cod_pessoa inner join Sessao c on a.cod_sessao = c.cod_sessao group by dbo.faixaEtaria(b.dtnasc_pessoa)");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	if (rs.getString(1).equals("60")) {
+                	retorno.setItem("Acima de " + rs.getString(1));
+				}else {
+	            	retorno.setItem("" + rs.getString(1));
+				}            	
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
             }
             rs.close();
             smt.close();
@@ -143,4 +200,133 @@ public class RelatorioDao {
         }
 		return resultado;
 	}
+
+	//TIPOS
+	
+	public List<Grafico<String>> tipos(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("Select b.nome_tipo, count(a.cod_evento) as quantidade from Evento a full outer join Tipo_Evento b on a.cod_tipo = b.cod_tipo group by b.nome_tipo");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	retorno.setItem(rs.getString(1));       	
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
+	public List<Grafico<String>> tiposVendas(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("Select a.nome_tipo, coalesce(sum(b.quantidade), 0) as quantidade from Tipo_evento a left join ( select c.cod_tipo as tipo, count(b.cod_ingresso) as quantidade from Sessao a inner join ingresso b on a.cod_sessao = b.cod_sessao inner join Evento c on a.cod_evento = c.cod_evento group by c.cod_tipo, c.cod_evento ) b on a.cod_tipo = b.tipo group by a.nome_tipo, a.cod_tipo");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	retorno.setItem(rs.getString(1));       	
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
+	public List<Grafico<String>> tiposArrecadacao(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("select a.nome_tipo, coalesce(sum(b.quantidade), 0) as quantidade from Tipo_Evento a left join ( select c.cod_tipo as tipo, sum(dbo.ValorIngresso( b.tipo_poltrona, a.valor_base_sessao)) as quantidade from Sessao a inner join ingresso b on a.cod_sessao = b.cod_sessao inner join Evento c on a.cod_evento = c.cod_evento group by c.cod_tipo, c.cod_evento ) b on a.cod_tipo = b.tipo group by a.nome_tipo, a.cod_tipo");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	retorno.setItem(rs.getString(1));       	
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
+	public List<Grafico<String>> generos(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("Select b.nome_genero, count(a.cod_evento) as quantidade from Evento a full outer join Genero b on a.cod_genero = b.cod_genero group by b.nome_genero");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	retorno.setItem(rs.getString(1));       	
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
+	public List<Grafico<String>> generosVendas(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("select a.nome_genero, coalesce(sum(b.quantidade), 0) as quantidade from Genero a left join ( select c.cod_genero as genero, count(b.cod_ingresso) as quantidade from Sessao a inner join ingresso b on a.cod_sessao = b.cod_sessao inner join Evento c on a.cod_evento = c.cod_evento group by c.cod_genero, c.cod_evento ) b on a.cod_genero = b.genero group by a.nome_genero, a.cod_genero");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	retorno.setItem(rs.getString(1));       	
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
+	public List<Grafico<String>> generosArrecadacao(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+        try {
+            Connection conn = new ConnectionFactory().getConnection();
+            PreparedStatement smt = conn.prepareStatement("select a.nome_genero, coalesce(sum(b.quantidade), 0) as quantidade from Genero a left join ( select c.cod_genero as genero, sum(dbo.ValorIngresso( b.tipo_poltrona, a.valor_base_sessao)) as quantidade from Sessao a inner join ingresso b on a.cod_sessao = b.cod_sessao inner join Evento c on a.cod_evento = c.cod_evento group by c.cod_genero, c.cod_evento ) b on a.cod_genero = b.genero group by a.nome_genero, a.cod_genero");
+            ResultSet rs = smt.executeQuery();
+            while (rs.next()) {
+            	Grafico<String> retorno = new Grafico<String>("");
+            	retorno.setItem(rs.getString(1));       	
+            	retorno.setValor(rs.getDouble(2));
+            	resultado.add(retorno);
+            }
+            rs.close();
+            smt.close();
+            conn.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return resultado;
+	}
+
 }

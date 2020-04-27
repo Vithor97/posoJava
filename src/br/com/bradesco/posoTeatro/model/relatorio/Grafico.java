@@ -1,5 +1,9 @@
 package br.com.bradesco.posoTeatro.model.relatorio;
 
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 public class Grafico<T> {
 
 	private T item;
@@ -25,9 +29,16 @@ public class Grafico<T> {
 		setItem(item);
 	}
 	
-	    
-	
-
+	public List<Grafico<T>> ordenar(List<Grafico<T>> lista){
+        Collections.sort(lista, new Comparator<Grafico<T>>() {
+			@Override
+			public int compare(Grafico<T> o1, Grafico<T> o2) {
+                return o2.getValor().compareTo(o1.getValor());
+			}
+           
+        });
+        return lista;
+	}
 }
 
 

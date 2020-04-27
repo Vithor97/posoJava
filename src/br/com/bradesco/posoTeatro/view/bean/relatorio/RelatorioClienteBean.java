@@ -7,44 +7,42 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 import org.primefaces.model.charts.ChartData;
-import org.primefaces.model.charts.axes.cartesian.CartesianScales;
-import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
-import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
 import org.primefaces.model.charts.bar.BarChartDataSet;
 import org.primefaces.model.charts.bar.BarChartModel;
-import org.primefaces.model.charts.bar.BarChartOptions;
 import org.primefaces.model.charts.hbar.HorizontalBarChartDataSet;
 import org.primefaces.model.charts.hbar.HorizontalBarChartModel;
-import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.pie.PieChartDataSet;
 import org.primefaces.model.charts.pie.PieChartModel;
-import org.primefaces.model.charts.pie.PieChartOptions;
 
 import br.com.bradesco.posoTeatro.dao.IngressoDao;
 import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.dao.RelatorioDao;
 import br.com.bradesco.posoTeatro.model.Ingresso;
 import br.com.bradesco.posoTeatro.model.Pessoa;
-import br.com.bradesco.posoTeatro.model.relatorio.clientes.PrincipaisClientes;
+import br.com.bradesco.posoTeatro.model.relatorio.Grafico;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
-import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
 @ManagedBean(name = "relatorioClienteBean")
 @SessionScoped
 
-public class RelatorioClienteBean extends PosoBean implements BeanInterface {
+public class RelatorioClienteBean extends RelatorioBean implements BeanInterface {
 	
 	private String mensagem;
 	
 	//Clientes
 	private HorizontalBarChartModel principaisClientesGrafico;
-	private List<PrincipaisClientes> principaisClientesLista;
+	private List<Grafico<Pessoa>> principaisClientesLista;
 	private int principaisClientesQuantidade;
 	private Pessoa clienteDetalhe;
 	private List<Ingresso> comprasCliente;
 	
 	private BarChartModel faixaEtariaClientesGraficoColunas;
 	private PieChartModel faixaEtariaClientesGraficoPizza;
+	
+	private BarChartModel faixaEtariaClientesGraficoVendas;
+	private PieChartModel faixaEtariaClientesGraficoVendasPizza;
+	private BarChartModel faixaEtariaClientesGraficoArrecadacao;
+	private List<Grafico<String>> faixaEtariaClientesListaArrecadacao;
 
  	public String getMensagem() {
 		return mensagem;
@@ -62,11 +60,11 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
 		this.principaisClientesGrafico = principaisClientesGrafico;
 	}
 
-	public List<PrincipaisClientes> getPrincipaisClientesLista() {
+	public List<Grafico<Pessoa>> getPrincipaisClientesLista() {
 		return principaisClientesLista;
 	}
 
-	public void setPrincipaisClientesLista(List<PrincipaisClientes> principaisClientesLista) {
+	public void setPrincipaisClientesLista(List<Grafico<Pessoa>> principaisClientesLista) {
 		this.principaisClientesLista = principaisClientesLista;
 	}
 	
@@ -113,6 +111,38 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
 	public void setFaixaEtariaClientesGraficoPizza(PieChartModel faixaEtariaClientesGraficoPizza) {
 		this.faixaEtariaClientesGraficoPizza = faixaEtariaClientesGraficoPizza;
 	}
+	
+	public BarChartModel getFaixaEtariaClientesGraficoVendas() {
+		return faixaEtariaClientesGraficoVendas;
+	}
+
+	public void setFaixaEtariaClientesGraficoVendas(BarChartModel faixaEtariaClientesGraficoVendas) {
+		this.faixaEtariaClientesGraficoVendas = faixaEtariaClientesGraficoVendas;
+	}
+
+	public PieChartModel getFaixaEtariaClientesGraficoVendasPizza() {
+		return faixaEtariaClientesGraficoVendasPizza;
+	}
+
+	public void setFaixaEtariaClientesGraficoVendasPizza(PieChartModel faixaEtariaClientesGraficoVendasPizza) {
+		this.faixaEtariaClientesGraficoVendasPizza = faixaEtariaClientesGraficoVendasPizza;
+	}
+
+	public BarChartModel getFaixaEtariaClientesGraficoArrecadacao() {
+		return faixaEtariaClientesGraficoArrecadacao;
+	}
+
+	public void setFaixaEtariaClientesGraficoArrecadacao(BarChartModel faixaEtariaClientesGraficoArrecadacao) {
+		this.faixaEtariaClientesGraficoArrecadacao = faixaEtariaClientesGraficoArrecadacao;
+	}
+	
+	public List<Grafico<String>> getFaixaEtariaClientesListaArrecadacao() {
+		return faixaEtariaClientesListaArrecadacao;
+	}
+
+	public void setFaixaEtariaClientesListaArrecadacao(List<Grafico<String>> faixaEtariaClientesListaArrecadacao) {
+		this.faixaEtariaClientesListaArrecadacao = faixaEtariaClientesListaArrecadacao;
+	}
 
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Relatórios de Clientes", "relatorioCliente", titulosBread, urlsBread);
@@ -131,6 +161,8 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
 		setPrincipaisClientesQuantidade(5);
 		carregarPrincipaisClientes();
 		carregarFaixaEtariaClientes();	
+		carregarFaixaEtariaClientesVendas();
+		carregarFaixaEtariaClientesArrecadacao();
 	}
 
 	public void carregarPrincipaisClientes() {
@@ -148,9 +180,9 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
         List<Number> quantidades = new ArrayList<Number>();
         List<String> nomes = new ArrayList<String>();
         
-        for (PrincipaisClientes dado : getPrincipaisClientesLista()) {
-        	quantidades.add(dado.getQuantidadeCompras());
-        	nomes.add(dado.getPessoa().getNome());
+        for (Grafico<Pessoa> dado : getPrincipaisClientesLista()) {
+        	quantidades.add(dado.getValor().intValue());
+        	nomes.add(dado.getItem().getNome());
 		}
 
         data.setLabels(nomes);       
@@ -161,27 +193,24 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
         hbarDataSet.setBorderWidth(1);      
         data.addChartDataSet(hbarDataSet);        
         getPrincipaisClientesGrafico().setData(data);
-        getPrincipaisClientesGrafico().setOptions(getOptionsBar(getPrincipaisClientesQuantidade() + " clientes com mais compras de ingressos."));
+        getPrincipaisClientesGrafico().setOptions(getOptionsHorizontalBar(getPrincipaisClientesQuantidade() + " clientes com mais compras de ingressos."));
+        new Grafico<Pessoa>(null).ordenar(getPrincipaisClientesLista());
 	}
 
 	public void carregarFaixaEtariaClientes() {
-		List<Integer> resultado = new RelatorioDao().faixaEtariaClientes();
+		List<Grafico<String>> resultado = new RelatorioDao().faixaEtariaClientes();
 		setFaixaEtariaClientesGraficoColunas(new BarChartModel());
 		
 		ChartData data = new ChartData();
         BarChartDataSet hbarDataSet = new BarChartDataSet();
   
-        List<Number> quantidades = new ArrayList<Number>();      
-        for (int dado : resultado) {
-        	quantidades.add(dado);
-		}
-        
+        List<Number> quantidades = new ArrayList<Number>();
         List<String> nomes = new ArrayList<String>();
-        nomes.add("18 - 25");
-        nomes.add("25 - 35");
-        nomes.add("35 - 50");
-        nomes.add("50 - 60");
-        nomes.add("60+");
+        
+        for (Grafico<String> dado : resultado) {
+        	quantidades.add(dado.getValor().intValue());
+        	nomes.add(dado.getItem());
+		}
 
         data.setLabels(nomes);       
         hbarDataSet.setData(quantidades);
@@ -201,14 +230,8 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
          
         PieChartDataSet dataSet = new PieChartDataSet();
         dataSet.setData(quantidades);
-         
-        List<String> cores = new ArrayList<String>();
-		cores.add("rgba(0, 122, 217, 0.45)");			
-		cores.add("rgba(217, 0, 0, 1)");			
-		cores.add("rgba(0, 122, 217, 1)");			
-		cores.add("rgba(0, 217, 122, 1)");			
-		cores.add("rgba(255, 255, 0, 0.4)");			
-        dataSet.setBackgroundColor(cores);
+         			
+        dataSet.setBackgroundColor(getCores());
          
         data.addChartDataSet(dataSet);
         data.setLabels(nomes);
@@ -220,55 +243,78 @@ public class RelatorioClienteBean extends PosoBean implements BeanInterface {
         
 	}
 
+	public void carregarFaixaEtariaClientesVendas() {
+		List<Grafico<String>> resultado = new RelatorioDao().faixaEtariaVendas();
+		setFaixaEtariaClientesGraficoVendas(new BarChartModel());
+		
+		ChartData data = new ChartData();
+        BarChartDataSet hbarDataSet = new BarChartDataSet();
+  
+        List<Number> quantidades = new ArrayList<Number>();
+        List<String> nomes = new ArrayList<String>();
+        
+        for (Grafico<String> dado : resultado) {
+        	quantidades.add(dado.getValor().intValue());
+        	nomes.add(dado.getItem());
+		}
+
+        data.setLabels(nomes);       
+        hbarDataSet.setData(quantidades);
+        hbarDataSet.setLabel("Quantidade de ingressos comprados");
+        hbarDataSet.setBackgroundColor(setCorBarras(5));
+        hbarDataSet.setBorderColor(setBordaBarras(5));
+        hbarDataSet.setBorderWidth(1);      
+        data.addChartDataSet(hbarDataSet);        
+        getFaixaEtariaClientesGraficoVendas().setData(data);
+        getFaixaEtariaClientesGraficoVendas().setOptions(getOptionsBar("Quantidade de compras por faixa etária dos clientes (Colunas)")); 
+        
+        
+        setFaixaEtariaClientesGraficoVendasPizza(new PieChartModel());
+        data = new ChartData();
+                 
+        PieChartDataSet dataSet = new PieChartDataSet();
+        dataSet.setData(quantidades);
+         			
+        dataSet.setBackgroundColor(getCores());
+         
+        data.addChartDataSet(dataSet);
+        data.setLabels(nomes);
+         
+        getFaixaEtariaClientesGraficoVendasPizza().setData(data);
+        getFaixaEtariaClientesGraficoVendasPizza().setOptions(getOptionsPie("Quantidade de compras por faixa etária dos clientes (Pizza)"));
+      
+	}
+
+	public void carregarFaixaEtariaClientesArrecadacao() {
+		setFaixaEtariaClientesListaArrecadacao(new RelatorioDao().faixaEtariaArrecadacao());
+		setFaixaEtariaClientesGraficoArrecadacao(new BarChartModel());
+		
+		ChartData data = new ChartData();
+        BarChartDataSet hbarDataSet = new BarChartDataSet();
+  
+        List<Number> quantidades = new ArrayList<Number>();
+        List<String> nomes = new ArrayList<String>();
+        
+        for (Grafico<String> dado : getFaixaEtariaClientesListaArrecadacao()) {
+        	quantidades.add(dado.getValor());
+        	nomes.add(dado.getItem());
+		}
+
+        data.setLabels(nomes);       
+        hbarDataSet.setData(quantidades);
+        hbarDataSet.setLabel("Quantidade de ingressos comprados");
+        hbarDataSet.setBackgroundColor(setCorBarras(5));
+        hbarDataSet.setBorderColor(setBordaBarras(5));
+        hbarDataSet.setBorderWidth(1);      
+        data.addChartDataSet(hbarDataSet);        
+        getFaixaEtariaClientesGraficoArrecadacao().setData(data);
+        getFaixaEtariaClientesGraficoArrecadacao().setOptions(getOptionsBar("Valor arrecadado em reais por faixa etária dos clientes")); 
+        new Grafico<String>(null).ordenar(getFaixaEtariaClientesListaArrecadacao());
+	}
+	
 	public void detalharPessoas(Pessoa pessoa) {
 		setClienteDetalhe(new PessoaDao().consultar(pessoa));
 		setComprasCliente(new IngressoDao().listar(pessoa));
 	}
 	
-	public List<String> setCorBarras(int dados) {
-		List<String> cores = new ArrayList<String>();
-		for (int i = 0; i < dados; i++) {
-			cores.add("rgba(0, 122, 217, 0.4)");			
-		}
-        return cores;
-	}
-	
-	public List<String> setBordaBarras(int dados) {
-		List<String> cores = new ArrayList<String>();
-		for (int i = 0; i < dados; i++) {
-			cores.add("rgba(0, 71, 126, 1)");			
-		}
-        return cores;
-	}
-
-	public BarChartOptions getOptionsBar(String titulo) {
-		BarChartOptions options = new BarChartOptions();
-        CartesianScales cScales = new CartesianScales();
-        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
-        CartesianLinearTicks ticks = new CartesianLinearTicks();
-        ticks.setBeginAtZero(true);
-        linearAxes.setTicks(ticks);
-        cScales.addXAxesData(linearAxes);
-        options.setScales(cScales);
-        Title title = new Title();
-        title.setText(titulo);
-        title.setDisplay(true);
-        options.setTitle(title);
-        return options;
-	}
-	
-	public PieChartOptions getOptionsPie(String titulo) {
-		PieChartOptions options = new PieChartOptions();
-        CartesianScales cScales = new CartesianScales();
-        CartesianLinearAxes linearAxes = new CartesianLinearAxes();
-        CartesianLinearTicks ticks = new CartesianLinearTicks();
-        ticks.setBeginAtZero(true);
-        linearAxes.setTicks(ticks);
-        cScales.addXAxesData(linearAxes);
-        Title title = new Title();
-        title.setText(titulo);
-        title.setDisplay(true);
-        options.setTitle(title);
-        return options;
-	}
 }

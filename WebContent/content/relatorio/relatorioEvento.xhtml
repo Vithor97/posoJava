@@ -20,208 +20,152 @@
 				<br />
 				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()" />
 			</p:dialog>
-				
-	<!-- 		<p:dialog header="Dados do Evento" id="dlgEvento"	widgetVar="dlgEvento" modal="true" minHeight="40" width="1100" positionType="absolute">
-				<p:panel id="pnPessoa" header="#{msgs.label_relatorio_cliente}" style="margin-top:10px">
-					<h:panelGrid columns="3" cellpadding="20">
-						<h:panelGrid columns="2">
-							<p:outputLabel for="codigoPessoa" value="#{msgs.label_relatorioEvento_pessoa_codigo}" />
-							<p:inputText id="codigoPessoa" value="#{relatorioEventoBean.clienteDetalhe.codigo}" size="4" readonly="true"/>
-							<p:outputLabel for="dataNascPessoa" value="#{msgs.label_relatorioEvento_pessoa_nascimento}" />
-							<p:inputText id="dataNascPessoa" value="#{relatorioEventoBean.clienteDetalhe.dataNascimentoString}" readonly="true" />						
-						</h:panelGrid>
-						<h:panelGrid columns="2">
-							<p:outputLabel for="nomePessoa" value="#{msgs.label_relatorioEvento_pessoa_nome}" />
-							<p:inputText id="nomePessoa" value="#{relatorioEventoBean.clienteDetalhe.nome}" size="50" readonly="true" />
-							<p:outputLabel for="emailPessoa" value="#{msgs.label_relatorioEvento_pessoa_email}" />
-							<p:inputText id="emailPessoa" value="#{relatorioEventoBean.clienteDetalhe.email}" size="50" readonly="true" />
-						</h:panelGrid>
-						<h:panelGrid columns="2">
-							<p:outputLabel for="cpfPessoa" value="#{msgs.label_relatorioEvento_pessoa_cpf}" />
-							<p:inputText id="cpfPessoa" value="#{relatorioEventoBean.clienteDetalhe.cpf}" size="14" readonly="true" />
-							<p:outputLabel for="telefonePessoa" value="#{msgs.label_relatorioEvento_pessoa_telefone}" />
-							<p:inputText id="telefonePessoa" value="#{relatorioEventoBean.clienteDetalhe.telefone}" size="15" readonly="true" />
-						</h:panelGrid>
-					</h:panelGrid>
-				</p:panel>
+		 
+      		<p:tab title="#{msgs.label_relatorioEvento_clientes}" style="width: 100%;">	
+				<h:panelGrid columns="1" styleClass="clientes">
+					<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
+       					<p:tab id="publicoEventos" title="Públicos Gerais">
+							<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
+								<h:column >
+									<p:toolbar>
+										<c:facet name="left">
+											<p:outputLabel value="Quantidade a ser exibida:   " for="publicoEventosQuantidade"/>
+											<p:spinner id="publicoEventosQuantidade" value="#{relatorioEventoBean.publicoEventosQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
+												<p:ajax update="publicoEventosLista publicoEventosGrafico publicoEventosQuantidade" listener="#{relatorioEventoBean.carregarPublicoEventos}"/>
+											</p:spinner>
+										</c:facet>
+									</p:toolbar>
+									
+									<p:barChart id="publicoEventosGrafico" model="#{relatorioEventoBean.publicoEventosGrafico}"/>		
+								</h:column>
+								<p:dataTable widgetVar="publicoEventosLista" id="publicoEventosLista" value="#{relatorioEventoBean.publicoEventosLista}" style="margin-top: 10px; " var="publicoEvento">
+									<p:column width="10%">
+										<c:facet name="header">Código</c:facet>
+										<p:outputLabel value="#{publicoEvento.item.codigo}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column>
+										<c:facet name="header">Nome</c:facet>
+										<p:outputLabel value="#{publicoEvento.item.descricao}"></p:outputLabel>
+									</p:column>
+									<p:column width="23%">
+										<c:facet name="header">Ingressos Vendidos</c:facet>
+										<p:outputLabel value="#{publicoEvento.valor.intValue()}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column width="15%">
+										<c:facet name="header">Ações</c:facet>
+					                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(publicoEvento.item)}"></p:commandButton> 							
+										</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+       					</p:tab>
+       					
+       					<p:tab id="publicoMediaEventos" title="Médias de Público">
+							<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
+								<h:column >
+									<p:toolbar>
+										<c:facet name="left">
+											<p:outputLabel value="Quantidade a ser exibida:   " for="publicoMediaEventosQuantidade"/>
+											<p:spinner id="publicoMediaEventosQuantidade" value="#{relatorioEventoBean.publicoMediaEventosQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
+												<p:ajax update="publicoMediaEventosLista publicoMediaEventosGrafico publicoMediaEventosQuantidade" listener="#{relatorioEventoBean.carregarPublicoMediaEventos}"/>
+											</p:spinner>
+										</c:facet>
+									</p:toolbar>
+									
+									<p:barChart id="publicoMediaEventosGrafico" model="#{relatorioEventoBean.publicoMediaEventosGrafico}"/>		
+								</h:column>
+								<p:dataTable widgetVar="publicoMediaEventosLista" id="publicoMediaEventosLista" value="#{relatorioEventoBean.publicoMediaEventosLista}" style="margin-top: 10px; " var="publicoMediaEvento">
+									<p:column width="10%">
+										<c:facet name="header">Código</c:facet>
+										<p:outputLabel value="#{publicoMediaEvento.item.codigo}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column>
+										<c:facet name="header">Nome</c:facet>
+										<p:outputLabel value="#{publicoMediaEvento.item.descricao}"></p:outputLabel>
+									</p:column>
+									<p:column width="20%">
+										<c:facet name="header">Média de vendas</c:facet>
+										<p:outputLabel value="#{publicoMediaEvento.valor}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column width="15%">
+										<c:facet name="header">Ações</c:facet>
+					                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(publicoMediaEvento.item)}"></p:commandButton> 							
+										</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+       					</p:tab>
 
-				<p:dataTable widgetVar="ingressosEvento" id="ingressosEvento" value="#{relatorioEventoBean.comprasEvento}" style="margin-top: 10px;" var="ingresso" 
-					rows="5" 
-					paginator="true" 
-					paginatorPosition="top" 
-					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
-					currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} compras">
-					<c:facet name="header">
-				        Compras
-				    </c:facet>
-					<p:column>
-						<c:facet name="header">Evento</c:facet>
-						<p:outputLabel value="#{ingresso.sessao.evento.descricao}"></p:outputLabel>
-					</p:column>
-					<p:column>
-						<c:facet name="header">Dia</c:facet>
-						<p:outputLabel value="#{ingresso.sessao.diaString}"></p:outputLabel>
-					</p:column>
-					<p:column>
-						<c:facet name="header">Horario</c:facet>
-						<p:outputLabel value="#{ingresso.sessao.horario}"></p:outputLabel>
-					</p:column>
-					<p:column>
-						<c:facet name="header">Setor</c:facet>
-						<p:outputLabel value="#{ingresso.poltrona.tipoPoltrona.descricao}"></p:outputLabel>
-					</p:column>
-					<p:column>
-						<c:facet name="header">Valor</c:facet>
-						<p:outputLabel value="R$ #{ingresso.sessao.getValorPoltronaString(ingresso.poltrona.tipoPoltrona.porcentagem)}"></p:outputLabel>
-					</p:column>
-				</p:dataTable>	
-			</p:dialog>
-		-->						 
-       			<p:tab title="#{msgs.label_relatorioEvento_clientes}" style="width: 100%;">	
-					<h:panelGrid columns="1" styleClass="clientes">
-						<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
-        					<p:tab id="publicoEventos" title="Públicos Gerais">
-								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
-									<h:column >
-										<p:toolbar>
-											<c:facet name="left">
-												<p:outputLabel value="Quantidade a ser exibida:   " for="publicoEventosQuantidade"/>
-												<p:spinner id="publicoEventosQuantidade" value="#{relatorioEventoBean.publicoEventosQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
-													<p:ajax update="publicoEventosLista publicoEventosGrafico publicoEventosQuantidade" listener="#{relatorioEventoBean.carregarPublicoEventos}"/>
-												</p:spinner>
-											</c:facet>
-										</p:toolbar>
-										
-										<p:barChart id="publicoEventosGrafico" model="#{relatorioEventoBean.publicoEventosGrafico}"/>		
-									</h:column>
-									<p:dataTable widgetVar="publicoEventosLista" id="publicoEventosLista" value="#{relatorioEventoBean.publicoEventosLista}" style="margin-top: 10px; " var="publicoEvento">
-										<p:column width="10%">
-											<c:facet name="header">Código</c:facet>
-											<p:outputLabel value="#{publicoEvento.item.codigo}"></p:outputLabel>
+    					    <p:tab id="arrecadacao" title="Arrecadações">
+							<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
+								<h:column >
+									<p:toolbar>
+										<c:facet name="left">
+											<p:outputLabel value="Quantidade a ser exibida:   " for="arrecadacaoQuantidade"/>
+											<p:spinner id="arrecadacaoQuantidade" value="#{relatorioEventoBean.arrecadacaoQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
+												<p:ajax update="arrecadacaoLista arrecadacaoGrafico arrecadacaoQuantidade" listener="#{relatorioEventoBean.carregarArrecadacao}"/>
+											</p:spinner>
+										</c:facet>
+									</p:toolbar>
+									
+									<p:barChart id="arrecadacaoGrafico" model="#{relatorioEventoBean.arrecadacaoGrafico}"/>		
+								</h:column>
+								<p:dataTable widgetVar="arrecadacaoLista" id="arrecadacaoLista" value="#{relatorioEventoBean.arrecadacaoLista}" style="margin-top: 10px; " var="arrecadacao">
+									<p:column width="10%">
+										<c:facet name="header">Código</c:facet>
+										<p:outputLabel value="#{arrecadacao.item.codigo}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column>
+										<c:facet name="header">Nome</c:facet>
+										<p:outputLabel value="#{arrecadacao.item.descricao}"></p:outputLabel>
+									</p:column>
+									<p:column width="20%">
+										<c:facet name="header">Valor arrecadado</c:facet>
+										<p:outputLabel value="#{relatorioEventoBean.getReal(arrecadacao.valor)}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column width="15%">
+										<c:facet name="header">Ações</c:facet>
+						                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(arrecadacao.item)}"></p:commandButton> 													
 										</p:column>
-										<p:column>
-											<c:facet name="header">Nome</c:facet>
-											<p:outputLabel value="#{publicoEvento.item.descricao}"></p:outputLabel>
+								</p:dataTable>
+							</h:panelGrid>
+       					</p:tab>
+       					
+       					<p:tab id="arrecadacaoMedia" title="Médias de Arrecadação">
+							<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
+								<h:column >
+									<p:toolbar>
+										<c:facet name="left">
+											<p:outputLabel value="Quantidade a ser exibida:   " for="arrecadacaoMediaQuantidade"/>
+											<p:spinner id="arrecadacaoMediaQuantidade" value="#{relatorioEventoBean.arrecadacaoMediaQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
+												<p:ajax update="arrecadacaoMediaLista arrecadacaoMediaGrafico arrecadacaoMediaQuantidade" listener="#{relatorioEventoBean.carregarArrecadacaoMedia}"/>
+											</p:spinner>
+										</c:facet>
+									</p:toolbar>
+									
+									<p:barChart id="arrecadacaoMediaGrafico" model="#{relatorioEventoBean.arrecadacaoMediaGrafico}"/>		
+								</h:column>
+								<p:dataTable widgetVar="arrecadacaoMediaLista" id="arrecadacaoMediaLista" value="#{relatorioEventoBean.arrecadacaoMediaLista}" style="margin-top: 10px; " var="arrecadacaoMedia">
+									<p:column width="10%">
+										<c:facet name="header">Código</c:facet>
+										<p:outputLabel value="#{arrecadacaoMedia.item.codigo}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column>
+										<c:facet name="header">Nome</c:facet>
+										<p:outputLabel value="#{arrecadacaoMedia.item.descricao}"></p:outputLabel>
+									</p:column>
+									<p:column width="23%">
+										<c:facet name="header">Média de arrecadação</c:facet>
+										<p:outputLabel value="#{relatorioEventoBean.getReal(arrecadacaoMedia.valor)}" style="float: right"></p:outputLabel>
+									</p:column>
+									<p:column width="15%">
+										<c:facet name="header">Ações</c:facet>
+					                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(arrecadacaoMedia.item)}"></p:commandButton> 							
 										</p:column>
-										<p:column width="20%">
-											<c:facet name="header">Qtde. de compras</c:facet>
-											<p:outputLabel value="#{publicoEvento.valor}"></p:outputLabel>
-										</p:column>
-										<p:column width="15%">
-											<c:facet name="header">Ações</c:facet>
-						                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(publicoEvento.item)}"></p:commandButton> 							
- 										</p:column>
-									</p:dataTable>
-								</h:panelGrid>
-        					</p:tab>
-        					
-        					<p:tab id="publicoMediaEventos" title="Médias de Público">
-								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
-									<h:column >
-										<p:toolbar>
-											<c:facet name="left">
-												<p:outputLabel value="Quantidade a ser exibida:   " for="publicoMediaEventosQuantidade"/>
-												<p:spinner id="publicoMediaEventosQuantidade" value="#{relatorioEventoBean.publicoMediaEventosQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
-													<p:ajax update="publicoMediaEventosLista publicoMediaEventosGrafico publicoMediaEventosQuantidade" listener="#{relatorioEventoBean.carregarPublicoMediaEventos}"/>
-												</p:spinner>
-											</c:facet>
-										</p:toolbar>
-										
-										<p:barChart id="publicoMediaEventosGrafico" model="#{relatorioEventoBean.publicoMediaEventosGrafico}"/>		
-									</h:column>
-									<p:dataTable widgetVar="publicoMediaEventosLista" id="publicoMediaEventosLista" value="#{relatorioEventoBean.publicoMediaEventosLista}" style="margin-top: 10px; " var="publicoMediaEvento">
-										<p:column width="10%">
-											<c:facet name="header">Código</c:facet>
-											<p:outputLabel value="#{publicoMediaEvento.item.codigo}"></p:outputLabel>
-										</p:column>
-										<p:column>
-											<c:facet name="header">Nome</c:facet>
-											<p:outputLabel value="#{publicoMediaEvento.item.descricao}"></p:outputLabel>
-										</p:column>
-										<p:column width="20%">
-											<c:facet name="header">Qtde. de compras</c:facet>
-											<p:outputLabel value="#{publicoMediaEvento.valor}"></p:outputLabel>
-										</p:column>
-										<p:column width="15%">
-											<c:facet name="header">Ações</c:facet>
-						                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(publicoMediaEvento.item)}"></p:commandButton> 							
- 										</p:column>
-									</p:dataTable>
-								</h:panelGrid>
-        					</p:tab>
-
-     					    <p:tab id="arrecadacao" title="Arrecadações">
-								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
-									<h:column >
-										<p:toolbar>
-											<c:facet name="left">
-												<p:outputLabel value="Quantidade a ser exibida:   " for="arrecadacaoQuantidade"/>
-												<p:spinner id="arrecadacaoQuantidade" value="#{relatorioEventoBean.arrecadacaoQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
-													<p:ajax update="arrecadacaoLista arrecadacaoGrafico arrecadacaoQuantidade" listener="#{relatorioEventoBean.carregarPublicoMedia}"/>
-												</p:spinner>
-											</c:facet>
-										</p:toolbar>
-										
-										<p:barChart id="arrecadacaoGrafico" model="#{relatorioEventoBean.arrecadacaoGrafico}"/>		
-									</h:column>
-									<p:dataTable widgetVar="arrecadacaoLista" id="arrecadacaoLista" value="#{relatorioEventoBean.arrecadacaoLista}" style="margin-top: 10px; " var="arrecadacao">
-										<p:column width="10%">
-											<c:facet name="header">Código</c:facet>
-											<p:outputLabel value="#{arrecadacao.item.codigo}"></p:outputLabel>
-										</p:column>
-										<p:column>
-											<c:facet name="header">Nome</c:facet>
-											<p:outputLabel value="#{arrecadacao.item.descricao}"></p:outputLabel>
-										</p:column>
-										<p:column width="20%">
-											<c:facet name="header">Valor arrecadado</c:facet>
-											<p:outputLabel value="R$ #{arrecadacao.valor}"></p:outputLabel>
-										</p:column>
-										<p:column width="15%">
-											<c:facet name="header">Ações</c:facet>
- 						                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(arrecadacao.item)}"></p:commandButton> 													
- 										</p:column>
-									</p:dataTable>
-								</h:panelGrid>
-        					</p:tab>
-        					
-        					<p:tab id="arrecadacaoMedia" title="Médias de Arrecadação">
-								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20" title="">
-									<h:column >
-										<p:toolbar>
-											<c:facet name="left">
-												<p:outputLabel value="Quantidade a ser exibida:   " for="arrecadacaoMediaQuantidade"/>
-												<p:spinner id="arrecadacaoMediaQuantidade" value="#{relatorioEventoBean.arrecadacaoMediaQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
-													<p:ajax update="arrecadacaoMediaLista arrecadacaoMediaGrafico arrecadacaoMediaQuantidade" listener="#{relatorioEventoBean.carregarPublicoMedia}"/>
-												</p:spinner>
-											</c:facet>
-										</p:toolbar>
-										
-										<p:barChart id="arrecadacaoMediaGrafico" model="#{relatorioEventoBean.arrecadacaoMediaGrafico}"/>		
-									</h:column>
-									<p:dataTable widgetVar="arrecadacaoMediaLista" id="arrecadacaoMediaLista" value="#{relatorioEventoBean.arrecadacaoMediaLista}" style="margin-top: 10px; " var="arrecadacaoMedia">
-										<p:column width="10%">
-											<c:facet name="header">Código</c:facet>
-											<p:outputLabel value="#{arrecadacaoMedia.item.codigo}"></p:outputLabel>
-										</p:column>
-										<p:column>
-											<c:facet name="header">Nome</c:facet>
-											<p:outputLabel value="#{arrecadacaoMedia.item.descricao}"></p:outputLabel>
-										</p:column>
-										<p:column width="20%">
-											<c:facet name="header">Valor arrecadado</c:facet>
-											<p:outputLabel value="R$ #{arrecadacaoMedia.valor}"></p:outputLabel>
-										</p:column>
-										<p:column width="15%">
-											<c:facet name="header">Ações</c:facet>
-						                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioEventoBean.detalhar(arrecadacaoMedia.item)}"></p:commandButton> 							
- 										</p:column>
-									</p:dataTable>
-								</h:panelGrid>
-        					</p:tab>
-        				</p:tabView>
-					</h:panelGrid>
-				</p:tab>
+								</p:dataTable>
+							</h:panelGrid>
+       					</p:tab>
+       				</p:tabView>
+				</h:panelGrid>
+			</p:tab>
 
 			<p:commandButton disabled="#{relatorioEventoBean.telaAnterior == null}" value="#{msgs.label_relatorio_voltar}" action="#{relatorioEventoBean.voltar}" style="margin-top:10px" />			
 		</h:form>

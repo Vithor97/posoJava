@@ -167,5 +167,10 @@
 			<to-view-id>/content/relatorio/relatorioEvento.xhtml</to-view-id>
 		</navigation-case>
 		
+		<navigation-case>
+			<from-outcome>relatorioTipoGenero</from-outcome>
+			<to-view-id>/content/relatorio/relatorioTipoGenero.xhtml</to-view-id>
+		</navigation-case>
+		
 	</navigation-rule>
 </faces-config>

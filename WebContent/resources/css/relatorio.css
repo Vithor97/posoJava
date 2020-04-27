@@ -5,14 +5,27 @@ table{
 
 
 .clientes .ui-tabs.ui-tabs-left .ui-tabs-nav{
-	width: 15%;
+	width: 16%;
 }
 
 .clientes .ui-tabs.ui-tabs-left .ui-tabs-panels{
-	width: 85%;
+	width: 84%;
 }
 
 .clientes .ui-tabs.ui-tabs-left .ui-tabs-panels td:first-child{
+	width: 45%;
+	vertical-align: top;
+}
+
+.tiposGeneros .ui-tabs.ui-tabs-left .ui-tabs-nav{
+	width: 9%;
+}
+
+.tiposGeneros .ui-tabs.ui-tabs-left .ui-tabs-panels{
+	width: 91%;
+}
+
+.tiposGeneros .ui-tabs.ui-tabs-left .ui-tabs-panels td:first-child{
 	width: 45%;
 	vertical-align: top;
 }

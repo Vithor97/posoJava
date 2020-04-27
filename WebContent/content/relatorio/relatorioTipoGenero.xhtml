@@ -1,0 +1,119 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{msgs.label_relatorio} - #{msgs.label_relatorioClientes}</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{relatorioTipoGeneroBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet name="css/relatorio.css"></h:outputStylesheet>	
+		<h:form id="dados">			
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"	minHeight="40" width="300">
+				<h:outputText value="#{relatorioTipoGeneroBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()" />
+			</p:dialog>
+												 
+			<h:panelGrid columns="1" styleClass="tiposGeneros">
+				<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
+     				<p:tab title="Tipos" >
+     					<p:tabView style="width: 100%;  overflow: hidden;" orientation="left">
+        					<p:tab title="Quantidade">
+								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="tiposColunas" model="#{relatorioTipoGeneroBean.tiposGraficoColunas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="tiposPizza" model="#{relatorioTipoGeneroBean.tiposGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Vendas" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="tiposVendas" model="#{relatorioTipoGeneroBean.tiposGraficoVendas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="tiposGraficoVendasPizza" model="#{relatorioTipoGeneroBean.tiposGraficoVendasPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Arrecadação" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="tiposArrecadacao" model="#{relatorioTipoGeneroBean.tiposGraficoArrecadacao}"/>		
+									</h:column>
+									<p:dataTable widgetVar="tiposListaArrecadacao" id="tiposListaArrecadacao" value="#{relatorioTipoGeneroBean.tiposListaArrecadacao}" style="margin-top: 10px; " var="tipo">
+										<p:column width="30%">
+											<c:facet name="header">Tipo</c:facet>
+											<p:outputLabel value="#{tipo.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<p:outputLabel value="#{relatorioTipoGeneroBean.getReal(tipo.valor)}" style="float: right"></p:outputLabel>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        				</p:tabView>
+     				</p:tab>
+     				
+     				
+     				
+     				
+     				<p:tab title="Gêneros" >
+     					<p:tabView style="width: 100%;  overflow: hidden;" orientation="left">
+        					<p:tab title="Quantidade">
+								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="generosColunas" model="#{relatorioTipoGeneroBean.generosGraficoColunas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="generosPizza" model="#{relatorioTipoGeneroBean.generosGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Vendas" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="generosVendas" model="#{relatorioTipoGeneroBean.generosGraficoVendas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="generosGraficoVendasPizza" model="#{relatorioTipoGeneroBean.generosGraficoVendasPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Arrecadação" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="generosArrecadacao" model="#{relatorioTipoGeneroBean.generosGraficoArrecadacao}"/>		
+									</h:column>
+									<p:dataTable widgetVar="generosListaArrecadacao" id="generosListaArrecadacao" value="#{relatorioTipoGeneroBean.generosListaArrecadacao}" style="margin-top: 10px; " var="genero">
+										<p:column width="30%">
+											<c:facet name="header">Tipo</c:facet>
+											<p:outputLabel value="#{genero.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<p:outputLabel value="#{relatorioTipoGeneroBean.getReal(genero.valor)}" style="float: right"></p:outputLabel>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        				</p:tabView>
+     				</p:tab>
+      			</p:tabView>
+			</h:panelGrid>
+
+			<p:commandButton disabled="#{relatorioTipoGeneroBean.telaAnterior == null}" value="#{msgs.label_relatorio_voltar}" action="#{relatorioTipoGeneroBean.voltar}" style="margin-top:10px" />			
+		</h:form>
+	</ui:define>
+
+</ui:composition>
