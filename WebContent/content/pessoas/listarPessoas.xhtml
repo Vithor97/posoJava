@@ -1,0 +1,74 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">#{msgs.label_consultarEventos}</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{listarPessoasBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	
+	
+	<ui:define name="conteudo">
+		<h:form>
+			<p:dialog header="Listar Pessoas" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+			    <h:outputText value="#{listarPessoasBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
+			</p:dialog>
+			
+			<h:panelGrid columns="3" style="margin-bottom: 1%">
+				<p:outputLabel value="Pesquisar: " style="font-weight: 700;color: #333;"/>
+				<p:inputText size="50" placeholder="Digite o nome da pessoa" value="#{listarPessoasBean.pesquisaPessoa}" />
+				<p:commandButton icon="pi pi-search" action="#{listarPessoasBean.pesquisarPessoas}" update="pessoas"/>			
+			</h:panelGrid>
+
+			
+			<p:dataTable value="#{listarPessoasBean.pessoas}" id="pessoas" var="pessoa" rows="10" emptyMessage="#{msgs.msg_listarEvento_eventos_empty}"
+					paginator="true"
+					paginatorPosition="top"
+	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} pessoas">
+	                						
+	                
+				<p:column width="5%">
+					<c:facet name="header">#{msgs.label_listarEvento_codigo}</c:facet>
+                		<p:outputLabel style="float: right;" value="#{pessoa.codigo}"></p:outputLabel>  
+                </p:column>
+				<p:column>
+					<c:facet name="header">#{msgs.label_listarEvento_descricao}</c:facet>
+                    <p:outputLabel value="#{pessoa.nome}"></p:outputLabel> 
+                </p:column>
+                <p:column width="12%">
+					<c:facet name="header">Descricao</c:facet>
+                    <p:commandButton style="width: 100%;" value="#{msgs.label_listarEvento_detalhar}" action="#{listarPessoasBean.detalhaPessoa(pessoa)}"></p:commandButton>
+ 					<p:commandButton value="Alterar" action="#{listarPessoasBean.alteracao(pessoa)}" 
+ 					 style= "margin-top:10px; margin-right:10px;width: 46.25%;"
+ 					 update="@form"/>
+                	
+<!--                 	<p:commandButton value="Excluir" action="#{listarEventosBean.excluir(pessoa)}"> -->
+<!--                 	<p:confirm header="Exlusão de Pessoa" message="Deseja apagar?" icon="ui-icon-alert" /> -->
+<!--                 	</p:commandButton>  -->
+                	           
+                </p:column>	
+			</p:dataTable>
+			
+<!-- 			<p:commandButton value="#{msgs.label_listarEvento_voltar}" -->
+<!-- 				action="#{listarEventosBean.voltar}" style="margin-top:10px" /> -->
+				
+				
+		</h:form> 
+		
+		<h:form>
+			<p:confirmDialog global="true" width="300">
+			        <p:commandButton value="Sim"   type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

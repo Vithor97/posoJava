@@ -14,6 +14,7 @@ public class MenuCatalog {
 	private boolean menuPessoas;
 	private boolean cadastrarPessoas;
 	private boolean consultarPessoas;
+	private boolean listarPessoas;
 
 	private boolean menuIngressos;
 	private boolean cadastrarIngressos;
@@ -288,6 +289,14 @@ public class MenuCatalog {
 
 	public void setRelatorioEmpresa(boolean relatorioEmpresa) {
 		this.relatorioEmpresa = relatorioEmpresa;
+	}
+
+	public boolean isListarPessoas() {
+		return listarPessoas;
+	}
+
+	public void setListarPessoas(boolean listarPessoas) {
+		this.listarPessoas = listarPessoas;
 	}
 	
 	
