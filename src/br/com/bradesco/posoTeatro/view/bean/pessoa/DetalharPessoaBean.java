@@ -93,6 +93,7 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Pessoas Detalhe", "detalhePessoas", titulosBread, urlsBread);
+		setEvento(new EventoDao().consultar(evento));
 		setEventos(new EventoDao().listarEventosPessoa(getPessoa()));
 		return "detalhePessoas";
 	}
@@ -100,6 +101,7 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 	@Override
 	public String iniciarPagina() {
 		super.iniciarPagina("Pessoas Detalhe", "detalhePessoas");
+		setEvento(new EventoDao().consultar(evento));
 		setEventos(new EventoDao().listarEventosPessoa(getPessoa()));
 		return "detalhePessoas";
 	}

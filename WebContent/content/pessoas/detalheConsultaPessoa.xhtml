@@ -65,6 +65,33 @@
 			        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
+		
+		
+		<p:panel id="pnEventos" header="#{msgs.label_detalhe_pessoa_eventos}" style="margin-top:10px">
+				<p:dataTable value="#{consultarPessoaDetalheBean.eventos}" style="margin-top: 10px;" var="evento" rows="5" emptyMessage="#{msgs.label_msg_detalhe_pessoa_eventos_empty}"
+					paginator="true"
+					paginatorPosition="top"
+	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} eventos">
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalhe_pessoa_evento_codigo}</c:facet>
+						<p:outputLabel value="#{evento.codigo}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalhe_pessoa_evento_descricao}</c:facet>
+						<p:outputLabel value="#{evento.descricao}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalhe_pessoa_evento_tipo}</c:facet>
+						<p:outputLabel value="#{evento.tipoEvento.nome}"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">#{msgs.label_detalhe_pessoa_evento_genero}</c:facet>
+						<p:outputLabel value="#{evento.genero.nome}"></p:outputLabel>
+					</p:column>
+				</p:dataTable>
+			</p:panel>
+		
 	</ui:define>
 	
 </ui:composition>
