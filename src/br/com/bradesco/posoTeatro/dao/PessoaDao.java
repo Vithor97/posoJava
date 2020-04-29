@@ -165,29 +165,6 @@ public class PessoaDao extends Pessoa {
 		return pessoas;
 	}
 	
-	public ArrayList<Evento> listarEventosPessoa(Pessoa pessoa) {
 
-		ArrayList<Evento> eventos = new ArrayList<Evento>();
-		try {
-			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement smt = conn.prepareStatement("select b.* from pessoa_evento a inner join evento b on a.cod_evento = b.cod_evento where a.cod_pessoa = " + pessoa.getCodigo());
-			ResultSet rs = smt.executeQuery();
-			while (rs.next()) {
-				Evento evento = new Evento();
-				evento.setCodigo(rs.getInt("cod_evento"));
-				evento.setDescricao(rs.getString("desc_evento"));
-				evento.setCodigo(rs.getInt("cod_tipo"));
-				evento.setCodigo(rs.getInt("cod_genero"));
-				eventos.add(evento);
-			}
-			rs.close();
-			smt.close();
-			conn.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return eventos;
-	}
 	
 }
