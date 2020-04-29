@@ -6,7 +6,9 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
+import br.com.bradesco.posoTeatro.dao.EventoDao;
 import br.com.bradesco.posoTeatro.dao.PessoaDao;
+import br.com.bradesco.posoTeatro.model.Evento;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
@@ -16,9 +18,13 @@ import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 @SessionScoped
 public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 	
-	private Pessoa pessoa;
-	private String mensagem;
+	
+	private Evento evento;
+	private Pessoa pessoa; 
 	private PessoaDao dao;
+	private List<Evento> eventos;
+	private String mensagem;
+
 	
 //	@Inject
 //	@Named("consultarPessoasBean")
@@ -40,7 +46,6 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 	public DetalharPessoaBean() {
 		dao = new PessoaDao();
 	}
-	
 	
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -65,20 +70,37 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 		return dao;
 	}
 
-
 	public void setDao(PessoaDao dao) {
 		this.dao = dao;
 	}
 
+	public Evento getEvento() {
+		return evento;
+	}
 
+	public void setEvento(Evento evento) {
+		this.evento = evento;
+	}
+
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+	
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Pessoas Detalhe", "detalhePessoas", titulosBread, urlsBread);
+		setEventos(new EventoDao().listarEventosPessoa(getPessoa()));
 		return "detalhePessoas";
 	}
+	
 	@Override
 	public String iniciarPagina() {
 		super.iniciarPagina("Pessoas Detalhe", "detalhePessoas");
+		setEventos(new EventoDao().listarEventosPessoa(getPessoa()));
 		return "detalhePessoas";
 	}
 	
@@ -122,8 +144,6 @@ public class DetalharPessoaBean extends PosoBean implements BeanInterface {
 			return iniciarPagina();
 		}
 		
-	}
-	
-	
+	}	
 
 }
