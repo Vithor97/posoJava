@@ -1,5 +1,6 @@
 	package br.com.bradesco.posoTeatro.view.bean.ingresso;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -31,34 +32,14 @@ public class ConsultarIngressosBean extends PosoBean {
 	private IngressosDetalheBean detalhe;
 	
 	private Ingresso ingresso;
+	
+	private ArrayList<Ingresso> ingressos;
 
 	private String mensagem;
 
 	public String iniciarPagina() {
-		setIngresso(new Ingresso());
+		setIngressos(new IngressoDao().listarIngressosAtivos());
 		return "consultarIngressos";
-	}
-
-	public String consultar() {
-		Ingresso ingressoRetorno = new IngressoDao().cosultarIngressos(getIngresso());
-		PrimeFaces current = PrimeFaces.current();
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle messageBundle = facesContext.getApplication().getResourceBundle(facesContext, "msgs");
-		if(ingressoRetorno == null) {
-			setMensagem(messageBundle.getString("msg_ingressoNaoCadastrado"));
-			current.executeScript("PF('dlg1').show();");
-			return "";
-		}
-		else if(ingressoRetorno.getSituacaoIngresso() != 1){
-			setMensagem(messageBundle.getString("msg_ingressoDesabilitado"));
-			current.executeScript("PF('dlg1').show();");
-			return "";
-		}
-		else {
-			ingresso = ingressoRetorno;
-			detalhe.setIngresso(getIngresso());
-			return detalhe.iniciarPagina(getTitulosBread(),getUrlsBread());
-		}
 	}
 
 	public Ingresso getIngresso() {
@@ -83,6 +64,14 @@ public class ConsultarIngressosBean extends PosoBean {
 
 	public void setDetalhe(IngressosDetalheBean detalhe) {
 		this.detalhe = detalhe;
+	}
+
+	public ArrayList<Ingresso> getIngressos() {
+		return ingressos;
+	}
+
+	public void setIngressos(ArrayList<Ingresso> ingressos) {
+		this.ingressos = ingressos;
 	}
 
 }

@@ -11,6 +11,7 @@ import br.com.bradesco.posoTeatro.model.Ingresso;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 import br.com.bradesco.posoTeatro.model.Poltrona;
 import br.com.bradesco.posoTeatro.model.Sessao;
+import br.com.bradesco.posoTeatro.posoUtil.enums.Situacao;
 import br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona;
 
 public class IngressoDao {
@@ -41,40 +42,6 @@ public class IngressoDao {
 		}
 	}
 	
-	public Ingresso cosultarIngressos(Ingresso ingresso) {
-		Ingresso ingressoRetorno = new Ingresso();
-		try {
-			PreparedStatement smt = conn.prepareStatement("SELECT * FROM ingresso WHERE cod_ingresso = ?");
-			smt.setInt(1,ingresso.getCodigoIngresso());
-			ResultSet rs = smt.executeQuery();
-			if (rs.next()) {
-				ingressoRetorno.setCodigoIngresso(rs.getInt("cod_ingresso"));
-				ingressoRetorno.getPessoa().setCodigo(rs.getInt("cod_pessoa"));
-				ingressoRetorno.getPoltrona().setCodigo(rs.getString("cod_poltrona"));
-				ingressoRetorno.getPoltrona().setTipoPoltrona(TipoPoltrona.codigo(rs.getInt("tipo_poltrona")));
-				ingressoRetorno.getSessao().setCodigo(rs.getInt("cod_sessao"));
-				ingressoRetorno.setSituacaoIngresso(rs.getInt("situacao_ingresso"));
-				rs.close();
-				smt.close();
-				return ingressoRetorno;
-			}
-			else {
-				return null;
-			}
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-		finally {
-			try {
-				conn.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-	}
-	
 	public List<Ingresso> listar(Pessoa pessoa){
 		List<Ingresso> ingressos = new ArrayList<Ingresso>();
         try {
@@ -97,13 +64,6 @@ public class IngressoDao {
         }
 		return ingressos;
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	public List<Poltrona> verificarPoltronas(Sessao sessao) {
 		List<Poltrona> poltronas = new ArrayList<Poltrona>();
@@ -152,4 +112,38 @@ public class IngressoDao {
 		}
 		return rs;
 	  }
+	
+	public ArrayList<Ingresso> listarIngressosAtivos(){
+		ArrayList<Ingresso> ingressosRetorno = new ArrayList<Ingresso>();
+		try {
+			PreparedStatement smt = conn.prepareStatement("SELECT * FROM ingresso WHERE situacao_ingresso = 1");
+			ResultSet rs = smt.executeQuery();
+			while (rs.next()) {
+				Ingresso ingresso = new Ingresso();
+				ingresso.setCodigoIngresso(rs.getInt("cod_ingresso"));
+				ingresso.getPessoa().setCodigo(rs.getInt("cod_pessoa"));
+				ingresso.getPoltrona().setCodigo(rs.getString("cod_poltrona"));
+				ingresso.getPoltrona().setTipoPoltrona(TipoPoltrona.codigo(rs.getInt("tipo_poltrona")));
+				ingresso.getSessao().setCodigo(rs.getInt("cod_sessao"));
+				ingresso.setSituacaoIngresso(Situacao.codigo(rs.getInt("situacao_ingresso")));
+				ingresso.setSessao(new SessaoDao().consultaSessao(ingresso.getSessao()));
+				ingresso.setPessoa(new PessoaDao().consultar(ingresso.getPessoa()));
+				ingressosRetorno.add(ingresso);
+			}
+			rs.close();
+			smt.close();
+			return ingressosRetorno;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+		finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
+}

@@ -1,11 +1,13 @@
 package br.com.bradesco.posoTeatro.model;
 
+import br.com.bradesco.posoTeatro.posoUtil.enums.Situacao;
+
 public class Ingresso {
 	private int codigoIngresso;
 	private Sessao sessao = new Sessao();
 	private Pessoa pessoa = new Pessoa();
 	private Poltrona poltrona = new Poltrona();
-	private int situacaoIngresso;
+	private Situacao situacaoIngresso;
 	
 	public int getCodigoIngresso() {
 		return codigoIngresso;
@@ -76,13 +78,12 @@ public class Ingresso {
 		return true;
 	}
 
-	public int getSituacaoIngresso() {
+	public Situacao getSituacaoIngresso() {
 		return situacaoIngresso;
 	}
 
-	public void setSituacaoIngresso(int situacaoIngresso) {
+	public void setSituacaoIngresso(Situacao situacaoIngresso) {
 		this.situacaoIngresso = situacaoIngresso;
-	}
-	
+	}	
 	
 }
