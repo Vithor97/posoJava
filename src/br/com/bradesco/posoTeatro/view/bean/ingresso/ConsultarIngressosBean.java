@@ -1,23 +1,21 @@
 	package br.com.bradesco.posoTeatro.view.bean.ingresso;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-
-import org.primefaces.PrimeFaces;
 
 import br.com.bradesco.posoTeatro.dao.IngressoDao;
 import br.com.bradesco.posoTeatro.model.Ingresso;
+import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
 @ManagedBean(name = "consultarIngressosBean")
 @SessionScoped
 
-public class ConsultarIngressosBean extends PosoBean {
+public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 	
 	public ConsultarIngressosBean(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Consultar ingressos", "consultarIngressos", titulosBread, urlsBread);
@@ -31,36 +29,34 @@ public class ConsultarIngressosBean extends PosoBean {
 	private IngressosDetalheBean detalhe;
 	
 	private Ingresso ingresso;
+	
+	private ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
 
 	private String mensagem;
-
+	
 	public String iniciarPagina() {
-		setIngresso(new Ingresso());
+		super.iniciarPagina("Consultar ingressos", "consultarIngressos");
+		if(getIngressos().isEmpty()) {
+			setIngressos(new IngressoDao().listarIngressosAtivos());
+		}
+		return "consultarIngressos";
+	}
+	
+	@Override
+	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
+		super.iniciarPagina("Consultar ingressos", "consultarIngressos", titulosBread, urlsBread);
+		if(getIngressos().isEmpty()) {
+			setIngressos(new IngressoDao().listarIngressosAtivos());
+		}
 		return "consultarIngressos";
 	}
 
-	public String consultar() {
-		Ingresso ingressoRetorno = new IngressoDao().cosultarIngressos(getIngresso());
-		PrimeFaces current = PrimeFaces.current();
-		FacesContext facesContext = FacesContext.getCurrentInstance();
-		ResourceBundle messageBundle = facesContext.getApplication().getResourceBundle(facesContext, "msgs");
-		if(ingressoRetorno == null) {
-			setMensagem(messageBundle.getString("msg_ingressoNaoCadastrado"));
-			current.executeScript("PF('dlg1').show();");
-			return "";
-		}
-		else if(ingressoRetorno.getSituacaoIngresso() != 1){
-			setMensagem(messageBundle.getString("msg_ingressoDesabilitado"));
-			current.executeScript("PF('dlg1').show();");
-			return "";
-		}
-		else {
-			ingresso = ingressoRetorno;
-			detalhe.setIngresso(getIngresso());
-			return detalhe.iniciarPagina(getTitulosBread(),getUrlsBread());
-		}
+	public String consultar(Ingresso ingressoEntrada) {
+		detalhe.setIngresso(ingressoEntrada);
+		detalhe.setTelaAnterior(this);
+		return detalhe.iniciarPagina(getTitulosBread(), getUrlsBread());
 	}
-
+	
 	public Ingresso getIngresso() {
 		return ingresso;
 	}
@@ -84,5 +80,15 @@ public class ConsultarIngressosBean extends PosoBean {
 	public void setDetalhe(IngressosDetalheBean detalhe) {
 		this.detalhe = detalhe;
 	}
+
+	public ArrayList<Ingresso> getIngressos() {
+		return ingressos;
+	}
+
+	public void setIngressos(ArrayList<Ingresso> ingressos) {
+		this.ingressos = ingressos;
+	}
+
+
 
 }
