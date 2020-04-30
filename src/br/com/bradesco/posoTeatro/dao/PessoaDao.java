@@ -11,6 +11,7 @@ import javax.faces.context.FacesContext;
 
 import br.com.bradesco.posoTeatro.model.Funcionario;
 import br.com.bradesco.posoTeatro.model.Pessoa;
+import br.com.bradesco.posoTeatro.model.Evento;
 
 public class PessoaDao extends Pessoa {
 
@@ -163,4 +164,7 @@ public class PessoaDao extends Pessoa {
 		}
 		return pessoas;
 	}
+	
+
+	
 }

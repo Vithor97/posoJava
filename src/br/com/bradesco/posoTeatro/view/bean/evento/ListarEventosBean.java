@@ -121,9 +121,6 @@ public class ListarEventosBean extends PosoBean implements BeanInterface{
 				setMensagem("Exclusão realizada");
 				setEventos(new EventoDao().listar(getPesquisaEvento()));
 			}
-			else {
-				
-			}
 		}
 		else {
 			setMensagem("Exclusão não realizada");

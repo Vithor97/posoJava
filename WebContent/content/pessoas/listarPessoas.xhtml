@@ -16,6 +16,7 @@
 	<ui:define name="conteudo">
 		<h:form>
 			<p:dialog header="Listar Pessoas" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+				<h:messages globalOnly="true"/>
 			    <h:outputText value="#{listarPessoasBean.mensagem}" />
 			    <br/>
 				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()"/>
@@ -34,6 +35,7 @@
 	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} pessoas">
 	                						
+	                <p:ajax event="rowEdit" update="@form" />
 	                
 				<p:column width="5%">
 					<c:facet name="header">#{msgs.label_listarEvento_codigo}</c:facet>
@@ -50,9 +52,9 @@
  					 style= "margin-top:10px; margin-right:10px;width: 46.25%;"
  					 update="@form"/>
                 	
-<!--                 	<p:commandButton value="Excluir" action="#{listarEventosBean.excluir(pessoa)}"> -->
-<!--                 	<p:confirm header="Exlusão de Pessoa" message="Deseja apagar?" icon="ui-icon-alert" /> -->
-<!--                 	</p:commandButton>  -->
+                	<p:commandButton value="Excluir" action="${listarPessoasBean.excluir(pessoa)}" update="pessoas">
+                	<p:confirm header="Exlusão de Pessoa" message="Deseja apagar?" icon="ui-icon-alert" />
+                	</p:commandButton> 
                 	           
                 </p:column>	
 			</p:dataTable>
@@ -65,7 +67,7 @@
 		
 		<h:form>
 			<p:confirmDialog global="true" width="300">
-			        <p:commandButton value="Sim"   type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+			        <p:commandButton value="Sim"  update="dlg1" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 			        <p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
 			</p:confirmDialog>
 		</h:form>
