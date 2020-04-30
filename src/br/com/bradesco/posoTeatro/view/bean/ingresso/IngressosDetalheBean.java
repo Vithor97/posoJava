@@ -53,10 +53,10 @@ public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Ingressos detalhe", "consultarIngressosDetalhe", titulosBread, urlsBread);
-		getIngresso().setPessoa(new PessoaDao().consultar(getIngresso().getPessoa()));
-		getIngresso().setSessao(new SessaoDao().consultaSessao(getIngresso().getSessao()));
-		getIngresso().getSessao().setDataSessao(DataUtil.transformaData(getIngresso().getSessao().getDataSessao()));
-		setHora(getIngresso().getSessao().getHorario().getHorarioCompleto());
+//		getIngresso().setPessoa(new PessoaDao().consultar(getIngresso().getPessoa()));
+//		getIngresso().setSessao(new SessaoDao().consultaSessao(getIngresso().getSessao()));
+//		getIngresso().getSessao().setDataSessao(DataUtil.transformaData(getIngresso().getSessao().getDataSessao()));
+//		setHora(getIngresso().getSessao().getHorario().getHorarioCompleto());
 		return "consultarIngressosDetalhe";
 	}
 

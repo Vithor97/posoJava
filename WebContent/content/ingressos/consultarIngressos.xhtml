@@ -47,7 +47,7 @@
                 </p:column>
                 <p:column width="12%">
 					<c:facet name="header">#{msgs.label_ingressos_acoes}</c:facet>
-                    <p:commandButton style="width: 100%;" value="#{msgs.label_ingressos_button_consultar}" action="#{listarEventosBean.detalhar(evento)}"></p:commandButton>
+                    <p:commandButton style="width: 100%;" value="#{msgs.label_ingressos_button_detalhar}" action="#{consultarIngressosBean.consultar(ingresso)}"></p:commandButton>
                     
  					<p:commandButton value="#{msgs.label_ingressos_button_alterar}" action="#{listarEventosBean.alteracao(evento)}" style= "margin-top:10px; margin-right:10px;width: 50%;"/>
                 	<p:commandButton value="#{msgs.label_ingressos_button_excluir}" action="#{listarEventosBean.excluir(evento)}">
@@ -57,11 +57,11 @@
                 	           
                 </p:column>	
 			</p:dataTable>
-			<h:panelGrid columns="2">
-				<p:outputLabel for="codIngresso" value="${msgs.label_ingressos_codigoIngresso}" />
-				<p:inputText id="codIngresso" value="${consultarIngressosBean.ingresso.codigoIngresso}"/>
-				<p:commandButton value="${msgs.label_ingressos_button_consultar}" action="${consultarIngressosBean.consultar}" update="form"/>
-			</h:panelGrid>
+<!-- 			<h:panelGrid columns="2"> -->
+<!-- 				<p:outputLabel for="codIngresso" value="${msgs.label_ingressos_codigoIngresso}" /> -->
+<!-- 				<p:inputText id="codIngresso" value="${consultarIngressosBean.ingresso.codigoIngresso}"/> -->
+<!-- 				<p:commandButton value="${msgs.label_ingressos_button_consultar}" action="${consultarIngressosBean.consultar}" update="form"/> -->
+<!-- 			</h:panelGrid> -->
 		</h:form>
 	</ui:define>
 	

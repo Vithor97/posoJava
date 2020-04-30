@@ -21,49 +21,84 @@
 								 onclick="PF('dlg1').hide()"/>
 			</p:dialog>
 			
-			<h:panelGrid cellspacing="10">
+			<h:panelGrid columns="2" cellspacing="10">
 				<h:panelGroup>
 					<p:outputLabel for="codIngresso" value="${msgs.label_ingressos_codigoIngresso}" /><br/>
 					<p:inputText id="codIngresso" value="${ingressosDetalheBean.ingresso.codigoIngresso}" disabled="true"/>
 				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="situacaoIngresso" value="${msgs.label_ingressos_situacao}" /><br/>
+					<p:inputText id="situacaoIngresso" value="${ingressosDetalheBean.ingresso.situacaoIngresso.descricao}" disabled="true"/>
+				</h:panelGroup>
 			</h:panelGrid>
 					
-			<h:panelGrid columns="3" cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="codSessao" value="${msgs.label_ingressos_codigoSessao}" /><br/>
-					<p:inputText id="codSessao" value="${ingressosDetalheBean.ingresso.sessao.codigo}" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="dataSessao" value="${msgs.label_sessao_dataSessao}" /><br/><!-- ##########   IREI PEGAR AS LABELS DA SESSÃO DEPOIS ############-->
-					<p:inputText id="dataSessao" value="${ingressosDetalheBean.ingresso.sessao.dataSessao}" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="horaSessao" value="${msgs.label_sessao_horaSessao}" /><br/>
-					<p:inputText id="horaSessao" value="${ingressosDetalheBean.hora}" disabled="true"/>
-				</h:panelGroup>
-			</h:panelGrid>
+			<p:panel id="pnSessaoIngresso" header="Sessão" style="margin-top:10px">
+				<h:panelGrid columns="3" cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="codSessao" value="${msgs.label_ingressos_codigoSessao}" /><br/>
+						<p:inputText id="codSessao" value="${ingressosDetalheBean.ingresso.sessao.codigo}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="dataSessao" value="${msgs.label_sessao_dataSessao}" /><br/><!-- ##########   IREI PEGAR AS LABELS DA SESSÃO DEPOIS ############-->
+						<p:inputText id="dataSessao" value="${ingressosDetalheBean.ingresso.sessao.dataSessao}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="horaSessao" value="${msgs.label_sessao_horaSessao}" /><br/>
+						<p:inputText id="horaSessao" value="${ingressosDetalheBean.ingresso.sessao.horario.horarioCompleto}" disabled="true"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+			<p:panel id="pnEventoIngresso" header="Evento" style="margin-top:10px">
+				<h:panelGrid columns="3" cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="codEvento" value="${msgs.label_detalheEvento_codigo}" /><br/>
+						<p:inputText id="codEvento" value="${ingressosDetalheBean.ingresso.sessao.evento.codigo}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="descricaoEvento" value="${msgs.label_detalheEvento_descricao}" /><br/>
+						<p:inputText id="descricaoEvento" value="${ingressosDetalheBean.ingresso.sessao.evento.descricao}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="tipoEvento" value="${msgs.label_detalheEvento_tipo}" /><br/>
+						<p:inputText id="tipoEvento" value="${ingressosDetalheBean.ingresso.sessao.evento.tipoEvento.nome}" disabled="true"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+			
+			<p:panel id="pnPessoaIngresso" header="Pessoa" style="margin-top:10px">
+				<h:panelGrid columns="4" cellspacing="10">	
+					<h:panelGroup>
+						<p:outputLabel for="nomePessoa" value="${msgs.label_detalheEvento_funcionarios_nome}" /><br/>
+						<p:inputText id="nomePessoa" value="${ingressosDetalheBean.ingresso.pessoa.nome}" size="38" disabled="true" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="cpfPessoa" value="${msgs.label_detalheEvento_funcionarios_cpf}" /><br/>
+						<p:inputMask id="cpfPessoa" value="${ingressosDetalheBean.ingresso.pessoa.cpf}" disabled="true" mask="999.999.999-99"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="telPessoa" value="${msgs.label_detalheEvento_funcionarios_telefone}" /><br/>
+						<p:inputMask id="telPessoa" value="${ingressosDetalheBean.ingresso.pessoa.telefone}" disabled="true" mask="(99)9999-9999"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="emailPessoa" value="${msgs.label_detalheEvento_funcionarios_email}" /><br/>
+						<p:inputText id="emailPessoa" value="${ingressosDetalheBean.ingresso.pessoa.email}" size="46" disabled="true"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>	
 				
-			<h:panelGrid columns="2" cellspacing="10">	
-				<h:panelGroup>
-					<p:outputLabel for="nomePessoa" value="${msgs.label_ingressos_nomePessoa}" /><br/>
-					<p:inputText id="nomePessoa" value="${ingressosDetalheBean.ingresso.pessoa.nome}" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="cpfPessoa" value="${msgs.label_ingressos_cpfPessoa}" /><br/>
-					<p:inputMask id="cpfPessoa" value="${ingressosDetalheBean.ingresso.pessoa.cpf}" disabled="true" mask="999.999.999-99"/>
-				</h:panelGroup>
-			</h:panelGrid>
-				
-			<h:panelGrid columns="2" cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="codPoltrona" value="${msgs.label_ingressos_codigoPoltrona}" /><br/>
-					<p:inputText id="codPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.codigo}" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="tipoPoltrona" value="${msgs.label_ingressos_tipoPoltrona}" /><br/>
-					<p:inputText id="tipoPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.tipoPoltrona}" disabled="true"/>
-				</h:panelGroup>
-			</h:panelGrid>
+			<p:panel id="pnPoltronaIngresso" header="Poltrona" style="margin-top:10px">	
+				<h:panelGrid columns="2" cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="codPoltrona" value="${msgs.label_ingressos_codigoPoltrona}" /><br/>
+						<p:inputText id="codPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.codigo}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="tipoPoltrona" value="${msgs.label_ingressos_tipoPoltrona}" /><br/>
+						<p:inputText id="tipoPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.tipoPoltrona}" disabled="true"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+			
 			<p:column>
 					<h:panelGrid cellspacing="10" style="float: right;">
 						<p:commandButton id="btnExcluir" icon="pi pi-trash"
