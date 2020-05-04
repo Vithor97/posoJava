@@ -28,6 +28,9 @@ public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 	@ManagedProperty(value = "#{ingressosDetalheBean}")
 	private IngressosDetalheBean detalhe;
 	
+	@ManagedProperty(value = "#{alterarIngressosBean}")
+	private AlterarIngressosBean alterar;
+	
 	private Ingresso ingresso;
 	
 	private ArrayList<Ingresso> ingressos = new ArrayList<Ingresso>();
@@ -36,18 +39,14 @@ public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 	
 	public String iniciarPagina() {
 		super.iniciarPagina("Consultar ingressos", "consultarIngressos");
-		if(getIngressos().isEmpty()) {
-			setIngressos(new IngressoDao().listarIngressosAtivos());
-		}
+		setIngressos(new IngressoDao().listarIngressosAtivos());
 		return "consultarIngressos";
 	}
 	
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Consultar ingressos", "consultarIngressos", titulosBread, urlsBread);
-		if(getIngressos().isEmpty()) {
-			setIngressos(new IngressoDao().listarIngressosAtivos());
-		}
+		setIngressos(new IngressoDao().listarIngressosAtivos());
 		return "consultarIngressos";
 	}
 
@@ -55,6 +54,12 @@ public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 		detalhe.setIngresso(ingressoEntrada);
 		detalhe.setTelaAnterior(this);
 		return detalhe.iniciarPagina(getTitulosBread(), getUrlsBread());
+	}
+	
+	public String alterar(Ingresso ingressoEntrada) {
+		alterar.setIngresso(ingressoEntrada);
+		alterar.setTelaAnterior(this);
+		return alterar.iniciarPagina(getTitulosBread(), getUrlsBread());
 	}
 	
 	public Ingresso getIngresso() {
@@ -87,6 +92,14 @@ public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 
 	public void setIngressos(ArrayList<Ingresso> ingressos) {
 		this.ingressos = ingressos;
+	}
+
+	public AlterarIngressosBean getAlterar() {
+		return alterar;
+	}
+
+	public void setAlterar(AlterarIngressosBean alterar) {
+		this.alterar = alterar;
 	}
 
 

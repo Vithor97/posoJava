@@ -112,6 +112,11 @@
 		</navigation-case>
 		
 		<navigation-case>
+			<from-outcome>alterarIngressos</from-outcome>
+			<to-view-id>/content/ingressos/alterarIngressos.xhtml</to-view-id>
+		</navigation-case>
+		
+		<navigation-case>
 			<from-outcome>cadastrarIngressos</from-outcome>
 			<to-view-id>/content/ingressos/cadastrarIngressos.xhtml</to-view-id>
 			<redirect></redirect>

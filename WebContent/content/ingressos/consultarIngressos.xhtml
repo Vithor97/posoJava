@@ -49,7 +49,7 @@
 					<c:facet name="header">#{msgs.label_ingressos_acoes}</c:facet>
                     <p:commandButton style="width: 100%;" value="#{msgs.label_ingressos_button_detalhar}" action="#{consultarIngressosBean.consultar(ingresso)}"></p:commandButton>
                     
- 					<p:commandButton value="#{msgs.label_ingressos_button_alterar}" action="#{listarEventosBean.alteracao(evento)}" style= "margin-top:10px; margin-right:10px;width: 50%;"/>
+ 					<p:commandButton value="#{msgs.label_ingressos_button_alterar}" action="#{consultarIngressosBean.alterar(ingresso)}" style= "margin-top:10px; margin-right:10px;width: 50%;"/>
                 	<p:commandButton value="#{msgs.label_ingressos_button_excluir}" action="#{listarEventosBean.excluir(evento)}">
                 	
                 	<p:confirm header="Exlusão de Evento" message="Deseja apagar?" icon="ui-icon-alert" />

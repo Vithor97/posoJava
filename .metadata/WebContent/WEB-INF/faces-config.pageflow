@@ -1,65 +1,65 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15886187821110" configfile="/posoJava/WebContent/WEB-INF/faces-config.xml">
-  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="5554" id="pf15886188352037" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15886188352038 pf15886188352039 pf158861883520310 pf158861883520311 pf158861883520312 pf158861883520313 pf158861883520314 pf158861883520315 pf158861883520316 pf158861883520317 pf158861883520318 pf158861883520319 pf158861883520320 pf158861883520321 pf158861883520322 pf158861883520323 pf158861883520324 pf158861883520325 pf158861883520326 pf158861883520327 pf158861883520328 pf158861883520329 pf158861883520330 pf158861883520331 pf158861883520332 pf158861883520333 pf158861883520334 pf158861883520335 pf158861883520336 pf158861883520337 pf158861883520338" path="*"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/index.xhtml" x="338" y="178" id="pf158861883520339" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15886188352038 pf158861883520311" path="/content/index.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/login.xhtml" x="338" y="562" id="pf158861883520340" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf15886188352039" path="/content/login.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/perfil/perfilFuncionario.xhtml" x="338" y="946" id="pf158861883520341" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf158861883520310" path="/content/perfil/perfilFuncionario.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/cadastrarPessoas.xhtml" x="338" y="1330" id="pf158861883520342" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf158861883520312" path="/content/pessoas/cadastrarPessoas.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/consultarPessoas.xhtml" x="338" y="1714" id="pf158861883520343" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf158861883520313" path="/content/pessoas/consultarPessoas.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/detalheConsultaPessoa.xhtml" x="338" y="2098" id="pf158861883520344" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf158861883520314" path="/content/pessoas/detalheConsultaPessoa.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/alteraPessoa.xhtml" x="338" y="2482" id="pf158861883520345" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf158861883520315" path="/content/pessoas/alteraPessoa.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/listarPessoas.xhtml" x="338" y="2866" id="pf158861883520346" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf158861883520316" path="/content/pessoas/listarPessoas.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/evento/cadastrarEvento.xhtml" x="338" y="3250" id="pf158861883520347" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf158861883520317" path="/content/evento/cadastrarEvento.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/evento/listarEventos.xhtml" x="338" y="3634" id="pf158861883520348" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf158861883520318" path="/content/evento/listarEventos.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/evento/detalheEvento.xhtml" x="338" y="4018" id="pf158861883520349" referenceLink="//@navigationRule.0/@navigationCase.11/@toViewId|" inlinks="pf158861883520319" path="/content/evento/detalheEvento.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/evento/alterarEvento.xhtml" x="338" y="4402" id="pf158861883520350" referenceLink="//@navigationRule.0/@navigationCase.12/@toViewId|" inlinks="pf158861883520320" path="/content/evento/alterarEvento.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/funcionario/cadastrarFuncionarios.xhtml" x="338" y="4786" id="pf158861883520351" referenceLink="//@navigationRule.0/@navigationCase.13/@toViewId|" inlinks="pf158861883520321" path="/content/funcionario/cadastrarFuncionarios.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/funcionario/consultarFuncionario.xhtml" x="338" y="5170" id="pf158861883520352" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf158861883520322" path="/content/funcionario/consultarFuncionario.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/funcionario/funcionarioDetalhe.xhtml" x="338" y="5554" id="pf158861883520353" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf158861883520323" path="/content/funcionario/funcionarioDetalhe.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/ingressos/consultarIngressos.xhtml" x="338" y="5938" id="pf158861883520354" referenceLink="//@navigationRule.0/@navigationCase.16/@toViewId|" inlinks="pf158861883520324" path="/content/ingressos/consultarIngressos.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/ingressos/ingressosDetalhe.xhtml" x="338" y="6322" id="pf158861883520355" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf158861883520325" path="/content/ingressos/ingressosDetalhe.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/ingressos/cadastrarIngressos.xhtml" x="338" y="6706" id="pf158861883520356" referenceLink="//@navigationRule.0/@navigationCase.18/@toViewId|" inlinks="pf158861883520326" path="/content/ingressos/cadastrarIngressos.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/sessao/consultaSessao.xhtml" x="338" y="7090" id="pf158861883520357" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf158861883520327" path="/content/sessao/consultaSessao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/sessao/sessaoDetalhe.xhtml" x="338" y="7474" id="pf158861883520358" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf158861883520328" path="/content/sessao/sessaoDetalhe.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/sessao/cadastrarSessao.xhtml" x="338" y="7858" id="pf158861883520359" referenceLink="//@navigationRule.0/@navigationCase.21/@toViewId|" inlinks="pf158861883520329" path="/content/sessao/cadastrarSessao.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/cadastrarEmpresaResp.xhtml" x="338" y="8242" id="pf158861883520360" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf158861883520330" path="/content/empresaResponsavel/cadastrarEmpresaResp.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/alterarEmpresaResp.xhtml" x="338" y="8626" id="pf158861883520361" referenceLink="//@navigationRule.0/@navigationCase.23/@toViewId|" inlinks="pf158861883520331" path="/content/empresaResponsavel/alterarEmpresaResp.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/excluirEmpresaResp.xhtml" x="338" y="9010" id="pf158861883520362" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf158861883520332" path="/content/empresaResponsavel/excluirEmpresaResp.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/genero/cadastrarGenero.xhtml" x="338" y="9394" id="pf158861883520363" referenceLink="//@navigationRule.0/@navigationCase.25/@toViewId|" inlinks="pf158861883520333" path="/content/genero/cadastrarGenero.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/tipoEvento/cadastrarTipoEvento.xhtml" x="338" y="9778" id="pf158861883520364" referenceLink="//@navigationRule.0/@navigationCase.26/@toViewId|" inlinks="pf158861883520334" path="/content/tipoEvento/cadastrarTipoEvento.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/sessao/listarSessoes.xhtml" x="338" y="10162" id="pf158861883520365" referenceLink="//@navigationRule.0/@navigationCase.27/@toViewId|" inlinks="pf158861883520335" path="/content/sessao/listarSessoes.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/relatorio/relatorioCliente.xhtml" x="338" y="10546" id="pf158861883520366" referenceLink="//@navigationRule.0/@navigationCase.28/@toViewId|" inlinks="pf158861883520336" path="/content/relatorio/relatorioCliente.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/relatorio/relatorioEvento.xhtml" x="338" y="10930" id="pf158861883520367" referenceLink="//@navigationRule.0/@navigationCase.29/@toViewId|" inlinks="pf158861883520337" path="/content/relatorio/relatorioEvento.xhtml"/>
-  <nodes xsi:type="pageflow:PFPage" name="content/relatorio/relatorioTipoGenero.xhtml" x="338" y="11314" id="pf158861883520368" referenceLink="//@navigationRule.0/@navigationCase.30/@toViewId|" inlinks="pf158861883520338" path="/content/relatorio/relatorioTipoGenero.xhtml"/>
-  <links id="pf15886188352038" target="pf158861883520339" source="pf15886188352037" outcome="index" redirect="true"/>
-  <links id="pf15886188352039" target="pf158861883520340" source="pf15886188352037" outcome="login" redirect="true"/>
-  <links id="pf158861883520310" target="pf158861883520341" source="pf15886188352037" outcome="perfil" redirect="true"/>
-  <links id="pf158861883520311" target="pf158861883520339" source="pf15886188352037" outcome="index"/>
-  <links id="pf158861883520312" target="pf158861883520342" source="pf15886188352037" outcome="cadastrarPessoas"/>
-  <links id="pf158861883520313" target="pf158861883520343" source="pf15886188352037" outcome="consultarPessoas"/>
-  <links id="pf158861883520314" target="pf158861883520344" source="pf15886188352037" outcome="detalhePessoas"/>
-  <links id="pf158861883520315" target="pf158861883520345" source="pf15886188352037" outcome="alteraPessoas"/>
-  <links id="pf158861883520316" target="pf158861883520346" source="pf15886188352037" outcome="listarPessoas"/>
-  <links id="pf158861883520317" target="pf158861883520347" source="pf15886188352037" outcome="cadastrarEvento"/>
-  <links id="pf158861883520318" target="pf158861883520348" source="pf15886188352037" outcome="listarEventos"/>
-  <links id="pf158861883520319" target="pf158861883520349" source="pf15886188352037" outcome="detalheEvento"/>
-  <links id="pf158861883520320" target="pf158861883520350" source="pf15886188352037" outcome="alterarEvento"/>
-  <links id="pf158861883520321" target="pf158861883520351" source="pf15886188352037" outcome="cadastrarFuncionario"/>
-  <links id="pf158861883520322" target="pf158861883520352" source="pf15886188352037" outcome="consultarFuncionario"/>
-  <links id="pf158861883520323" target="pf158861883520353" source="pf15886188352037" outcome="consultarFuncionarioDetalhe"/>
-  <links id="pf158861883520324" target="pf158861883520354" source="pf15886188352037" outcome="consultarIngressos"/>
-  <links id="pf158861883520325" target="pf158861883520355" source="pf15886188352037" outcome="consultarIngressosDetalhe"/>
-  <links id="pf158861883520326" target="pf158861883520356" source="pf15886188352037" outcome="cadastrarIngressos" redirect="true"/>
-  <links id="pf158861883520327" target="pf158861883520357" source="pf15886188352037" outcome="consultaSessao"/>
-  <links id="pf158861883520328" target="pf158861883520358" source="pf15886188352037" outcome="consultaSessaoDetalhe"/>
-  <links id="pf158861883520329" target="pf158861883520359" source="pf15886188352037" outcome="cadastrarSessao"/>
-  <links id="pf158861883520330" target="pf158861883520360" source="pf15886188352037" outcome="cadastrarEmpresas"/>
-  <links id="pf158861883520331" target="pf158861883520361" source="pf15886188352037" outcome="alterarEmpresas"/>
-  <links id="pf158861883520332" target="pf158861883520362" source="pf15886188352037" outcome="excluirEmpresas"/>
-  <links id="pf158861883520333" target="pf158861883520363" source="pf15886188352037" outcome="cadastrarGenero"/>
-  <links id="pf158861883520334" target="pf158861883520364" source="pf15886188352037" outcome="cadastrarTipoEvento"/>
-  <links id="pf158861883520335" target="pf158861883520365" source="pf15886188352037" outcome="listarSessoes"/>
-  <links id="pf158861883520336" target="pf158861883520366" source="pf15886188352037" outcome="relatorioCliente"/>
-  <links id="pf158861883520337" target="pf158861883520367" source="pf15886188352037" outcome="relatorioEvento"/>
-  <links id="pf158861883520338" target="pf158861883520368" source="pf15886188352037" outcome="relatorioTipoGenero"/>
+<pageflow:Pageflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:pageflow="http://www.sybase.com/suade/pageflow" id="pf15880992467770" configfile="/posoJava/WebContent/WEB-INF/faces-config.xml">
+  <nodes xsi:type="pageflow:PFPage" name="*" x="122" y="5554" id="pf15880993765761" referenceLink="//@navigationRule.0/@fromViewId|" outlinks="pf15880993765762 pf15880993765763 pf15880993765764 pf15880993765765 pf15880993765766 pf15880993765767 pf15880993765768 pf15880993765769 pf158809937657610 pf158809937657611 pf158809937657612 pf158809937657613 pf158809937657614 pf158809937657615 pf158809937657616 pf158809937657617 pf158809937657618 pf158809937657619 pf158809937657620 pf158809937657621 pf158809937657622 pf158809937657623 pf158809937657624 pf158809937657625 pf158809937657626 pf158809937657627 pf158809937657628 pf158809937657629 pf158809937657630 pf158809937657631 pf158809937657632" path="*"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/index.xhtml" x="338" y="178" id="pf158809937657633" referenceLink="//@navigationRule.0/@navigationCase.3/@toViewId|" inlinks="pf15880993765762 pf15880993765765" path="/content/index.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/login.xhtml" x="338" y="562" id="pf158809937657634" referenceLink="//@navigationRule.0/@navigationCase.1/@toViewId|" inlinks="pf15880993765763" path="/content/login.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/perfil/perfilFuncionario.xhtml" x="338" y="946" id="pf158809937657735" referenceLink="//@navigationRule.0/@navigationCase.2/@toViewId|" inlinks="pf15880993765764" path="/content/perfil/perfilFuncionario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/cadastrarPessoas.xhtml" x="338" y="1330" id="pf158809937657736" referenceLink="//@navigationRule.0/@navigationCase.4/@toViewId|" inlinks="pf15880993765766" path="/content/pessoas/cadastrarPessoas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/consultarPessoas.xhtml" x="338" y="1714" id="pf158809937657737" referenceLink="//@navigationRule.0/@navigationCase.5/@toViewId|" inlinks="pf15880993765767" path="/content/pessoas/consultarPessoas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/detalheConsultaPessoa.xhtml" x="338" y="2098" id="pf158809937657738" referenceLink="//@navigationRule.0/@navigationCase.6/@toViewId|" inlinks="pf15880993765768" path="/content/pessoas/detalheConsultaPessoa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/alteraPessoa.xhtml" x="338" y="2482" id="pf158809937657739" referenceLink="//@navigationRule.0/@navigationCase.7/@toViewId|" inlinks="pf15880993765769" path="/content/pessoas/alteraPessoa.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/pessoas/listarPessoas.xhtml" x="338" y="2866" id="pf158809937657740" referenceLink="//@navigationRule.0/@navigationCase.8/@toViewId|" inlinks="pf158809937657610" path="/content/pessoas/listarPessoas.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/evento/cadastrarEvento.xhtml" x="338" y="3250" id="pf158809937657741" referenceLink="//@navigationRule.0/@navigationCase.9/@toViewId|" inlinks="pf158809937657611" path="/content/evento/cadastrarEvento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/evento/listarEventos.xhtml" x="338" y="3634" id="pf158809937657742" referenceLink="//@navigationRule.0/@navigationCase.10/@toViewId|" inlinks="pf158809937657612" path="/content/evento/listarEventos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/evento/detalheEvento.xhtml" x="338" y="4018" id="pf158809937657743" referenceLink="//@navigationRule.0/@navigationCase.11/@toViewId|" inlinks="pf158809937657613" path="/content/evento/detalheEvento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/evento/alterarEvento.xhtml" x="338" y="4402" id="pf158809937657744" referenceLink="//@navigationRule.0/@navigationCase.12/@toViewId|" inlinks="pf158809937657614" path="/content/evento/alterarEvento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/funcionario/cadastrarFuncionarios.xhtml" x="338" y="4786" id="pf158809937657745" referenceLink="//@navigationRule.0/@navigationCase.13/@toViewId|" inlinks="pf158809937657615" path="/content/funcionario/cadastrarFuncionarios.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/funcionario/consultarFuncionario.xhtml" x="338" y="5170" id="pf158809937657746" referenceLink="//@navigationRule.0/@navigationCase.14/@toViewId|" inlinks="pf158809937657616" path="/content/funcionario/consultarFuncionario.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/funcionario/funcionarioDetalhe.xhtml" x="338" y="5554" id="pf158809937657747" referenceLink="//@navigationRule.0/@navigationCase.15/@toViewId|" inlinks="pf158809937657617" path="/content/funcionario/funcionarioDetalhe.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/ingressos/consultarIngressos.xhtml" x="338" y="5938" id="pf158809937657748" referenceLink="//@navigationRule.0/@navigationCase.16/@toViewId|" inlinks="pf158809937657618" path="/content/ingressos/consultarIngressos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/ingressos/ingressosDetalhe.xhtml" x="338" y="6322" id="pf158809937657749" referenceLink="//@navigationRule.0/@navigationCase.17/@toViewId|" inlinks="pf158809937657619" path="/content/ingressos/ingressosDetalhe.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/ingressos/cadastrarIngressos.xhtml" x="338" y="6706" id="pf158809937657750" referenceLink="//@navigationRule.0/@navigationCase.18/@toViewId|" inlinks="pf158809937657620" path="/content/ingressos/cadastrarIngressos.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/sessao/consultaSessao.xhtml" x="338" y="7090" id="pf158809937657851" referenceLink="//@navigationRule.0/@navigationCase.19/@toViewId|" inlinks="pf158809937657621" path="/content/sessao/consultaSessao.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/sessao/sessaoDetalhe.xhtml" x="338" y="7474" id="pf158809937657852" referenceLink="//@navigationRule.0/@navigationCase.20/@toViewId|" inlinks="pf158809937657622" path="/content/sessao/sessaoDetalhe.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/sessao/cadastrarSessao.xhtml" x="338" y="7858" id="pf158809937657853" referenceLink="//@navigationRule.0/@navigationCase.21/@toViewId|" inlinks="pf158809937657623" path="/content/sessao/cadastrarSessao.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/cadastrarEmpresaResp.xhtml" x="338" y="8242" id="pf158809937657854" referenceLink="//@navigationRule.0/@navigationCase.22/@toViewId|" inlinks="pf158809937657624" path="/content/empresaResponsavel/cadastrarEmpresaResp.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/alterarEmpresaResp.xhtml" x="338" y="8626" id="pf158809937657855" referenceLink="//@navigationRule.0/@navigationCase.23/@toViewId|" inlinks="pf158809937657625" path="/content/empresaResponsavel/alterarEmpresaResp.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/empresaResponsavel/excluirEmpresaResp.xhtml" x="338" y="9010" id="pf158809937657856" referenceLink="//@navigationRule.0/@navigationCase.24/@toViewId|" inlinks="pf158809937657626" path="/content/empresaResponsavel/excluirEmpresaResp.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/genero/cadastrarGenero.xhtml" x="338" y="9394" id="pf158809937657857" referenceLink="//@navigationRule.0/@navigationCase.25/@toViewId|" inlinks="pf158809937657627" path="/content/genero/cadastrarGenero.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/tipoEvento/cadastrarTipoEvento.xhtml" x="338" y="9778" id="pf158809937657858" referenceLink="//@navigationRule.0/@navigationCase.26/@toViewId|" inlinks="pf158809937657628" path="/content/tipoEvento/cadastrarTipoEvento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/sessao/listarSessoes.xhtml" x="338" y="10162" id="pf158809937657859" referenceLink="//@navigationRule.0/@navigationCase.27/@toViewId|" inlinks="pf158809937657629" path="/content/sessao/listarSessoes.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/relatorio/relatorioCliente.xhtml" x="338" y="10546" id="pf158809937657860" referenceLink="//@navigationRule.0/@navigationCase.28/@toViewId|" inlinks="pf158809937657630" path="/content/relatorio/relatorioCliente.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/relatorio/relatorioEvento.xhtml" x="338" y="10930" id="pf158809937657861" referenceLink="//@navigationRule.0/@navigationCase.29/@toViewId|" inlinks="pf158809937657631" path="/content/relatorio/relatorioEvento.xhtml"/>
+  <nodes xsi:type="pageflow:PFPage" name="content/relatorio/relatorioTipoGenero.xhtml" x="338" y="11314" id="pf158809937657862" referenceLink="//@navigationRule.0/@navigationCase.30/@toViewId|" inlinks="pf158809937657632" path="/content/relatorio/relatorioTipoGenero.xhtml"/>
+  <links id="pf15880993765762" target="pf158809937657633" source="pf15880993765761" outcome="index" redirect="true"/>
+  <links id="pf15880993765763" target="pf158809937657634" source="pf15880993765761" outcome="login" redirect="true"/>
+  <links id="pf15880993765764" target="pf158809937657735" source="pf15880993765761" outcome="perfil" redirect="true"/>
+  <links id="pf15880993765765" target="pf158809937657633" source="pf15880993765761" outcome="index"/>
+  <links id="pf15880993765766" target="pf158809937657736" source="pf15880993765761" outcome="cadastrarPessoas"/>
+  <links id="pf15880993765767" target="pf158809937657737" source="pf15880993765761" outcome="consultarPessoas"/>
+  <links id="pf15880993765768" target="pf158809937657738" source="pf15880993765761" outcome="detalhePessoas"/>
+  <links id="pf15880993765769" target="pf158809937657739" source="pf15880993765761" outcome="alteraPessoas"/>
+  <links id="pf158809937657610" target="pf158809937657740" source="pf15880993765761" outcome="listarPessoas"/>
+  <links id="pf158809937657611" target="pf158809937657741" source="pf15880993765761" outcome="cadastrarEvento"/>
+  <links id="pf158809937657612" target="pf158809937657742" source="pf15880993765761" outcome="listarEventos"/>
+  <links id="pf158809937657613" target="pf158809937657743" source="pf15880993765761" outcome="detalheEvento"/>
+  <links id="pf158809937657614" target="pf158809937657744" source="pf15880993765761" outcome="alterarEvento"/>
+  <links id="pf158809937657615" target="pf158809937657745" source="pf15880993765761" outcome="cadastrarFuncionario"/>
+  <links id="pf158809937657616" target="pf158809937657746" source="pf15880993765761" outcome="consultarFuncionario"/>
+  <links id="pf158809937657617" target="pf158809937657747" source="pf15880993765761" outcome="consultarFuncionarioDetalhe"/>
+  <links id="pf158809937657618" target="pf158809937657748" source="pf15880993765761" outcome="consultarIngressos"/>
+  <links id="pf158809937657619" target="pf158809937657749" source="pf15880993765761" outcome="consultarIngressosDetalhe"/>
+  <links id="pf158809937657620" target="pf158809937657750" source="pf15880993765761" outcome="cadastrarIngressos" redirect="true"/>
+  <links id="pf158809937657621" target="pf158809937657851" source="pf15880993765761" outcome="consultaSessao"/>
+  <links id="pf158809937657622" target="pf158809937657852" source="pf15880993765761" outcome="consultaSessaoDetalhe"/>
+  <links id="pf158809937657623" target="pf158809937657853" source="pf15880993765761" outcome="cadastrarSessao"/>
+  <links id="pf158809937657624" target="pf158809937657854" source="pf15880993765761" outcome="cadastrarEmpresas"/>
+  <links id="pf158809937657625" target="pf158809937657855" source="pf15880993765761" outcome="alterarEmpresas"/>
+  <links id="pf158809937657626" target="pf158809937657856" source="pf15880993765761" outcome="excluirEmpresas"/>
+  <links id="pf158809937657627" target="pf158809937657857" source="pf15880993765761" outcome="cadastrarGenero"/>
+  <links id="pf158809937657628" target="pf158809937657858" source="pf15880993765761" outcome="cadastrarTipoEvento"/>
+  <links id="pf158809937657629" target="pf158809937657859" source="pf15880993765761" outcome="listarSessoes"/>
+  <links id="pf158809937657630" target="pf158809937657860" source="pf15880993765761" outcome="relatorioCliente"/>
+  <links id="pf158809937657631" target="pf158809937657861" source="pf15880993765761" outcome="relatorioEvento"/>
+  <links id="pf158809937657632" target="pf158809937657862" source="pf15880993765761" outcome="relatorioTipoGenero"/>
 </pageflow:Pageflow>

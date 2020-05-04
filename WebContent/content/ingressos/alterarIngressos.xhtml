@@ -1,0 +1,135 @@
+<ui:composition template="/menu-catalog.xhtml" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	
+	<ui:define name="titulo">Alterar ingressos</ui:define>
+	
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{alterarIngressosBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+	
+	<ui:define name="conteudo">
+		<h:form id = "formAlterarIngresso">
+		
+			<p:dialog header="Alterar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
+                <br/>
+			    <h:outputText value="${alterarIngressosBean.mensagem}" />
+			    <br/>
+				<p:commandButton style="float: right;" value="OK" 
+								 onclick="PF('dlg1').hide()"/>
+			</p:dialog>
+			
+			
+			<p:dialog header="Sessão" id="pesquisaSessao" widgetVar="pesquisaSessao" modal="true" minHeight="40" width="500">
+				<p:dataTable value="#{alterarIngressosBean.sessoes}" id="sessoes" var="sessao" rows="10" emptyMessage="#{msgs.msg_ingressos_sessoesEmpty}"
+						paginator="true"
+						paginatorPosition="top"
+		                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+		                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} eventos">
+					<p:column width="8%">
+						<c:facet name="header">${msgs.label_sessao_codSessao}</c:facet>
+	                		<p:outputLabel style="float: right;" value="#{sessao.codigo}"></p:outputLabel>  
+	                </p:column>
+	                <p:column width="10%">
+						<c:facet name="header">#{msgs.label_sessao_horaSessao}</c:facet>
+	                    <p:outputLabel value="#{sessao.horario.horarioCompleto}"></p:outputLabel> 
+	                </p:column>
+	                <p:column width="10%">
+						<c:facet name="header">#{msgs.label_sessao_dataSessao}</c:facet>
+	                    <p:outputLabel value="#{sessao.dataFormatada}"></p:outputLabel> 
+	                </p:column>
+	                <p:column width="8%">
+	                    <p:commandButton value="#{msgs.btn_ingressos_selecionar}" action="#{alterarIngressosBean.getIngresso().setSessao(sessao)}" 
+	                    	update="formAlterarIngresso" oncomplete="PF('pesquisaSessao').hide()"/> 
+	                </p:column>	
+				</p:dataTable>
+			</p:dialog>
+			
+			
+			
+			<h:panelGrid columns="2" cellspacing="10">
+				<h:panelGroup>
+					<p:outputLabel for="codIngresso" value="${msgs.label_ingressos_codigoIngresso}" /><br/>
+					<p:inputText id="codIngresso" value="${alterarIngressosBean.ingresso.codigoIngresso}" disabled="true"/>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:outputLabel for="situacaoIngresso" value="${msgs.label_ingressos_situacao}" /><br/>
+					<p:inputText id="situacaoIngresso" value="${alterarIngressosBean.ingresso.situacaoIngresso.descricao}" disabled="true"/>
+				</h:panelGroup>
+			</h:panelGrid>
+					
+			<p:panel id="pnSessaoIngresso" header="Sessão" style="margin-top:10px">
+				<h:panelGrid columns="4" cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="codSessao" value="${msgs.label_ingressos_codigoSessao}" /><br/>
+						<p:inputText id="codSessao" value="${alterarIngressosBean.ingresso.sessao.codigo}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="dataSessao" value="${msgs.label_sessao_dataSessao}" /><br/><!-- ##########   IREI PEGAR AS LABELS DA SESSÃO DEPOIS ############-->
+						<p:inputText id="dataSessao" value="${alterarIngressosBean.ingresso.sessao.dataFormatada}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="horaSessao" value="${msgs.label_sessao_horaSessao}" /><br/>
+						<p:inputText id="horaSessao" value="${alterarIngressosBean.ingresso.sessao.horario.horarioCompleto}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<br/>
+						<p:commandButton value="#{msgs.btn_ingressos_pesquisaSessao}" action="#{alterarIngressosBean.pesquisarSessoes}" update ="pesquisaSessao" oncomplete="PF('pesquisaSessao').show()"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+			
+			<p:panel id="pnPessoaIngresso" header="Pessoa" style="margin-top:10px">
+				<h:panelGrid columns="5" cellspacing="10">	
+					<h:panelGroup>
+						<p:outputLabel for="nomePessoa" value="${msgs.label_detalheEvento_funcionarios_nome}" /><br/>
+						<p:inputText id="nomePessoa" value="${alterarIngressosBean.ingresso.pessoa.nome}" size="38" disabled="true" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="cpfPessoa" value="${msgs.label_detalheEvento_funcionarios_cpf}" /><br/>
+						<p:inputMask id="cpfPessoa" value="${alterarIngressosBean.ingresso.pessoa.cpf}" disabled="true" mask="999.999.999-99"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="telPessoa" value="${msgs.label_detalheEvento_funcionarios_telefone}" /><br/>
+						<p:inputMask id="telPessoa" value="${alterarIngressosBean.ingresso.pessoa.telefone}" disabled="true" mask="(99)9999-9999"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="emailPessoa" value="${msgs.label_detalheEvento_funcionarios_email}" /><br/>
+						<p:inputText id="emailPessoa" value="${alterarIngressosBean.ingresso.pessoa.email}" size="46" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<br/>
+						<p:commandButton value="#{msgs.btn_ingressos_pesquisaPessoa}"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>	
+				
+			<p:panel id="pnPoltronaIngresso" header="Poltrona" style="margin-top:10px">	
+				<h:panelGrid columns="2" cellspacing="10">
+					<h:panelGroup>
+						<p:outputLabel for="codPoltrona" value="${msgs.label_ingressos_codigoPoltrona}" /><br/>
+						<p:inputText id="codPoltrona" value="${alterarIngressosBean.ingresso.poltrona.codigo}" disabled="true"/>
+					</h:panelGroup>
+					<h:panelGroup>
+						<p:outputLabel for="tipoPoltrona" value="${msgs.label_ingressos_tipoPoltrona}" /><br/>
+						<p:inputText id="tipoPoltrona" value="${alterarIngressosBean.ingresso.poltrona.tipoPoltrona}" disabled="true"/>
+					</h:panelGroup>
+				</h:panelGrid>
+			</p:panel>
+			
+			<p:column>
+					<h:panelGrid cellspacing="10" style="float: right;">
+						<p:commandButton id="btnExcluir" icon="pi pi-trash"
+							action="${ingressosDetalheBean.exclui()}"
+							value="${msgs.label_reemb_ingresso}" 
+							immediate="true" style="float: right;">
+						</p:commandButton>
+					</h:panelGrid>
+				</p:column>	
+		</h:form>
+	</ui:define>
+	
+</ui:composition>

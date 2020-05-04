@@ -119,6 +119,8 @@ public class SessaoDao {
 				sessao.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").split(":")[0])));
 				sessao.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").split(":")[1])));
 				sessao.setValorBase(rs.getDouble("valor_base_sessao"));
+				sessao.setDiaString(rs.getString("dia_sessao"));
+				sessao.setDataSessao(rs.getString("dia_sessao"));
 				sessao.setSituacao("Sessão futura");
 				sessoes.add(sessao);
 			}

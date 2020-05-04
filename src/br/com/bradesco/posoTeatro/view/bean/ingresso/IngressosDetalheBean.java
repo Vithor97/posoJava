@@ -6,10 +6,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
-import br.com.bradesco.posoTeatro.dao.PessoaDao;
-import br.com.bradesco.posoTeatro.dao.SessaoDao;
 import br.com.bradesco.posoTeatro.model.Ingresso;
-import br.com.bradesco.posoTeatro.posoUtil.DataUtil;
 import br.com.bradesco.posoTeatro.view.bean.BeanInterface;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
@@ -19,8 +16,6 @@ import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 	
 	private Ingresso ingresso;
-	
-	private String hora;
 	
 	private String mensagem;
 	@ManagedProperty(value = "#{reembolsoIngressoBean}")
@@ -53,10 +48,6 @@ public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 	@Override
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Ingressos detalhe", "consultarIngressosDetalhe", titulosBread, urlsBread);
-//		getIngresso().setPessoa(new PessoaDao().consultar(getIngresso().getPessoa()));
-//		getIngresso().setSessao(new SessaoDao().consultaSessao(getIngresso().getSessao()));
-//		getIngresso().getSessao().setDataSessao(DataUtil.transformaData(getIngresso().getSessao().getDataSessao()));
-//		setHora(getIngresso().getSessao().getHorario().getHorarioCompleto());
 		return "consultarIngressosDetalhe";
 	}
 
@@ -66,13 +57,6 @@ public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 		return "consultarIngressosDetalhe";
 	}
 
-	public String getHora() {
-		return hora;
-	}
-
-	public void setHora(String hora) {
-		this.hora = hora;
-	}
 	public String exclui() {
 		excluir.setIngresso(this.ingresso);
 		excluir.excluir();
