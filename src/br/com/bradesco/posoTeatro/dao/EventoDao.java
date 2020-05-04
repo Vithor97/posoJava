@@ -305,17 +305,30 @@ public class EventoDao extends Evento {
 	public ArrayList<Evento> listarEventosPessoa(Pessoa pessoa) {
 
 		ArrayList<Evento> eventos = new ArrayList<Evento>();
+		String query = ("SELECT e.cod_evento as codigo, e.desc_evento as descricao, g.nome_genero as genero, t.nome_tipo as tipo "
+						+ "FROM Pessoa_Evento a, Pessoa p, Evento e, Genero g, Tipo_Evento t "
+						+ "where a.cod_pessoa = p.cod_pessoa "
+						+ "and e.cod_evento = a.cod_evento "
+						+ "and g.cod_genero = e.cod_genero "
+						+ "and t.cod_tipo = e.cod_tipo "
+						+ "and a.cod_pessoa = " + pessoa.getCodigo() 
+						+ "union select c.cod_evento as codigo, c.desc_evento as descricao, e.nome_genero as genero, d.nome_tipo as tipo "
+						+ "from Ingresso a inner join Sessao b on a.cod_sessao = b.cod_sessao "
+						+ "inner join Evento c on b.cod_evento = c.cod_evento "
+						+ "inner join Tipo_Evento d on c.cod_tipo = d.cod_tipo "
+						+ "inner join Genero e on c.cod_genero = e.cod_genero " 
+						+ "where a.cod_pessoa = " + pessoa.getCodigo());
+
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
-			PreparedStatement smt = conn.prepareStatement("select b.* from pessoa_evento a inner join evento b on a.cod_evento = b.cod_evento "
-															+ "where a.cod_pessoa = " + pessoa.getCodigo());
+			PreparedStatement smt = conn.prepareStatement(query);
 			ResultSet rs = smt.executeQuery();
 			while (rs.next()) {
 				Evento evento = new Evento();
-				evento.setCodigo(rs.getInt("cod_evento"));
-				evento.setDescricao(rs.getString("desc_evento"));
-				evento.setCodigo(rs.getInt("cod_tipo"));
-				evento.setCodigo(rs.getInt("cod_genero"));
+				evento.setCodigo(rs.getInt("codigo"));
+				evento.setDescricao(rs.getString("descricao"));
+				evento.getGenero().setNome(rs.getString("genero"));
+				evento.getTipoEvento().setNome(rs.getString("tipo"));
 				eventos.add(evento);
 			}
 			rs.close();
