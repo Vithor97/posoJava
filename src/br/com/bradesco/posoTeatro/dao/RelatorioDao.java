@@ -7,8 +7,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.bradesco.posoTeatro.model.Evento;
+import br.com.bradesco.posoTeatro.model.Funcionario;
+import br.com.bradesco.posoTeatro.model.Ingresso;
 import br.com.bradesco.posoTeatro.model.Pessoa;
 import br.com.bradesco.posoTeatro.model.relatorio.Grafico;
+import br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona;
 
 public class RelatorioDao {
 
@@ -326,6 +329,369 @@ public class RelatorioDao {
         } catch (Exception e) {
             e.printStackTrace();
         }
+		return resultado;
+	}
+
+	
+	public List<Grafico<Pessoa>> principaisClientes(){
+		List<Grafico<Pessoa>> resultado = new ArrayList<Grafico<Pessoa>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("select count(cod_ingresso) as quantidade, b.nome_pessoa, b.cod_pessoa from Ingresso a inner join Pessoa b on a.cod_pessoa = b.cod_pessoa group by b.nome_pessoa, b.cod_pessoa order by 1  desc offset 0 rows fetch next 20 rows only");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<Pessoa> item = new Grafico<Pessoa>(new Pessoa());
+	        	item.getItem().setCodigo(rs.getInt("cod_pessoa"));
+	        	item.getItem().setNome(rs.getString("nome_pessoa"));
+	        	item.setValor(rs.getDouble("quantidade"));
+	        	resultado.add(item);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	
+	public List<Grafico<Ingresso>> comprasCliente(Pessoa pessoa){
+		List<Grafico<Ingresso>> resultado = new ArrayList<Grafico<Ingresso>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("select * from Ingresso where cod_pessoa = ?");
+	        smt.setInt(1, pessoa.getCodigo());        
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<Ingresso> ingresso = new Grafico<Ingresso>(new Ingresso());
+	        	ingresso.getItem().getSessao().setCodigo(rs.getInt("cod_sessao"));
+	        	ingresso.getItem().setSessao(new SessaoDao().consultaSessao(ingresso.getItem().getSessao()));
+	        	ingresso.getItem().getPoltrona().setTipoPoltrona(TipoPoltrona.codigo(rs.getInt("tipo_poltrona")));
+	        	resultado.add(ingresso);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public int quantidadeClientes(){
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("select count(cod_pessoa) as quantidade from Pessoa");
+	        ResultSet rs = smt.executeQuery();
+	        if (rs.next()) {
+	        	return rs.getInt("quantidade");
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return 0;
+	}
+
+	public List<Grafico<String>> faixaEtariaFuncionarios() {
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("select count(cod_func) as quantidade, b.nome from Funcionario a right join FaixasEtarias b on dbo.FaixaEtaria(a.dtnasc_func) = b.nome group by b.nome");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	if (rs.getString(2).equals("60")) {
+	            	retorno.setItem("Acima de " + rs.getString(2));
+				}else {
+	            	retorno.setItem("" + rs.getString(2));
+				}
+	        	retorno.setValor(rs.getDouble("quantidade"));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<Funcionario>> principaisFuncionarios(int quantidade) {
+		List<Grafico<Funcionario>> resultado = new ArrayList<Grafico<Funcionario>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("select count(cod_evento) as quantidade, b.nome_func, b.cod_func from Evento a inner join Funcionario b on a.cod_func = b.cod_func where b.cod_cargo in (1, 2) group by b.nome_func, b.cod_func order by 1  desc offset 0 rows fetch next " + quantidade + " rows only");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<Funcionario> principaisClientes = new Grafico<Funcionario>(new Funcionario());
+	        	principaisClientes.getItem().setCodigo(rs.getInt("cod_func"));
+	        	principaisClientes.getItem().setNome(rs.getString("nome_func"));
+	        	principaisClientes.setValor(rs.getDouble("quantidade"));
+	        	resultado.add(principaisClientes);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoHoraValorMedio(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select coalesce(coalesce(sum(a.valor_base_sessao), 0) / NULLIF(count(a.cod_sessao), 0), 0), b.nome, b.numero from Sessao a right join PeriodosDoDia b on dbo.PeriodoDoDia(a.hora_sessao) = b.nome left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoHoraArrecadacao(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select coalesce(sum(dbo.valorIngresso(c.tipo_poltrona, a.valor_base_sessao)), 0), b.nome, b.numero from Sessao a right join PeriodosDoDia b on dbo.PeriodoDoDia(a.hora_sessao) = b.nome left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoHoraVendas(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select count(c.cod_ingresso), b.nome, b.numero from Sessao a right join PeriodosDoDia b on dbo.PeriodoDoDia(a.hora_sessao) = b.nome left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoHoraQuantidade(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select count(a.cod_sessao), b.nome, b.numero from Sessao a right join PeriodosDoDia b on dbo.PeriodoDoDia(a.hora_sessao) = b.nome group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoDiaValorMedio(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select coalesce(coalesce(sum(a.valor_base_sessao), 0) / NULLIF(count(a.cod_sessao), 0), 0), b.nome, b.numero from Sessao a right join DiasSemana b on datepart(dw, (a.dia_sessao)) = b.numero left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoDiaArrecadacao(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select coalesce(sum(dbo.valorIngresso(c.tipo_poltrona, a.valor_base_sessao)), 0), b.nome, b.numero from Sessao a right join DiasSemana b on datepart(dw, (a.dia_sessao)) = b.numero left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoDiaVendas(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select count(c.cod_ingresso), b.nome, b.numero from Sessao a right join DiasSemana b on datepart(dw, (a.dia_sessao)) = b.numero left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoDiaQuantidade(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select count(a.cod_sessao), b.nome, b.numero from Sessao a right join DiasSemana b on datepart(dw, (a.dia_sessao)) = b.numero group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoMesValorMedio(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select coalesce(coalesce(sum(a.valor_base_sessao), 0) / NULLIF(count(a.cod_sessao), 0), 0), b.nome, b.numero from Sessao a right join Meses b on month(a.dia_sessao) = b.numero left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoMesArrecadacao(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select coalesce(sum(dbo.valorIngresso(c.tipo_poltrona, a.valor_base_sessao)), 0), b.nome, b.numero from Sessao a right join Meses b on month(a.dia_sessao) = b.numero left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoMesVendas(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select count(c.cod_ingresso), b.nome, b.numero from Sessao a right join Meses b on month(a.dia_sessao) = b.numero left join Ingresso c on a.cod_sessao = c.cod_sessao group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+		return resultado;
+	}
+
+	public List<Grafico<String>> sessaoMesQuantidade(){
+		List<Grafico<String>> resultado = new ArrayList<Grafico<String>>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("Select count(a.cod_sessao), b.nome, b.numero from Sessao a right join Meses b on month(a.dia_sessao) = b.numero group by b.nome, b.numero order by 3");
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	        	Grafico<String> retorno = new Grafico<String>("");
+	        	retorno.setItem(rs.getString(2));       	
+	        	retorno.setValor(rs.getDouble(1));
+	        	resultado.add(retorno);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 		return resultado;
 	}
 

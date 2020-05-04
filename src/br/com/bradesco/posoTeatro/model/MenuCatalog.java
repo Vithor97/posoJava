@@ -42,6 +42,7 @@ public class MenuCatalog {
 	private boolean relatorioTipoGenero;
 	private boolean relatorioFuncionario;
 	private boolean relatorioEmpresa;
+	private boolean relatorioSessao;
 
 	public boolean getMenuEventos() {
 		return menuEventos;
@@ -289,6 +290,14 @@ public class MenuCatalog {
 
 	public void setRelatorioEmpresa(boolean relatorioEmpresa) {
 		this.relatorioEmpresa = relatorioEmpresa;
+	}
+
+	public void setRelatorioSessao(boolean relatorioSessao) {
+		this.relatorioSessao = relatorioSessao;
+	}
+
+	public boolean isRelatorioSessao() {
+		return relatorioSessao;
 	}
 
 	public boolean isListarPessoas() {

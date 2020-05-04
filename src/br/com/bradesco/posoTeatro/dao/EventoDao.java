@@ -199,6 +199,29 @@ public class EventoDao extends Evento {
         return eventos;
     }
 
+	public ArrayList<Evento> listar(Funcionario funcionario) {
+	
+	    ArrayList<Evento> eventos = new ArrayList<Evento>();
+	    try {
+	        Connection conn = new ConnectionFactory().getConnection();
+	        PreparedStatement smt = conn.prepareStatement("select * from Evento where situacao_evento = 1 and cod_func = " + funcionario.getCodigo());
+	        ResultSet rs = smt.executeQuery();
+	        while (rs.next()) {
+	            Evento evento = new Evento();
+	            evento.setCodigo(rs.getInt("cod_evento"));
+	            evento.setDescricao(rs.getString("desc_evento"));
+	            eventos.add(evento);
+	        }
+	        rs.close();
+	        smt.close();
+	        conn.close();
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	
+	    return eventos;
+	}
+	
 	public ArrayList<Pessoa> listarPessoasDoEvento(Evento evento) {
 
 		ArrayList<Pessoa> pessoas = new ArrayList<Pessoa>();

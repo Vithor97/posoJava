@@ -1,0 +1,275 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{msgs.label_relatorio} - #{msgs.label_relatorioClientes}</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{relatorioSessaoBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet name="css/relatorio.css"></h:outputStylesheet>	
+		<h:form id="dados">			
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"	minHeight="40" width="300">
+				<h:outputText value="#{relatorioSessaoBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()" />
+			</p:dialog>
+				
+			
+			<p:importEnum type="br.com.bradesco.posoTeatro.posoUtil.enums.TipoPoltrona" var="tipoPoltrona" allSuffix="ALL_ENUM_VALUES" />  
+								 
+			<h:panelGrid columns="1" styleClass="clientes">
+				<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
+     				<p:tab title="Dados Mensais" >
+     					<p:tabView style="width: 100%;  overflow: hidden;" orientation="left">
+        					<p:tab title="Quantidade">
+								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:lineChart id="mesQuantidadeGraficoLinhas" model="#{relatorioSessaoBean.mesQuantidadeGraficoLinhas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="mesQuantidadeGraficoPizza" model="#{relatorioSessaoBean.mesQuantidadeGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Vendas" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:lineChart id="mesVendasGraficoLinhas" model="#{relatorioSessaoBean.mesVendasGraficoLinhas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="mesVendasGraficoPizza" model="#{relatorioSessaoBean.mesVendasGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Arrecadação" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:lineChart id="mesArrecadacaoGrafico" model="#{relatorioSessaoBean.mesArrecadacaoGrafico}"/>		
+									</h:column>
+									<p:dataTable widgetVar="mesArrecadacaoLista" id="mesArrecadacaoLista" value="#{relatorioSessaoBean.mesArrecadacaoLista}" style="margin-top: 10px; " var="dado">
+										<p:column width="30%">
+											<c:facet name="header">Faixa Etária</c:facet>
+											<p:outputLabel value="#{dado.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<p:outputLabel value="#{relatorioSessaoBean.getReal(dado.valor)}" style="float: right"></p:outputLabel>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Média de Preços" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:lineChart id="mesMediaPrecoGrafico" model="#{relatorioSessaoBean.mesMediaPrecoGrafico}"/>		
+									</h:column>
+									<p:dataTable widgetVar="mesMediaPrecoLista" id="mesMediaPrecoLista" value="#{relatorioSessaoBean.mesMediaPrecoLista}" style="margin-top: 10px; " var="dado">
+										<p:column width="30%">
+											<c:facet name="header">Faixa Etária</c:facet>
+											<p:outputLabel value="#{dado.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<h:outputLink id="valor" value="#" style="float: right; color: black;">
+												<p:outputLabel value="#{relatorioSessaoBean.getReal(dado.valor)}"></p:outputLabel>
+										    </h:outputLink>
+										    <p:tooltip id="toolTipValorMes" for="valor" position="left" showEffect="clip" hideEffect="clip" >
+										        <p:outputLabel value="Este valor corresponde ao preço base do ingresso."/><br/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.BalcaoNobre.descricao}:"/> <p:outputLabel style="float: right" value="#{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.BalcaoNobre.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.CamarotePrime.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.CamarotePrime.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Frisas1.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Frisas1.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Plateia.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Plateia.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Frisas2.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Frisas2.porcentagem)}"/><br/>
+										    </p:tooltip>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        				</p:tabView>
+     				</p:tab>
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				<p:tab title="Dados Semanais" >
+     					<p:tabView style="width: 100%;  overflow: hidden;" orientation="left">
+        					<p:tab title="Quantidade">
+								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="diaQuantidadeGraficoLinhas" model="#{relatorioSessaoBean.diaQuantidadeGraficoLinhas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="diaQuantidadeGraficoPizza" model="#{relatorioSessaoBean.diaQuantidadeGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Vendas" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="diaVendasGraficoLinhas" model="#{relatorioSessaoBean.diaVendasGraficoLinhas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="diaVendasGraficoPizza" model="#{relatorioSessaoBean.diaVendasGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Arrecadação" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="diaArrecadacaoGrafico" model="#{relatorioSessaoBean.diaArrecadacaoGrafico}"/>		
+									</h:column>
+									<p:dataTable widgetVar="diaArrecadacaoLista" id="diaArrecadacaoLista" value="#{relatorioSessaoBean.diaArrecadacaoLista}" style="margin-top: 10px; " var="dado">
+										<p:column width="30%">
+											<c:facet name="header">Faixa Etária</c:facet>
+											<p:outputLabel value="#{dado.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<p:outputLabel value="#{relatorioSessaoBean.getReal(dado.valor)}" style="float: right"></p:outputLabel>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Média de Preços" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="diaMediaPrecoGrafico" model="#{relatorioSessaoBean.diaMediaPrecoGrafico}"/>		
+									</h:column>
+									<p:dataTable widgetVar="diaMediaPrecoLista" id="diaMediaPrecoLista" value="#{relatorioSessaoBean.diaMediaPrecoLista}" style="margin-top: 10px; " var="dado">
+										<p:column width="30%">
+											<c:facet name="header">Faixa Etária</c:facet>
+											<p:outputLabel value="#{dado.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<h:outputLink id="valor" value="#" style="float: right; color: black;">
+												<p:outputLabel value="#{relatorioSessaoBean.getReal(dado.valor)}"></p:outputLabel>
+										    </h:outputLink>
+										    <p:tooltip id="toolTipValorMes" for="valor" position="left" showEffect="clip" hideEffect="clip" >
+										        <p:outputLabel value="Este valor corresponde ao preço base do ingresso."/><br/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.BalcaoNobre.descricao}:"/> <p:outputLabel style="float: right" value="#{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.BalcaoNobre.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.CamarotePrime.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.CamarotePrime.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Frisas1.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Frisas1.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Plateia.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Plateia.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Frisas2.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Frisas2.porcentagem)}"/><br/>
+										    </p:tooltip>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        				</p:tabView>
+     				</p:tab>
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				
+     				<p:tab title="Dados Diários" >
+     					<p:tabView style="width: 100%;  overflow: hidden;" orientation="left">
+        					<p:tab title="Quantidade">
+								<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="horaQuantidadeGraficoLinhas" model="#{relatorioSessaoBean.horaQuantidadeGraficoLinhas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="horaQuantidadeGraficoPizza" model="#{relatorioSessaoBean.horaQuantidadeGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Vendas" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="horaVendasGraficoLinhas" model="#{relatorioSessaoBean.horaVendasGraficoLinhas}"/>		
+									</h:column>
+									<h:column>						
+										<p:pieChart id="horaVendasGraficoPizza" model="#{relatorioSessaoBean.horaVendasGraficoPizza}"/>		
+									</h:column>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Arrecadação" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="horaArrecadacaoGrafico" model="#{relatorioSessaoBean.horaArrecadacaoGrafico}"/>		
+									</h:column>
+									<p:dataTable widgetVar="horaArrecadacaoLista" id="horaArrecadacaoLista" value="#{relatorioSessaoBean.horaArrecadacaoLista}" style="margin-top: 10px; " var="dado">
+										<p:column width="30%">
+											<c:facet name="header">Faixa Etária</c:facet>
+											<p:outputLabel value="#{dado.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<p:outputLabel value="#{relatorioSessaoBean.getReal(dado.valor)}" style="float: right"></p:outputLabel>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        					<p:tab title="Média de Preços" >
+        						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+									<h:column>						
+										<p:barChart id="horaMediaPrecoGrafico" model="#{relatorioSessaoBean.horaMediaPrecoGrafico}"/>		
+									</h:column>
+									<p:dataTable widgetVar="horaMediaPrecoLista" id="horaMediaPrecoLista" value="#{relatorioSessaoBean.horaMediaPrecoLista}" style="margin-top: 10px; " var="dado">
+										<p:column width="30%">
+											<c:facet name="header">Faixa Etária</c:facet>
+											<p:outputLabel value="#{dado.item}"></p:outputLabel>
+										</p:column>
+										<p:column>
+											<c:facet name="header">Valor arrecadado</c:facet>
+											<h:outputLink id="valor" value="#" style="float: right; color: black;">
+												<p:outputLabel value="#{relatorioSessaoBean.getReal(dado.valor)}"></p:outputLabel>
+										    </h:outputLink>
+										    <p:tooltip id="toolTipValorMes" for="valor" position="left" showEffect="clip" hideEffect="clip" >
+										        <p:outputLabel value="Este valor corresponde ao preço base do ingresso."/><br/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.BalcaoNobre.descricao}:"/> <p:outputLabel style="float: right" value="#{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.BalcaoNobre.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.CamarotePrime.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.CamarotePrime.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Frisas1.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Frisas1.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Plateia.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Plateia.porcentagem)}"/><br/>
+										        <p:outputLabel value="#{tipoPoltrona.Frisas2.descricao}:"/> <p:outputLabel style="float: right" value=" #{relatorioSessaoBean.getReal(dado.valor * tipoPoltrona.Frisas2.porcentagem)}"/><br/>
+										    </p:tooltip>
+										</p:column>
+									</p:dataTable>
+								</h:panelGrid>
+        					</p:tab>
+        				</p:tabView>
+     				</p:tab>
+      			</p:tabView>
+			</h:panelGrid>
+
+			<p:commandButton disabled="#{relatorioSessaoBean.telaAnterior == null}" value="#{msgs.label_relatorio_voltar}" action="#{relatorioSessaoBean.voltar}" style="margin-top:10px" />			
+		</h:form>
+	</ui:define>
+
+</ui:composition>

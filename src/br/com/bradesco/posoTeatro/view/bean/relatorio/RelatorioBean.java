@@ -7,6 +7,7 @@ import org.primefaces.model.charts.axes.cartesian.CartesianScales;
 import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearAxes;
 import org.primefaces.model.charts.axes.cartesian.linear.CartesianLinearTicks;
 import org.primefaces.model.charts.bar.BarChartOptions;
+import org.primefaces.model.charts.line.LineChartOptions;
 import org.primefaces.model.charts.optionconfig.title.Title;
 import org.primefaces.model.charts.pie.PieChartOptions;
 
@@ -55,6 +56,15 @@ public class RelatorioBean extends PosoBean{
         linearAxes.setTicks(ticks);        
         cScales.addYAxesData(linearAxes);
         options.setScales(cScales);
+        Title title = new Title();
+        title.setText(titulo);
+        title.setDisplay(true);
+        options.setTitle(title);
+        return options;
+	}
+	
+	public LineChartOptions getOptionsLine(String titulo) {
+		LineChartOptions options = new LineChartOptions();        
         Title title = new Title();
         title.setText(titulo);
         title.setDisplay(true);

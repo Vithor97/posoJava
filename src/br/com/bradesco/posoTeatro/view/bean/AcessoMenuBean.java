@@ -91,6 +91,7 @@ public class AcessoMenuBean{
 		getMenuCatalog().setRelatorioCliente(true);
 		getMenuCatalog().setRelatorioEvento(true);
 		getMenuCatalog().setRelatorioTipoGenero(true);
+		getMenuCatalog().setRelatorioSessao(true);
 		getMenuCatalog().setRelatorioFuncionario(true);
 		getMenuCatalog().setRelatorioEmpresa(true);
 	}

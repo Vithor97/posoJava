@@ -1,0 +1,128 @@
+<ui:composition template="/menu-catalog.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsf/core"
+	xmlns:f="http://java.sun.com/jsf/facet"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<ui:define name="titulo">#{msgs.label_relatorio} - #{msgs.label_relatorioFuncionarios}</ui:define>
+
+	<ui:define name="breadCrumb">
+		<p:breadCrumb styleClass="breadCrumb" model="#{relatorioFuncionarioBean.menuModel}" lastItemDisabled="true"></p:breadCrumb>
+	</ui:define>
+
+	<ui:define name="conteudo">
+		<h:outputStylesheet name="css/relatorio.css"></h:outputStylesheet>	
+		<h:form id="dados">			
+			<p:dialog header="Cadastro" id="dlg1" widgetVar="dlg1" modal="true"	minHeight="40" width="300">
+				<h:outputText value="#{relatorioFuncionarioBean.mensagem}" />
+				<br />
+				<p:commandButton style="float: right;" value="OK" onclick="dlg1.hide()" />
+			</p:dialog>
+				
+		<p:dialog header="Dados do Funcionario" id="dlgFuncionario"	widgetVar="dlgFuncionario" modal="true" minHeight="40" width="1100" positionType="absolute">
+				<p:panel id="pnFuncionario" header="#{msgs.label_relatorio_funcionario}" style="margin-top:10px">
+					<h:panelGrid columns="3" cellpadding="20">
+						<h:panelGrid columns="2">
+							<p:outputLabel for="codigoFuncionario" value="#{msgs.label_relatorioFuncionario_funcionario_codigo}" />
+							<p:inputText id="codigoFuncionario" value="#{relatorioFuncionarioBean.funcionarioDetalhe.codigo}" size="4" readonly="true"/>
+							<p:outputLabel for="dataNascFuncionario" value="#{msgs.label_relatorioFuncionario_funcionario_nascimento}" />
+							<p:inputText id="dataNascFuncionario" value="#{relatorioFuncionarioBean.funcionarioDetalhe.dataNascimentoString}" readonly="true" />						
+							<p:outputLabel for="cargoFuncionario" value="#{msgs.label_relatorioFuncionario_funcionario_nascimento}" />
+							<p:inputText id="cargoFuncionario" value="#{relatorioFuncionarioBean.funcionarioDetalhe.cargo}" readonly="true" />						
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="nomeFuncionario" value="#{msgs.label_relatorioFuncionario_funcionario_nome}" />
+							<p:inputText id="nomeFuncionario" value="#{relatorioFuncionarioBean.funcionarioDetalhe.nome}" size="50" readonly="true" />
+							<p:outputLabel for="emailFuncionario" value="#{msgs.label_relatorioFuncionario_funcionario_email}" />
+							<p:inputText id="emailFuncionario" value="#{relatorioFuncionarioBean.funcionarioDetalhe.email}" size="50" readonly="true" />
+						</h:panelGrid>
+						<h:panelGrid columns="2">
+							<p:outputLabel for="cpfFuncionario" value="#{msgs.label_relatorioFuncionario_funcionario_cpf}" />
+							<p:inputText id="cpfFuncionario" value="#{relatorioFuncionarioBean.funcionarioDetalhe.cpf}" size="14" readonly="true" />
+							<p:outputLabel for="telefoneFuncionario" value="#{msgs.label_relatorioFuncionario_funcionario_telefone}" />
+							<p:inputText id="telefoneFuncionario" value="#{relatorioFuncionarioBean.funcionarioDetalhe.telefone}" size="15" readonly="true" />
+						</h:panelGrid>
+					</h:panelGrid>
+				</p:panel>
+
+				<p:dataTable widgetVar="ingressosFuncionario" id="ingressosFuncionario" value="#{relatorioFuncionarioBean.eventosFuncionario}" style="margin-top: 10px;" var="evento" 
+					rows="5" 
+					paginator="true" 
+					paginatorPosition="top" 
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}" 
+					currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} compras">
+					<c:facet name="header">
+				        Compras
+				    </c:facet>
+					<p:column width="10%">
+						<c:facet name="header">Código</c:facet>
+						<p:outputLabel value="#{evento.codigo}" style="float: right"></p:outputLabel>
+					</p:column>
+					<p:column>
+						<c:facet name="header">Nome</c:facet>
+						<p:outputLabel value="#{evento.descricao}"></p:outputLabel>
+					</p:column>
+					<p:column width="15%" style="text-align: center">
+						<c:facet name="header">Ações</c:facet>
+	                    <p:commandButton style="width: 100%;" value="#{msgs.label_relatorio_detalhar}" action="#{relatorioFuncionarioBean.detalhar(evento)}"/> 							
+					</p:column>
+				</p:dataTable>	
+			</p:dialog>
+								 
+			<h:panelGrid columns="1" styleClass="clientes">
+				<p:tabView orientation="left" style="width: 100%;  overflow: hidden;">
+     				<p:tab id="principaisFuncionarios" title="Principais Funcionarios">
+						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+							<h:column >
+								<p:toolbar>
+									<c:facet name="left">
+										<p:outputLabel value="Quantidade a ser exibida:   " for="principaisFuncionariosQuantidade"/>
+										<p:spinner id="principaisFuncionariosQuantidade" value="#{relatorioFuncionarioBean.principaisFuncionariosQuantidade}" max="15" min="1" style="margin-left: 2%; width: 20%;">
+											<p:ajax update="principaisFuncionariosLista principaisFuncionariosGrafico principaisFuncionariosQuantidade" listener="#{relatorioFuncionarioBean.carregarPrincipaisFuncionarios}"/>
+										</p:spinner>
+									</c:facet>
+								</p:toolbar>
+								
+								<p:barChart id="principaisFuncionariosGrafico" model="#{relatorioFuncionarioBean.principaisFuncionariosGrafico}"/>
+								
+							</h:column>
+							<p:dataTable widgetVar="principaisFuncionariosLista" id="principaisFuncionariosLista" value="#{relatorioFuncionarioBean.principaisFuncionariosLista}" style="margin-top: 10px; " var="principalFuncionario">
+								<p:column width="10%">
+									<c:facet name="header">Código</c:facet>
+									<p:outputLabel value="#{principalFuncionario.item.codigo}" style="float: right"></p:outputLabel>
+								</p:column>
+								<p:column>
+									<c:facet name="header">Nome</c:facet>
+									<p:outputLabel value="#{principalFuncionario.item.nome}"></p:outputLabel>
+								</p:column>
+								<p:column width="20%">
+									<c:facet name="header">Qtde. de eventos</c:facet>
+									<p:outputLabel value="#{principalFuncionario.valor.intValue()}" style="float: right"></p:outputLabel>
+								</p:column>
+								<p:column width="18%">
+									<c:facet name="header">Ações</c:facet>
+									<p:commandButton value="Detalhar" style="width: 100%" action="#{relatorioFuncionarioBean.detalharFuncionarios(principalFuncionario.item)}" oncomplete="PF('dlgFuncionario').show();" update=":dados:dlgFuncionario"/>									
+								</p:column>
+							</p:dataTable>
+						</h:panelGrid>
+     				</p:tab>
+     				<p:tab title="Faixas etárias" >
+						<h:panelGrid columns="2" style="font-size: 85%;" cellspacing="20">
+							<h:column>						
+								<p:barChart id="faixaEtariaFuncionariosColunas" model="#{relatorioFuncionarioBean.faixaEtariaFuncionariosGraficoColunas}"/>		
+							</h:column>
+							<h:column>						
+								<p:pieChart id="faixaEtariaFuncionariosPizza" model="#{relatorioFuncionarioBean.faixaEtariaFuncionariosGraficoPizza}"/>		
+							</h:column>
+						</h:panelGrid>
+     				</p:tab>
+      			</p:tabView>
+			</h:panelGrid>
+
+			<p:commandButton disabled="#{relatorioFuncionarioBean.telaAnterior == null}" value="#{msgs.label_relatorio_voltar}" action="#{relatorioFuncionarioBean.voltar}" style="margin-top:10px" />			
+		</h:form>
+	</ui:define>
+
+</ui:composition>
