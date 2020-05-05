@@ -17,6 +17,7 @@ public class EventoDao extends Evento {
 	public String cadastrar(Evento evento) {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
+			//busca func atraves do cpf
 			PreparedStatement smt0 = conn.prepareStatement("select * from funcionario where cpf_func = '"
 					+ evento.getFuncionario().getCpf().replace(".", "").replace("-", "") + "'");
 			ResultSet rs0 = smt0.executeQuery();
@@ -25,6 +26,7 @@ public class EventoDao extends Evento {
 			}
 			rs0.close();
 			smt0.close();
+			//busca empresa atraves do cnpj
 			PreparedStatement smt1 = conn.prepareStatement("select * from empresa_responsavel where cnpj_empresa = '"
 					+ evento.getEmpresaResponsavel().getCnpj().replace(".", "").replace("-", "").replace("/", "") + "'");
 			ResultSet rs1 = smt1.executeQuery();
@@ -33,24 +35,44 @@ public class EventoDao extends Evento {
 			}
 			rs1.close();
 			smt1.close();
-			PreparedStatement smt2 = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?, default)");
-
-			smt2.setInt(1, evento.getEmpresaResponsavel().getCodigo());
-			smt2.setInt(4, evento.getTipoEvento().getCodigo());
-			smt2.setInt(5, evento.getGenero().getCodigo());
-			smt2.setInt(2, evento.getFuncionario().getCodigo());
-			smt2.setString(3, evento.getDescricao());
-
-
-			smt2.executeUpdate();
+			//busca tipo evento atraves do nome
+			PreparedStatement smt2 = conn.prepareStatement("select * from tipo_evento where nome_tipo = '"
+					+ evento.getTipoEvento().getNome()+ "'");
+			ResultSet rsTipo = smt2.executeQuery();
+			if (rsTipo.next()) {
+				evento.getTipoEvento().setCodigo(Integer.parseInt(rsTipo.getString("cod_tipo")));
+			}
+			rsTipo.close();
 			smt2.close();
-			PreparedStatement smt3 = conn.prepareStatement("select top 1 * FROM evento order by cod_evento desc");
-			ResultSet rs2 = smt3.executeQuery();
+			//busca genero atraves do nome
+			PreparedStatement smt3 = conn.prepareStatement("select * from genero where nome_genero = '"
+					+ evento.getGenero().getNome()+ "'");
+			ResultSet rsGenr = smt3.executeQuery();
+			if (rsGenr.next()) {
+				evento.getGenero().setCodigo(Integer.parseInt(rsGenr.getString("cod_genero")));
+			}
+			rsGenr.close();
+			smt3.close();
+			//insere
+			PreparedStatement smt4 = conn.prepareStatement("insert into evento values (?, ?, ?, ?, ?, default)");
+
+			smt4.setInt(1, evento.getEmpresaResponsavel().getCodigo());
+			smt4.setInt(2, evento.getTipoEvento().getCodigo());
+			smt4.setInt(3, evento.getGenero().getCodigo());
+			smt4.setInt(4, evento.getFuncionario().getCodigo());
+			smt4.setString(5, evento.getDescricao());
+
+
+			smt4.executeUpdate();
+			smt4.close();
+			//busca o cod do evento que foi cadastrado para ser usado no cad pessoas evento
+			PreparedStatement smt5 = conn.prepareStatement("select top 1 * FROM evento order by cod_evento desc");
+			ResultSet rs2 = smt5.executeQuery();
 			if (rs2.next()) {
 				evento.setCodigo(Integer.parseInt(rs2.getString("cod_evento")));
 			}
 			rs2.close();
-			smt3.close();
+			smt5.close();
 			
 			conn.close();
 
