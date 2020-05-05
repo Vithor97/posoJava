@@ -49,10 +49,10 @@
 					<c:facet name="header">Descricao</c:facet>
                     <p:commandButton style="width: 100%;" value="#{msgs.label_listarEvento_detalhar}" action="#{listarPessoasBean.detalhaPessoa(pessoa)}"></p:commandButton>
  					<p:commandButton value="Alterar" action="#{listarPessoasBean.alteracao(pessoa)}" 
- 					 style= "margin-top:10px; margin-right:10px;width: 46.25%;"
+ 					 style= "margin-top:10px; margin-right:10px;width: 70px;"
  					 update="@form"/>
                 	
-                	<p:commandButton value="Excluir" action="${listarPessoasBean.excluir(pessoa)}" update="pessoas">
+                	<p:commandButton style="margin-top:10px; margin-right:10px;width: 41.25%;" value="Excluir" action="${listarPessoasBean.excluir(pessoa)}" update="pessoas">
                 	<p:confirm header="Exlusão de Pessoa" message="Deseja apagar?" icon="ui-icon-alert" />
                 	</p:commandButton> 
                 	           

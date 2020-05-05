@@ -21,41 +21,28 @@
 								 onclick="PF('dlg1').hide()"/>
 			</p:dialog>
 			
-			<h:panelGrid cellspacing="10">
-				<h:panelGroup>
-					<p:outputLabel for="cpfPessoa" value="${msgs.label_pessoas_cpf}" /><br/>
-					<p:inputText id="cpfPessoa" value="${consultarPessoaDetalheBean.pessoa.cpf}" disabled="true"/> 
-				</h:panelGroup>
-			</h:panelGrid>
-				
-				
-			<h:panelGrid columns="2" cellspacing="10">	
-				<h:panelGroup>
-					<p:outputLabel for="nomePessoa" value="Nome da pessoa" /><br/>
-					<p:inputText id="nomePessoa" value="${consultarPessoaDetalheBean.pessoa.nome}" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="emailPessoa" value="${msgs.label_pessoas_email}"/> <br/>
-					<p:inputText id="emailPessoa" value="${consultarPessoaDetalheBean.pessoa.email}" size="25" disabled="true"/>
-				</h:panelGroup>
-			</h:panelGrid>
-			
-			<h:panelGrid columns="2" cellspacing="10">	
-				<h:panelGroup>
-					<p:outputLabel for="dtNascimento" value="${msgs.label_pessoas_nascimento}"/><br/>
-					<p:inputText  id="dtNascimento" value="${consultarPessoaDetalheBean.pessoa.dataNascimentoString}" disabled="true"/>
-				</h:panelGroup>
-				<h:panelGroup>
-					<p:outputLabel for="telPessoa" value="${msgs.label_pessoas_telefone}" /><br/>
-					<p:inputText id="telPessoa" value="${consultarPessoaDetalheBean.pessoa.telefone}" disabled="true"/>
-				</h:panelGroup>
-			</h:panelGrid>
-			
-			<p:commandButton value="Alterar" action="#{consultarPessoaDetalheBean.alteracao}"/>
-			
-			<p:commandButton value="Excluir" action="#{consultarPessoaDetalheBean.excluir}" update="dlg1" oncomplete="PF('dlg1').show();">
-				<p:confirm header="Exlusão de Pessoa" message="Deseja apagar?" icon="ui-icon-alert" />
-			</p:commandButton>
+			<p:panel id="pnPessoa" header="Pessoas" style="margin-top:10px">
+				<h:panelGrid columns="3" cellspacing="20">
+					<h:panelGrid columns="2">
+						<p:outputLabel for="cpfPessoa" value="#{msgs.label_pessoas_cpf}" />
+						<p:inputText id="cpfPessoa"	value="${consultarPessoaDetalheBean.pessoa.cpf}" readonly="true" />
+						<p:outputLabel for="nomePessoa"	value="Nome da pessoa" />
+						<p:inputText id="nomePessoa" value="${consultarPessoaDetalheBean.pessoa.nome}" readonly="true"	size="20" />
+					</h:panelGrid>
+					<h:panelGrid columns="2">
+						<p:outputLabel for="emailPessoa" value="#{msgs.label_pessoas_email}" />
+						<p:inputText id="emailPessoa" value="${consultarPessoaDetalheBean.pessoa.email}" readonly="true" size="50" />				
+						<p:outputLabel for="dtNascimento" value="${msgs.label_pessoas_nascimento}" />
+						<p:inputText id="dtNascimento" value="${consultarPessoaDetalheBean.pessoa.dataNascimentoString}" readonly="true"	size="10" />
+					</h:panelGrid>
+					<h:panelGrid columns="2" style="margin-bottom: 30px">
+							
+						<p:outputLabel for="telPessoa" value="${msgs.label_pessoas_telefone}" />
+						<p:inputText id="telPessoa" value="${consultarPessoaDetalheBean.pessoa.telefone}"  readonly="true"	size="15" />
+					</h:panelGrid>
+				</h:panelGrid>
+			</p:panel>
+
 				
 		</h:form>
 		
@@ -91,6 +78,10 @@
 					</p:column>
 				</p:dataTable>
 			</p:panel>
+			
+			<h:form>
+				<p:commandButton value="Voltar" action="#{consultarPessoaDetalheBean.voltar}" style="margin-top:10px" />
+			</h:form>
 		
 	</ui:define>
 	
