@@ -56,7 +56,7 @@
 				<p:outputLabel for="pessoaEvento" value="${msgs.label_evento_pessoas}"/>
 				<p:inputMask id="pessoaEvento" value="${cadastrarEventoBean.evento.pessoa.cpf}" size="14" mask="999.999.999-99"/>
 				<p:commandButton value="+" action="#{cadastrarEventoBean.cpfPessoaEvento}" update="@form" />
-				<p:outputLabel id="listaPessoasEvento" value="${cadastrarEventoBean.evento.pessoa.nome}"/>
+				<p:outputLabel id="listaPessoasEvento" value="${cadastrarEventoBean.evento.pessoaEvento}"/>
 			</h:panelGrid>
 			<h:panelGrid columns="1">
 				<p:outputLabel for="listaPessoasEvento" value="${cadastrarEventoBean.mensagem}" styleClass="erro"/>
