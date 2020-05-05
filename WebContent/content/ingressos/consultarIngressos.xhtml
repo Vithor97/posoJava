@@ -20,11 +20,28 @@
 				<p:commandButton style="float: right;" value="OK" 
 								 onclick="PF('dlg1').hide()"/>
 			</p:dialog>
+			
+			<p:dialog id="excluirIngresso" widgetVar="excluirIngresso" modal="true" header="Excluir" width="175">
+				<h:panelGrid columns="1">
+					<h:panelGroup>
+						<h:outputText value="Deseja mesmo apagar?"/>
+					</h:panelGroup>
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<h:panelGroup>
+	                	<p:commandButton style="float: left;" value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+	                </h:panelGroup>
+	                <h:panelGroup>
+	        			<p:commandButton style="float: right;" value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+	        		</h:panelGroup>
+        		</h:panelGrid>
+            </p:dialog>
+
 			<p:dataTable value="#{consultarIngressosBean.ingressos}" id="ingressos" var="ingresso" rows="10" emptyMessage="#{msgs.msg_ingressos_empty}"
 					paginator="true"
 					paginatorPosition="top"
 	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} eventos">
+	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} ingressos">
 				<p:column width="5%">
 					<c:facet name="header">${msgs.label_ingressos_codigoIngresso}</c:facet>
                 		<p:outputLabel style="float: right;" value="#{ingresso.codigoIngresso}"></p:outputLabel>  
@@ -50,11 +67,9 @@
                     <p:commandButton style="width: 100%;" value="#{msgs.label_ingressos_button_detalhar}" action="#{consultarIngressosBean.consultar(ingresso)}"></p:commandButton>
                     
  					<p:commandButton value="#{msgs.label_ingressos_button_alterar}" action="#{consultarIngressosBean.alterar(ingresso)}" style= "margin-top:10px; margin-right:10px;width: 50%;"/>
-                	<p:commandButton value="#{msgs.label_ingressos_button_excluir}" action="#{listarEventosBean.excluir(evento)}">
-                	
-                	<p:confirm header="Exlusão de Evento" message="Deseja apagar?" icon="ui-icon-alert" />
-                	</p:commandButton> 
-                	           
+                	<p:commandButton value="#{msgs.label_ingressos_button_excluir}" onclick="PF('excluirIngresso').show()">
+                		<f:setPropertyActionListener value="#{ingresso}" target="#{consultarIngressosBean.ingresso}" />
+                	</p:commandButton>          
                 </p:column>	
 			</p:dataTable>
 <!-- 			<h:panelGrid columns="2"> -->

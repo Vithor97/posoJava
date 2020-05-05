@@ -154,6 +154,8 @@ public class PessoaDao extends Pessoa {
 				pessoa.setCodigo(rs.getInt("cod_pessoa"));
 				pessoa.setNome(rs.getString("nome_pessoa"));
 				pessoa.setCpf(rs.getString("cpf_pessoa"));
+				pessoa.setEmail(rs.getString("email_pessoa"));
+				pessoa.setTelefone(rs.getString("tel_pessoa"));
 				pessoas.add(pessoa);
 			}
 			rs.close();

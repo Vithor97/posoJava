@@ -6,6 +6,7 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
+import br.com.bradesco.posoTeatro.dao.PessoaDao;
 import br.com.bradesco.posoTeatro.dao.SessaoDao;
 import br.com.bradesco.posoTeatro.model.Ingresso;
 import br.com.bradesco.posoTeatro.model.Pessoa;
@@ -57,7 +58,10 @@ public class AlterarIngressosBean extends PosoBean implements BeanInterface{
 	
 	public void pesquisarSessoes() {
 		setSessoes(new SessaoDao().listarSessoesAtivas());
-		
+	}
+	
+	public void pesquisarPessoas() {
+		setPessoas(new PessoaDao().listarPessoas(""));
 	}
 
 	public ArrayList<Sessao> getSessoes() {

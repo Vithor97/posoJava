@@ -56,10 +56,4 @@ public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 		super.iniciarPagina("Ingressos detalhe", "consultarIngressosDetalhe");
 		return "consultarIngressosDetalhe";
 	}
-
-	public String exclui() {
-		excluir.setIngresso(this.ingresso);
-		excluir.excluir();
-		return this.iniciarPagina();
-	}
 }

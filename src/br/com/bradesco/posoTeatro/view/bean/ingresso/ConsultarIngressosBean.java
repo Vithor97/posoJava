@@ -2,10 +2,14 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
+
+import org.primefaces.PrimeFaces;
 
 import br.com.bradesco.posoTeatro.dao.IngressoDao;
 import br.com.bradesco.posoTeatro.model.Ingresso;
@@ -60,6 +64,20 @@ public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 		alterar.setIngresso(ingressoEntrada);
 		alterar.setTelaAnterior(this);
 		return alterar.iniciarPagina(getTitulosBread(), getUrlsBread());
+	}
+	
+	public void excluir(Ingresso ingressoEntrada) {
+		boolean exclusao = new IngressoDao().reembolsoIngresso(ingressoEntrada);
+		PrimeFaces current = PrimeFaces.current();
+		FacesContext facesContext = FacesContext.getCurrentInstance();
+		ResourceBundle messageBundle = facesContext.getApplication().getResourceBundle(facesContext, "msgs");
+		if(exclusao) {
+			setMensagem(messageBundle.getString("msg_ingressos_exclusaoSucesso"));
+		}
+		else {
+			setMensagem(messageBundle.getString("msg_ingressos_exlusaoErro"));
+		}
+		current.executeScript("PF('dlg1').show();");
 	}
 	
 	public Ingresso getIngresso() {
