@@ -5,6 +5,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Sessao {
  
@@ -131,6 +132,33 @@ public class Sessao {
 	
 	public double getValorPoltrona(double porcentagem) {
 		return getValorBase() * porcentagem;
+	}
+	
+	public boolean filtraHorario(Object valor, Object filtroDigitado, Locale locale) {
+		String textoFiltro = (filtroDigitado == null) ? null : filtroDigitado.toString().trim();
+		if (textoFiltro == null || textoFiltro.equals("")) {
+            return true;
+        }
+ 
+        if (valor == null) {
+            return false;
+        }
+
+        try {
+        	if(Integer.getInteger(valor.toString().split(":")[0])
+        			.compareTo(Integer.getInteger(textoFiltro.split(":")[0])) >= 0) {
+        		return true;
+        	} 
+        	if(Integer.getInteger(valor.toString().split(":")[1])
+        			.compareTo(Integer.getInteger(textoFiltro.split(":")[1])) >= 0) {
+        		return true;
+        	}
+        	return false;
+        
+        } catch (Exception e) {
+			return true;
+		}
+        
 	}
 
 }
