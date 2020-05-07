@@ -3,6 +3,8 @@ package br.com.bradesco.posoTeatro.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.model.SelectItem;
+
 public class Evento {
 
 	private int codigo;
@@ -13,7 +15,6 @@ public class Evento {
 	private TipoEvento tipoEvento;
 	private Genero genero;
 	private int situacaoEvento;
-	
 
 	private List<String> pessoaEvento = new ArrayList<String>();
 	private List<String> listaCpfPessoa = new ArrayList<String>();
@@ -105,6 +106,8 @@ public class Evento {
 	public void setListaCpfPessoa(List<String> listaCpfPessoa) {
 		this.listaCpfPessoa = listaCpfPessoa;
 	}
+
+
 
 	
 	

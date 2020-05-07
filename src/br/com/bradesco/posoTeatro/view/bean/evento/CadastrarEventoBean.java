@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.model.SelectItem;
 
 import br.com.bradesco.posoTeatro.dao.EventoDao;
 import br.com.bradesco.posoTeatro.model.Evento;
+import br.com.bradesco.posoTeatro.model.TipoEvento;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
 @ManagedBean(name = "cadastrarEventoBean")
@@ -34,9 +36,20 @@ public class CadastrarEventoBean extends PosoBean {
 		this.evento = evento;
 	}
 
+	private List<TipoEvento> tiposEvento;
+	
+	public List<TipoEvento> getTiposEvento() {
+		return tiposEvento;
+	}
+
+	public void setTiposEvento(List<TipoEvento> tiposEvento) {
+		this.tiposEvento = tiposEvento;
+	}
+	
 	public String iniciarPagina(List<String> titulosBread, List<String> urlsBread) {
 		super.iniciarPagina("Cadastrar Evento", "cadastrarEvento", titulosBread, urlsBread);
 		setMensagem("");
+		setTiposEvento(new EventoDao().listarTipos());
 		setEvento(new Evento());
 		return "cadastrarEvento";
 	}
@@ -44,6 +57,7 @@ public class CadastrarEventoBean extends PosoBean {
 	public String iniciarPagina() {
 		super.iniciarPagina("Cadastrar Evento", "cadastrarEvento");
 		setMensagem("");
+		setTiposEvento(new EventoDao().listarTipos());
 		setEvento(new Evento());
 		return "cadastrarEvento";
 	}
@@ -55,7 +69,7 @@ public class CadastrarEventoBean extends PosoBean {
 			new EventoDao().voltarCnpj(getEvento());
 		}
 	}
-
+	
 	public void retornaCpf() {
 		if (evento.getFuncionario().getCpf().equals("")) {
 			evento.getFuncionario().setNome("");
@@ -122,5 +136,7 @@ public class CadastrarEventoBean extends PosoBean {
 		}
 		return true;
 	}
+
+
 
 }

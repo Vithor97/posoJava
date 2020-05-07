@@ -35,10 +35,8 @@
 				<p:inputText id="descEvento" value="${cadastrarEventoBean.evento.descricao}" size="50"/>
 				
 				<p:outputLabel for="tipoEvento" value="${msgs.label_evento_tipoEvento}"/>
-				<p:selectOneMenu id="tipoEvento" value="${cadastrarEventoBean.evento.tipoEvento.nome}"> 
-            	    <c:selectItem itemValue = "${msgs.label_evento_tipo1}" itemLabel ="${msgs.label_evento_tipo1}" />
-            	    <c:selectItem itemValue = "${msgs.label_evento_tipo2}" itemLabel ="${msgs.label_evento_tipo2}" /> 
-            	    <c:selectItem itemValue = "${msgs.label_evento_tipo3}" itemLabel ="${msgs.label_evento_tipo3}" /> 
+				<p:selectOneMenu id="tipoEvento" value="${cadastrarEventoBean.evento.tipoEvento}"> 
+            	    <c:selectItems value ="#{cadastrarEventoBean.tiposEvento}" var="tipo" itemLabel ="#{tipo.nome}"/> 
             	</p:selectOneMenu> 		
 				
 				<p:outputLabel for="generoEvento" value="${msgs.label_evento_generoEvento}"/>
