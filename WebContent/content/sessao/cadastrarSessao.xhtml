@@ -46,7 +46,12 @@
 						value="${cadastrarSessaoBean.sessao.horario.minutos}" max="59"
 						min="0" size="2" />
 				</p:column>
-
+				
+				<p:outputLabel for="valorBaseSessao"
+					value="Valor base da Sessão" />
+				<p:inputNumber id="valorBaseSessao" minValue="1"
+					value="${cadastrarSessaoBean.sessao.valorBase}" decimalPlaces="2"
+					symbol="R$ "/>
 
 				<p:commandButton value="Salvar" id="btnSalvar"
 					action="${cadastrarSessaoBean.cadastrar}" update="dlg1"

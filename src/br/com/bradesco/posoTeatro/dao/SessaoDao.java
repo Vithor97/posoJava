@@ -15,12 +15,13 @@ public class SessaoDao {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 				
-			PreparedStatement smt = conn.prepareStatement("insert into sessao values (?, ?, ?, ?)");
+			PreparedStatement smt = conn.prepareStatement("insert into sessao values (?, ?, ?, ?, ?)");
 			
 			smt.setLong(1, sessao.getEvento().getCodigo());
 			smt.setString(2, sessao.getDataFormatada());
 			smt.setString(3, sessao.getHoraFormatada());
-			smt.setLong(4, 1);
+			smt.setDouble(4, sessao.getValorBase());
+			smt.setLong(5, 1);
 			
 			smt.executeUpdate();	
 			
@@ -107,8 +108,8 @@ public class SessaoDao {
 	public ArrayList<Sessao> listarSessoesAtivas() {
 		
 		ArrayList<Sessao> sessoes = new ArrayList<Sessao>();
+		Connection conn = new ConnectionFactory().getConnection();
 		try {
-			Connection conn = new ConnectionFactory().getConnection();
 			PreparedStatement smt = conn.prepareStatement(
 					"select * from sessao where dia_sessao >= getdate() and situacao_sessao <> 0");
 			ResultSet rs = smt.executeQuery();
@@ -126,9 +127,15 @@ public class SessaoDao {
 			}
 			rs.close();
 			smt.close();
-			conn.close();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return sessoes;
@@ -198,12 +205,13 @@ public class SessaoDao {
 			Connection conn = new ConnectionFactory().getConnection();
 
 			PreparedStatement smt = conn.prepareStatement(
-					"update sessao set cod_evento = ?, dia_sessao = ?, hora_sessao = ? where cod_sessao = ?");
+					"update sessao set cod_evento = ?, dia_sessao = ?, hora_sessao = ?, valor_base_sessao = ? where cod_sessao = ?");
 
 			smt.setLong(1, sessao.getEvento().getCodigo());
 			smt.setString(2, sessao.getDataFormatada());
 			smt.setString(3, sessao.getHoraFormatada());
-			smt.setLong(4, sessao.getCodigo());
+			smt.setDouble(4, sessao.getValorBase());
+			smt.setLong(5, sessao.getCodigo());
 
 			smt.executeUpdate();
 

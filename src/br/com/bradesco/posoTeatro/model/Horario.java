@@ -1,6 +1,6 @@
 package br.com.bradesco.posoTeatro.model;
 
-public class Horario {
+public class Horario implements Comparable<Horario> {
 
 	private int hora;
 	private int minutos;
@@ -23,6 +23,48 @@ public class Horario {
 	}
 	
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + hora;
+		result = prime * result + minutos;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Horario other = (Horario) obj;
+		if (hora != other.hora)
+			return false;
+		if (minutos != other.minutos)
+			return false;
+		return true;
+	}
+	
+	@Override
+	public int compareTo(Horario o) {
+		if(this.hora > o.hora) {
+			return 1;
+		}
+		if(this.hora < o.hora) {
+			return -1;
+		}
+		if(this.minutos > o.hora) {
+			return 1;
+		}
+		if(this.minutos < o.hora) {
+			return -1;
+		}
+		return 0;
+	}
+	
+	@Override
 	public String toString() {
 		return this.getHoraTexto() + ":" + this.getMinutosTexto();
 	}
@@ -42,4 +84,5 @@ public class Horario {
 	public void setMinutos(int minutos) {
 		this.minutos = minutos;
 	}
+
 }

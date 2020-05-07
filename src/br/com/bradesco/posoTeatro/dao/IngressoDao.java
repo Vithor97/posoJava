@@ -89,28 +89,26 @@ public class IngressoDao {
 
 	}
 	
-	public int reembolsoIngresso(Ingresso ingresso) {
-		int rs = 0;
+	public boolean reembolsoIngresso(Ingresso ingresso) {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 
-			PreparedStatement smt = conn.prepareStatement("delete from ingresso where cod_ingresso = ?");
+			PreparedStatement smt = conn.prepareStatement("UPDATE ingresso SET situacao_ingresso = 0 WHERE cod_ingresso = ?");
 
 			smt.setLong(1, ingresso.getCodigoIngresso());
 
-			rs = smt.executeUpdate();
-			System.out.println("Linhas afetadas: " + rs);
+			smt.executeUpdate();
 
 			smt.close();
 			conn.close();
 
-			
+			return true;
 
-		} catch (Exception e) {
-			System.out.println("Dentro do catch: " + e.getMessage());
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
 			
 		}
-		return rs;
 	  }
 	
 	public ArrayList<Ingresso> listarIngressosAtivos(){
