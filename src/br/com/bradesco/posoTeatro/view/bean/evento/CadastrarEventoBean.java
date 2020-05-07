@@ -8,6 +8,7 @@ import javax.faces.model.SelectItem;
 
 import br.com.bradesco.posoTeatro.dao.EventoDao;
 import br.com.bradesco.posoTeatro.model.Evento;
+import br.com.bradesco.posoTeatro.model.Genero;
 import br.com.bradesco.posoTeatro.model.TipoEvento;
 import br.com.bradesco.posoTeatro.view.bean.PosoBean;
 
@@ -38,6 +39,17 @@ public class CadastrarEventoBean extends PosoBean {
 
 	private List<TipoEvento> tiposEvento;
 	
+	private List<Genero> generos;
+	
+
+	public List<Genero> getGeneros() {
+		return generos;
+	}
+
+	public void setGeneros(List<Genero> genero) {
+		this.generos = genero;
+	}
+	
 	public List<TipoEvento> getTiposEvento() {
 		return tiposEvento;
 	}
@@ -50,6 +62,7 @@ public class CadastrarEventoBean extends PosoBean {
 		super.iniciarPagina("Cadastrar Evento", "cadastrarEvento", titulosBread, urlsBread);
 		setMensagem("");
 		setTiposEvento(new EventoDao().listarTipos());
+		setGeneros(new EventoDao().listarGeneros());
 		setEvento(new Evento());
 		return "cadastrarEvento";
 	}
@@ -58,6 +71,7 @@ public class CadastrarEventoBean extends PosoBean {
 		super.iniciarPagina("Cadastrar Evento", "cadastrarEvento");
 		setMensagem("");
 		setTiposEvento(new EventoDao().listarTipos());
+		setGeneros(new EventoDao().listarGeneros());
 		setEvento(new Evento());
 		return "cadastrarEvento";
 	}
@@ -136,6 +150,7 @@ public class CadastrarEventoBean extends PosoBean {
 		}
 		return true;
 	}
+
 
 
 
