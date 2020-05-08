@@ -15,13 +15,12 @@ public class SessaoDao {
 		try {
 			Connection conn = new ConnectionFactory().getConnection();
 				
-			PreparedStatement smt = conn.prepareStatement("insert into sessao values (?, ?, ?, ?, ?)");
+			PreparedStatement smt = conn.prepareStatement("insert into sessao values (?, ?, ?, ?, default)");
 			
 			smt.setLong(1, sessao.getEvento().getCodigo());
 			smt.setString(2, sessao.getDataFormatada());
 			smt.setString(3, sessao.getHoraFormatada());
 			smt.setDouble(4, sessao.getValorBase());
-			smt.setLong(5, 1);
 			
 			smt.executeUpdate();	
 			
@@ -37,18 +36,23 @@ public class SessaoDao {
 	}
 	
 	
-	Connection conn = new ConnectionFactory().getConnection();
 	
 	public Sessao consultaSessao(Sessao sessao) {
+		Connection conn = new ConnectionFactory().getConnection();
 		Sessao sessaoRetorno = new Sessao();
+		EventoDao eventoDao = new EventoDao();
+		Evento evento;
 		try {
 			PreparedStatement smt = conn.prepareStatement("SELECT * FROM sessao WHERE cod_sessao = ? AND situacao_sessao <> 0");
 			smt.setInt(1,sessao.getCodigo());
 			ResultSet rs = smt.executeQuery();
 			if(rs.next()) {
 				sessaoRetorno.setCodigo(rs.getInt("cod_sessao"));
-				sessaoRetorno.getEvento().setCodigo(rs.getInt("cod_evento"));
-				sessaoRetorno.setEvento(new EventoDao().consultar(sessaoRetorno.getEvento()));
+				
+				evento = new Evento();
+				evento.setCodigo(rs.getInt("cod_evento"));
+				sessaoRetorno.setEvento(eventoDao.consultar(evento));
+				
 				sessaoRetorno.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").substring(0, 2))));
 				sessaoRetorno.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").substring(3, 5))));
 				sessaoRetorno.setDiaString(rs.getString("dia_sessao"));
@@ -106,7 +110,8 @@ public class SessaoDao {
 	}
 	
 	public ArrayList<Sessao> listarSessoesAtivas() {
-		
+		EventoDao eventoDao = new EventoDao();
+		Evento evento;
 		ArrayList<Sessao> sessoes = new ArrayList<Sessao>();
 		Connection conn = new ConnectionFactory().getConnection();
 		try {
@@ -116,6 +121,11 @@ public class SessaoDao {
 			while (rs.next()) {
 				Sessao sessao = new Sessao();
 				sessao.setCodigo(rs.getInt("cod_sessao"));
+				
+				evento = new Evento();
+				evento.setCodigo(rs.getInt("cod_evento"));
+				sessao.setEvento(eventoDao.consultar(evento));
+				
 				sessao.setDia(rs.getDate("dia_sessao"));
 				sessao.getHorario().setHora(Integer.parseInt((rs.getString("hora_sessao").split(":")[0])));
 				sessao.getHorario().setMinutos(Integer.parseInt((rs.getString("hora_sessao").split(":")[1])));
@@ -201,8 +211,8 @@ public class SessaoDao {
 	}
 
 	public String alterarSessao(Sessao sessao) {
+		Connection conn = new ConnectionFactory().getConnection();
 		try {
-			Connection conn = new ConnectionFactory().getConnection();
 
 			PreparedStatement smt = conn.prepareStatement(
 					"update sessao set cod_evento = ?, dia_sessao = ?, hora_sessao = ?, valor_base_sessao = ? where cod_sessao = ?");
@@ -233,8 +243,8 @@ public class SessaoDao {
 	}
 
 	public boolean excluirSessao(Sessao sessao) {
+		Connection conn = new ConnectionFactory().getConnection();
 		try {
-			Connection conn = new ConnectionFactory().getConnection();
 
 			PreparedStatement smt = conn.prepareStatement("update sessao set situacao_sessao = 0 where cod_sessao = ?");
 

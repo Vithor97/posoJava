@@ -10,7 +10,9 @@ import javax.faces.context.FacesContext;
 
 import br.com.bradesco.posoTeatro.model.Evento;
 import br.com.bradesco.posoTeatro.model.Funcionario;
+import br.com.bradesco.posoTeatro.model.Genero;
 import br.com.bradesco.posoTeatro.model.Pessoa;
+import br.com.bradesco.posoTeatro.model.TipoEvento;
 
 public class EventoDao extends Evento {
 
@@ -104,6 +106,50 @@ public class EventoDao extends Evento {
 			e.printStackTrace();
 			return "CNPJ nao encontrado.";
 		}
+	}
+	
+	public ArrayList<TipoEvento> listarTipos() {
+		ArrayList<TipoEvento> tiposEvento = new ArrayList<TipoEvento>();
+		
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement smt = conn.prepareStatement("select * from tipo_evento");
+			ResultSet rs = smt.executeQuery();
+			while (rs.next()) {
+				TipoEvento tipoEvento = new TipoEvento();
+				tipoEvento.setCodigo(rs.getInt("cod_tipo"));
+				tipoEvento.setNome(rs.getString("nome_tipo"));
+				tiposEvento.add(tipoEvento);
+			}
+		rs.close();
+		smt.close();
+		conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return tiposEvento;
+	}
+	
+	public ArrayList<Genero> listarGeneros() {
+		ArrayList<Genero> generos = new ArrayList<Genero>();
+		
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+			PreparedStatement smt = conn.prepareStatement("select * from genero");
+			ResultSet rs = smt.executeQuery();
+			while (rs.next()) {
+				Genero genero = new Genero();
+				genero.setCodigo(rs.getInt("cod_genero"));
+				genero.setNome(rs.getString("nome_genero"));
+				generos.add(genero);
+			}
+		rs.close();
+		smt.close();
+		conn.close();
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return generos;
 	}
 
 	public String voltarCpf(Evento evento) {

@@ -21,8 +21,8 @@
 								 onclick="PF('dlg1').hide()"/>
 			</p:dialog>
 			
-			<p:dataTable id="tabelaSessoes" var="sessao" 
-				value="#{listarSessoesBean.sessoes}" scrollable="true">
+			<p:dataTable id="tabelaSessoes" value="#{listarSessoesBean.sessoes}"
+				var="sessao" scrollable="true">
 				<p:autoUpdate/>
 				<p:column headerText="Código da Sessão" filterBy="#{sessao.codigo}" 
 					filterMatchMode="contains" sortBy="#{sessao.codigo}">
