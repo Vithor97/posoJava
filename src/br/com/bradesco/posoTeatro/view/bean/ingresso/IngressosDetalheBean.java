@@ -3,7 +3,6 @@
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 
 import br.com.bradesco.posoTeatro.model.Ingresso;
@@ -18,16 +17,6 @@ public class IngressosDetalheBean extends PosoBean implements BeanInterface{
 	private Ingresso ingresso;
 	
 	private String mensagem;
-	@ManagedProperty(value = "#{reembolsoIngressoBean}")
-	private ReembolsoIngressoBean excluir;
-	
-	public ReembolsoIngressoBean getExcluir() {
-		return excluir;
-	}
-	
-	public void setExcluir(ReembolsoIngressoBean excluir) {
-		this.excluir = excluir;
-	}
 
 	public Ingresso getIngresso() {
 		return ingresso;

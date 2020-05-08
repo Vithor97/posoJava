@@ -93,4 +93,8 @@ public enum TipoPoltrona {
 		}
 		return itens;
 	}
+	
+	public static TipoPoltrona[] getTiposPoltrona() {
+		return TipoPoltrona.values();
+	}
 }

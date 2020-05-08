@@ -97,18 +97,8 @@
 						<p:inputText id="tipoPoltrona" value="${ingressosDetalheBean.ingresso.poltrona.tipoPoltrona}" disabled="true"/>
 					</h:panelGroup>
 				</h:panelGrid>
-			</p:panel>
-			
-			<p:column>
-					<h:panelGrid cellspacing="10" style="float: right;">
-						<p:commandButton id="btnExcluir" icon="pi pi-trash"
-							action="${ingressosDetalheBean.exclui()}"
-							value="${msgs.label_reemb_ingresso}" 
-							immediate="true" style="float: right;">
-						</p:commandButton>
-					</h:panelGrid>
-				</p:column>	
-				<p:commandButton value="#{msgs.label_detalheEvento_voltar}"
+			</p:panel>	
+			<p:commandButton value="#{msgs.label_detalheEvento_voltar}"
 				action="#{ingressosDetalheBean.voltar}" style="margin-top:10px" icon="pi pi-arrow-left"/>
 		</h:form>
 	</ui:define>

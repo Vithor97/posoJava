@@ -66,8 +66,8 @@ public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 		return alterar.iniciarPagina(getTitulosBread(), getUrlsBread());
 	}
 	
-	public void excluir(Ingresso ingressoEntrada) {
-		boolean exclusao = new IngressoDao().reembolsoIngresso(ingressoEntrada);
+	public String excluir() {
+		boolean exclusao = new IngressoDao().reembolsoIngresso(getIngresso());
 		PrimeFaces current = PrimeFaces.current();
 		FacesContext facesContext = FacesContext.getCurrentInstance();
 		ResourceBundle messageBundle = facesContext.getApplication().getResourceBundle(facesContext, "msgs");
@@ -77,7 +77,9 @@ public class ConsultarIngressosBean extends PosoBean implements BeanInterface {
 		else {
 			setMensagem(messageBundle.getString("msg_ingressos_exlusaoErro"));
 		}
+		ingressos.remove(getIngresso());
 		current.executeScript("PF('dlg1').show();");
+		return "";
 	}
 	
 	public Ingresso getIngresso() {

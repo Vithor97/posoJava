@@ -12,13 +12,13 @@
 	</ui:define>
 	
 	<ui:define name="conteudo">
-		<h:form id = "form">
+		<h:form id = "formConsultarIngressos">
 			<p:dialog header="Consultar" id="dlg1" widgetVar="dlg1" modal="true" minHeight="40" width="300">
                 <br/>
 			    <h:outputText value="${consultarIngressosBean.mensagem}" />
 			    <br/>
 				<p:commandButton style="float: right;" value="OK" 
-								 onclick="PF('dlg1').hide()"/>
+								 update="formConsultarIngressos" oncomplete="PF('dlg1').hide()"/>
 			</p:dialog>
 			
 			<p:dialog id="excluirIngresso" widgetVar="excluirIngresso" modal="true" header="Excluir" width="175">
@@ -29,20 +29,23 @@
 				</h:panelGrid>
 				<h:panelGrid columns="2">
 					<h:panelGroup>
-	                	<p:commandButton style="float: left;" value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+	                	<p:commandButton style="float: left;" value="Sim" icon="pi pi-check" 
+	                		action="#{consultarIngressosBean.excluir}" oncomplete="PF('dlg1').show()" 
+	                		update="formConsultarIngressos" onclick="PF('excluirIngresso').hide()"/>
 	                </h:panelGroup>
 	                <h:panelGroup>
-	        			<p:commandButton style="float: right;" value="Não" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+	        			<p:commandButton style="float: right;" value="Não" icon="pi pi-times"
+	        				onclick="PF('excluirIngresso').hide()" />
 	        		</h:panelGroup>
         		</h:panelGrid>
             </p:dialog>
-
+			
 			<p:dataTable value="#{consultarIngressosBean.ingressos}" id="ingressos" var="ingresso" rows="10" emptyMessage="#{msgs.msg_ingressos_empty}"
 					paginator="true"
 					paginatorPosition="top"
 	                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 	                currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} ingressos">
-				<p:column width="5%">
+				<p:column width="7%">
 					<c:facet name="header">${msgs.label_ingressos_codigoIngresso}</c:facet>
                 		<p:outputLabel style="float: right;" value="#{ingresso.codigoIngresso}"></p:outputLabel>  
                 </p:column>
@@ -67,16 +70,11 @@
                     <p:commandButton style="width: 100%;" value="#{msgs.label_ingressos_button_detalhar}" action="#{consultarIngressosBean.consultar(ingresso)}"></p:commandButton>
                     
  					<p:commandButton value="#{msgs.label_ingressos_button_alterar}" action="#{consultarIngressosBean.alterar(ingresso)}" style= "margin-top:10px; margin-right:10px;width: 50%;"/>
-                	<p:commandButton value="#{msgs.label_ingressos_button_excluir}" onclick="PF('excluirIngresso').show()">
-                		<f:setPropertyActionListener value="#{ingresso}" target="#{consultarIngressosBean.ingresso}" />
-                	</p:commandButton>          
+                	<p:commandButton value="#{msgs.label_ingressos_button_excluir}" action="#{consultarIngressosBean.setIngresso(ingresso)}" 
+                		onclick="PF('excluirIngresso').show()"/>         
                 </p:column>	
-			</p:dataTable>
-<!-- 			<h:panelGrid columns="2"> -->
-<!-- 				<p:outputLabel for="codIngresso" value="${msgs.label_ingressos_codigoIngresso}" /> -->
-<!-- 				<p:inputText id="codIngresso" value="${consultarIngressosBean.ingresso.codigoIngresso}"/> -->
-<!-- 				<p:commandButton value="${msgs.label_ingressos_button_consultar}" action="${consultarIngressosBean.consultar}" update="form"/> -->
-<!-- 			</h:panelGrid> -->
+			</p:dataTable>       
+            
 		</h:form>
 	</ui:define>
 	

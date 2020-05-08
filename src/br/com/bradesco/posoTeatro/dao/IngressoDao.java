@@ -144,4 +144,33 @@ public class IngressoDao {
 			}
 		}
 	}
+	
+	public boolean alterarIngresso(Ingresso ingresso) {
+		try {
+			Connection conn = new ConnectionFactory().getConnection();
+
+			PreparedStatement smt = conn.prepareStatement("UPDATE ingresso SET cod_sessao = ?,"
+																			+ "cod_pessoa = ?,"
+																			+ "cod_poltrona = ?,"
+																			+ "tipo_poltrona = ?"
+																			+ " WHERE cod_ingresso = ?");
+
+			smt.setInt(1, ingresso.getSessao().getCodigo());
+			smt.setInt(2, ingresso.getPessoa().getCodigo());
+			smt.setString(3, ingresso.getPoltrona().getCodigo());
+			smt.setInt(4, ingresso.getPoltrona().getTipoPoltrona().getCodigo());
+			smt.setInt(5, ingresso.getCodigoIngresso());
+			smt.executeUpdate();
+
+			smt.close();
+			conn.close();
+
+			return true;
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			return false;
+			
+		}
+	}
 }

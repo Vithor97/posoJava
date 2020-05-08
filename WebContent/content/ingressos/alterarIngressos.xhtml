@@ -44,8 +44,8 @@
 	                    <p:outputLabel value="#{sessao.dataFormatada}"></p:outputLabel> 
 	                </p:column>
 	                <p:column width="8%">
-	                    <p:commandButton value="#{msgs.btn_ingressos_selecionar}" action="#{alterarIngressosBean.getIngresso().setSessao(sessao)}" 
-	                    	update="formAlterarIngresso" oncomplete="PF('pesquisaSessao').hide()"/> 
+	                    <p:commandButton value="#{msgs.btn_ingressos_selecionar}" action="#{alterarIngressosBean.pesquisarPoltronas(sessao)}" 
+	                    	update="formAlterarIngresso" oncomplete="PF('pesquisaSessao').hide()"/>
 	                </p:column>	
 				</p:dataTable>
 				<br/>
@@ -148,17 +148,25 @@
 			<p:panel id="pnPoltronaIngresso" header="Poltrona" style="margin-top:10px">	
 				<h:panelGrid columns="2" cellspacing="10">
 					<h:panelGroup>
-						<p:outputLabel for="codPoltrona" value="${msgs.label_ingressos_codigoPoltrona}" /><br/>
-						<p:inputText id="codPoltrona" value="${alterarIngressosBean.ingresso.poltrona.codigo}" disabled="true"/>
+						<p:outputLabel for="tipoPoltrona" value="${msgs.label_ingressos_tipoPoltrona}" /><br/>
+						<h:selectOneMenu id="tipoPoltrona" value="#{alterarIngressosBean.poltrona.tipoPoltrona}">
+						    <f:selectItems value="#{alterarIngressosBean.tiposPoltronas}" itemValue="#{tipo}"
+                                                           var="tipo" itemLabel="#{tipo.descricao}"/>
+						</h:selectOneMenu>
 					</h:panelGroup>
 					<h:panelGroup>
-						<p:outputLabel for="tipoPoltrona" value="${msgs.label_ingressos_tipoPoltrona}" /><br/>
-						<p:inputText id="tipoPoltrona" value="${alterarIngressosBean.ingresso.poltrona.tipoPoltrona}" disabled="true"/>
+<!-- 						<p:outputLabel for="codPoltrona" value="${msgs.label_ingressos_codigoPoltrona}" /><br/> -->
+<!-- 						<h:selectOneMenu id="codPoltrona" value="#{alterarIngressosBean.poltrona}"> -->
+<!-- 						    <f:selectItems value="#{alterarIngressosBean.poltronas}" /> -->
+<!-- 						</h:selectOneMenu> -->
 					</h:panelGroup>
 				</h:panelGrid>
 			</p:panel>
 			<p:commandButton value="#{msgs.label_listarEvento_voltar}"
 				action="#{alterarIngressosBean.voltar}" style="margin-top:10px" icon="pi pi-arrow-left" />
+			<p:commandButton value="#{msgs.btn_ingressos_alterar}"
+				action="#{alterarIngressosBean.alterar}" oncomplete="PF('dlg1').show()" update="dlg1"
+					style="margin-top:10px; float:right;" icon="pi pi-save" />
 		</h:form>
 	</ui:define>
 	
